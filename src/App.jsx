@@ -1,4 +1,4 @@
-import Places from "./components/Places"
+import Places from "./components/Home/Places"
 
 function App() {
   return (

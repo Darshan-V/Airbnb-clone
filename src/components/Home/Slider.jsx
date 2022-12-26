@@ -1,6 +1,6 @@
 import React from "react"
 import { Carousel } from "react-carousel-minimal"
-import store from "./../../../airbnb-data/store.js"
+import store from "../../../../airbnb-data/store.js"
 const images = [
   { image: store.homeMainPic },
   { image: store.carouselPic1 },
