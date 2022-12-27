@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import store from "../../../../airbnb-data/store.js"
 import { AiFillStar } from "react-icons/ai"
+import store from "../../../../airbnb-data/store.js"
+import Reservation from "./Reservation.jsx"
 
 const PropertyPage = () => {
   const [propertyData, setPropertyData] = useState({ store })
@@ -26,11 +27,11 @@ const PropertyPage = () => {
         <div className="flex max-w-lg overflow-x-hidden">
           <img
             src={propertyData.store.carouselPic1}
-            className="w-56 h-auto mr-1"
+            className="w-72 h-auto mr-1"
           ></img>
           <img
             src={propertyData.store.carouselPic2}
-            className="w-auto h-auto mr-1"
+            className="w-60 h-auto mr-1"
           ></img>
           <img
             src={propertyData.store.carouselPic5}
@@ -46,6 +47,7 @@ const PropertyPage = () => {
           ></img>
         </div>
       </div>
+      <Reservation />
     </div>
   )
 }
