@@ -25,3 +25,6 @@ dist-ssr
 
 package.json
 .prettierrc
+postcss.config.cjs
+tailwind.config.cjs
+.gitignore
