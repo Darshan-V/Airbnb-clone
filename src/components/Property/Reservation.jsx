@@ -1,10 +1,14 @@
+import { check } from "prettier"
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
 import { getHotels, reserveSlot } from "../lib/apiClient"
 
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
   const [checkIn, setCheckin] = useState([])
   const [checkOut, setCheckout] = useState([])
+  const [nightsNumber, setNights] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loadHotelList = async () => {
@@ -20,7 +24,15 @@ const Reservation = () => {
     const checkOutDate = checkOut
     const userId = 1
     const bookingStatus = true
-    reserveSlot(hotelId, checkInDate, checkOutDate, bookingStatus, userId)
+    const nights = nightsNumber
+    reserveSlot(
+      hotelId,
+      checkInDate,
+      checkOutDate,
+      bookingStatus,
+      userId,
+      nights
+    )
   }
 
   const getCheckout = (event) => {
@@ -31,6 +43,16 @@ const Reservation = () => {
   const getCheckin = (event) => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
+  }
+
+  const countNights = (checkInDate, checkOutDate) => {
+    checkInDate = checkIn
+    checkOutDate = checkOut
+    let res = new Date(checkInDate) - new Date(checkOutDate)
+    if (res < 0) res = -res
+    const nights = res / 1000 / 3600 / 24
+    setNights(nights)
+    console.log(nights)
   }
 
   return (
@@ -71,18 +93,24 @@ const Reservation = () => {
                         className="w-full"
                         onChange={(e) => {
                           getCheckout(e)
+                          countNights()
                         }}
                       />
                     </div>
                   </div>
-                  {/* <div className="border border-black rounded-md">
-                    <p>Select guests</p>
-                  </div> */}
                 </div>
                 <div className="ml-auto m-1">
                   <button
                     className="bg-red-600 border rounded-lg w-28 h-8 m-2"
-                    onClick={() => makeBooking()}
+                    onClick={() => {
+                      checkIn.length !== 0 && checkOut.length !== 0 ? (
+                        (makeBooking(), navigate("/booking"))
+                      ) : (
+                        <p className="text text-red-600 ">
+                          Select Checkin and Checkout
+                        </p>
+                      )
+                    }}
                   >
                     Reserve
                   </button>
@@ -95,8 +123,10 @@ const Reservation = () => {
                 <section className="calculations sec">
                   <div className="flex flex-col">
                     <div className="flex flex-row justify-between">
-                      <p className="underline">Rs {hotel[0]?.price} x 2</p>
-                      <span>{`${hotel[0]?.price * 2} `}</span>
+                      <p className="underline">
+                        Rs {hotel[0]?.price} x {nightsNumber}
+                      </p>
+                      <p>{`${hotel[0]?.price * nightsNumber}`}</p>
                     </div>
                     <div className="flex justify-between">
                       <p className="underline">service fee</p>

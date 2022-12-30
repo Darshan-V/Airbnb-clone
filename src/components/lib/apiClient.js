@@ -17,7 +17,8 @@ async function reserveSlot(
   checkinDate,
   checkoutDate,
   bookingStatus,
-  userId
+  userId,
+  nights
 ) {
   let reserve = await fetch(`${apiUrl}/booking/${hotelId}`, {
     method: "POST",
@@ -28,7 +29,8 @@ async function reserveSlot(
       checkIn: checkinDate,
       checkOut: checkoutDate,
       bookingStatus: bookingStatus,
-      userId: userId
+      userId: userId,
+      nights: nights
     })
   })
   const postResponse = await reserve.json()

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import store from "../../../../airbnb-data/store.js"
 import Slider from "./Slider.jsx"
 import { useNavigate } from "react-router"
 import { getHotels } from "../lib/apiClient.js"
@@ -22,16 +21,16 @@ const Places = () => {
   const navigate = useNavigate()
 
   return (
-    <div
-      className="flex flex-col flex-auto m-5 hover:cursor-pointer"
-      onClick={() => {
-        navigate("/property")
-      }}
-    >
+    <div className="flex flex-col flex-auto m-5 ">
       <div className="flex">
         <Slider />
       </div>
-      <div className="flex flex-row ">
+      <div
+        className="flex flex-row hover:cursor-pointer"
+        onClick={() => {
+          navigate("/property")
+        }}
+      >
         <p className="font-thin text-gray-800">
           {propertyData[0]?.placename}, {propertyData[0]?.address}
         </p>
