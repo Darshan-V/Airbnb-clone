@@ -28,6 +28,7 @@ app.post("/booking/:id", async (req, res) => {
   const checkOut = req.body.checkOut
   const bookingStatus = req.body.bookingStatus
   const userId = req.body.userId
+  const night = req.body.nights
   const confirmBooking = await reserveSlot(
     checkIn,
     checkOut,
