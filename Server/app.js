@@ -33,7 +33,8 @@ app.post("/booking/:id", async (req, res) => {
     checkIn,
     checkOut,
     bookingStatus,
-    hotelId
+    hotelId,
+    night
   )
   res.json(confirmBooking)
 })
