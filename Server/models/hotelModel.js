@@ -5,7 +5,7 @@ const getHotels = async () => {
   return hotels.rows
 }
 const getImages = async (hotelId) => {
-  let images = await pool.query(`select * from images where placeid = $1`, [
+  let images = await pool.query(`select * from images where property_id = $1`, [
     hotelId
   ])
   return images.rows
