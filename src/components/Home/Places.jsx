@@ -6,37 +6,40 @@ import { getHotels } from "../lib/apiClient.js"
 const Places = () => {
   const [propertyData, setPropertyData] = useState([])
 
+  const loadHotelList = async () => {
+    const hotelList = await getHotels()
+    setPropertyData(hotelList)
+  }
+
   useEffect(() => {
-    const loadHotelList = async () => {
-      try {
-        const hotelList = await getHotels()
-        setPropertyData(hotelList)
-      } catch (error) {
-        console.log(error)
-      }
-    }
     loadHotelList()
-  }, [])
+  }, [propertyData.id])
 
   const navigate = useNavigate()
 
   return (
-    <div className="flex flex-col flex-auto m-5 ">
-      <div className="flex">
-        <Slider />
-      </div>
-      <div
-        className="flex flex-row hover:cursor-pointer"
-        onClick={() => {
-          navigate("/property")
-        }}
-      >
-        <p className="font-thin text-gray-800">
-          {propertyData[0]?.placename}, {propertyData[0]?.address}
-        </p>
-        <p className="text-red-500 pl-3">{propertyData[0]?.stars}</p>
-      </div>
-      <p className="label places-price">Rs {propertyData[0]?.price} night</p>
+    <div className="flex flex-row">
+      {propertyData.map((property, i) => (
+        <>
+          <div className="flex flex-col flex-auto m-5 ">
+            <div className="flex" key={i}>
+              <Slider id={property.id} />
+            </div>
+
+            <div
+              className="flex flex-row hover:cursor-pointer"
+              onClick={() => {
+                navigate(`/property/${property.id}`)
+              }}
+            >
+              <p className="font-thin text-gray-800 w-60 h-12 overflow-hidden">
+                {property?.name}, {property?.address?.location}
+              </p>
+            </div>
+            <p className="label places-price">Rs {property?.price} night</p>
+          </div>
+        </>
+      ))}
     </div>
   )
 }

@@ -1,30 +1,22 @@
-import React from "react"
-import { Carousel } from "react-carousel-minimal"
-import store from "../../../../airbnb-data/store.js"
-const images = [
-  { image: store.homeMainPic },
-  { image: store.carouselPic1 },
-  { image: store.carouselPic2 },
-  { image: store.carouselPic3 },
-  { image: store.carouselPic4 },
-  { image: store.carouselPic5 }
-]
+import React, { useState, useEffect } from "react"
+import { getImages } from "../lib/apiClient"
 
-const Slider = () => {
+const Slider = (id) => {
+  console.log("🚀 ~ file: Slider.jsx:6 ~ Slider ~ id", id.id)
+  const [propertyImages, setPropertyImages] = useState([])
+
+  const loadHotelList = async () => {
+    const loadImageList = await getImages(id.id)
+    setPropertyImages(loadImageList)
+  }
+  console.log(propertyImages)
+  useEffect(() => {
+    loadHotelList()
+  }, [id.id])
+
   return (
-    <div className="reactSlider--homePlace">
-      <Carousel
-        data={images}
-        width="15rem"
-        height="15rem"
-        radius="10px"
-        automatic={false}
-        dots={true}
-        pauseIconColor="white"
-        pauseIconSize="40px"
-        slideBackgroundColor="darkgrey"
-        slideImageFit="cover"
-      />
+    <div className="flex flex-row">
+      <img src={propertyImages[0]?.images?.imageUrl[1]} className="w-60 h-52" />
     </div>
   )
 }
