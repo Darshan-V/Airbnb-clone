@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { AiFillStar } from "react-icons/ai"
-import store from "../../../../airbnb-data/store.js"
 import Reservation from "./Reservation.jsx"
 import { getHotels, getImages } from "../lib/apiClient.js"
 

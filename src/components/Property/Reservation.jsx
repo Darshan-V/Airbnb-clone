@@ -1,4 +1,3 @@
-import { check } from "prettier"
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
 import { getHotels, reserveSlot } from "../lib/apiClient"
