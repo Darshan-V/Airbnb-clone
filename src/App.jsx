@@ -5,11 +5,11 @@ import PropertyPage from "./components/Property/PropertyPage"
 
 function App() {
   return (
-    <div className="flex">
+    <div className="flex ">
       <Router>
         <Routes>
           <Route path="/" element={<Places />} />
-          <Route path="/property" element={<PropertyPage />} />
+          <Route path="/property/:id" element={<PropertyPage />} />
           <Route path="/booking" element={<BookingSlots />} />
         </Routes>
       </Router>
