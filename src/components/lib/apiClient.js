@@ -7,9 +7,13 @@ async function getHotels() {
 }
 
 async function getImages(hotelId) {
-  let data = await fetch(`${apiUrl}/images/${hotelId}`)
-  let images = await data.json()
-  return images
+  try {
+    let data = await fetch(`${apiUrl}/images/${hotelId}`)
+    let images = await data.json()
+    return images
+  } catch (err) {
+    console.log(err.stack)
+  }
 }
 
 async function reserveSlot(
