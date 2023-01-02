@@ -22,7 +22,7 @@ const Places = () => {
       {propertyData.map((property, i) => (
         <>
           <div className="flex flex-col flex-auto m-5 ">
-            <div className="flex" key={i}>
+            <div className="flex">
               <Slider id={property.id} />
             </div>
 
