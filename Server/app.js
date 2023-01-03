@@ -11,18 +11,18 @@ app.use(express.json())
 app.use(cors())
 initDB()
 
-app.get("/", async (req, res) => {
+app.get("/hotels", async (req, res) => {
   const hotels = await getHotels()
   res.json(hotels)
 })
 
-app.get("/images/:id", async (req, res) => {
+app.get("/hotel/images/:id", async (req, res) => {
   const hotelId = req.params.id
   const images = await getImages(hotelId)
   res.json(images)
 })
 
-app.post("/booking/:id", async (req, res) => {
+app.post("/hotel/booking/:id", async (req, res) => {
   const hotelId = req.params.id
   const checkIn = req.body.checkIn
   const checkOut = req.body.checkOut

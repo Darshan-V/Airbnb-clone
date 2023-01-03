@@ -1,14 +1,19 @@
 import { pool } from "./config/init.js"
 
 const getHotels = async () => {
-  let hotels = await pool.query(`select * from property;`)
+  const hotels = await pool.query(`select * from property;`)
   return hotels.rows
 }
 const getImages = async (hotelId) => {
-  let images = await pool.query(`select * from images where property_id = $1`, [
-    hotelId
-  ])
+  const images = await pool.query(
+    `select * from images where property_id = $1`,
+    [hotelId]
+  )
   return images.rows
 }
 
-export { getHotels, getImages }
+const getHotelById = async (hotelId) => {
+  const hotel = await pool.query("select * from hotel wher id = $1", [hotelId])
+}
+
+export { getHotels, getImages, getHotelById }
