@@ -13,7 +13,10 @@ const getImages = async (hotelId) => {
 }
 
 const getHotelById = async (hotelId) => {
-  const hotel = await pool.query("select * from hotel wher id = $1", [hotelId])
+  const hotel = await pool.query("select * from property where id = $1", [
+    hotelId
+  ])
+  return hotel.rows
 }
 
 export { getHotels, getImages, getHotelById }

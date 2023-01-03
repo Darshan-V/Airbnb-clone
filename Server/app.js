@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import { initDB } from "./models/config/init.js"
-import { getHotels, getImages } from "./models/hotelModel.js"
+import { getHotelById, getHotels, getImages } from "./models/hotelModel.js"
 import { reserveSlot } from "./models/bookingsModel.js"
 
 const PORT = 8000
@@ -20,6 +20,12 @@ app.get("/hotel/images/:id", async (req, res) => {
   const hotelId = req.params.id
   const images = await getImages(hotelId)
   res.json(images)
+})
+
+app.get("/hotel/:id", async (req, res) => {
+  const hotelId = req.params.id
+  const hotel = await getHotelById(hotelId)
+  res.json(hotel)
 })
 
 app.post("/hotel/booking/:id", async (req, res) => {
