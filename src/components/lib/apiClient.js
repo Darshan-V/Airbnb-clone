@@ -41,4 +41,11 @@ async function reserveSlot(
   console.log(postResponse)
 }
 
-export { getHotels, getImages, reserveSlot }
+async function getHotelById(hotelId) {
+  let data = await fetch(`${apiUrl}/hotel/${hotelId}`)
+  let hotel = await data.json()
+  console.log(hotel)
+  return hotel
+}
+
+export { getHotels, getImages, reserveSlot, getHotelById }
