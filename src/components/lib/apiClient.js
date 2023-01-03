@@ -1,14 +1,14 @@
 const apiUrl = "http://localhost:8000"
 
 async function getHotels() {
-  let data = await fetch(`${apiUrl}`)
+  let data = await fetch(`${apiUrl}/hotels`)
   let hotels = await data.json()
   return hotels
 }
 
 async function getImages(hotelId) {
   try {
-    let data = await fetch(`${apiUrl}/images/${hotelId}`)
+    let data = await fetch(`${apiUrl}/hotel/images/${hotelId}`)
     let images = await data.json()
     return images
   } catch (err) {
@@ -24,7 +24,7 @@ async function reserveSlot(
   userId,
   nights
 ) {
-  let reserve = await fetch(`${apiUrl}/booking/${hotelId}`, {
+  let reserve = await fetch(`${apiUrl}/hotel/booking/${hotelId}`, {
     method: "POST",
     headers: {
       "content-type": "application/json"
