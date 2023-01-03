@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react"
 import Reservation from "./Reservation.jsx"
-import { getHotels, getImages } from "../lib/apiClient.js"
+import { getImages, getHotelById, getHotels } from "../lib/apiClient.js"
 import { useNavigate, useParams } from "react-router"
-// import PropertyImages from "./PropertyImages.jsx"
 
 const PropertyPage = () => {
   const [propertyData, setPropertyData] = useState([])
   const [hotelImages, setHotelImages] = useState([])
   const params = useParams()
+  const hotelId = params.id
 
   const loadHotelList = async () => {
-    const hotelList = await getHotels()
+    const hotelList = await getHotelById(hotelId)
     setPropertyData(hotelList)
-    const loadImageList = await getImages(params.id)
+    const loadImageList = await getImages(hotelId)
     const images = loadImageList[0]?.images?.imageUrl
     setHotelImages(images)
   }
