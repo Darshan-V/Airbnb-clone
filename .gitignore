@@ -29,3 +29,4 @@ postcss.config.cjs
 tailwind.config.cjs
 .gitignore
 config.js
+temp.txt

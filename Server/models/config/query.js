@@ -1,5 +1,5 @@
 const createUsers = `create table if not exists users(
-    name text,
+    name varchar unique,
     password varchar,
     id serial primary key
 )`
@@ -26,9 +26,8 @@ const createBookings = `create table if not exists bookings(
 )`
 
 const createImages = `create table if not exists images(
-    property_id int ,
+    property_id int primary key  ,
     images JSON,
-    constraint fk_place foreign key(property_id) references property(id)
-)`
+    constraint fk_property foreign key(property_id) references property(id))`
 
 export { createBookings, createImages, createPlaces, createUsers }

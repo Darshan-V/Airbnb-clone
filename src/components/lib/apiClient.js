@@ -48,4 +48,11 @@ async function getHotelById(hotelId) {
   return hotel
 }
 
-export { getHotels, getImages, reserveSlot, getHotelById }
+async function getUserById(userId) {
+  let data = await fetch(`${apiUrl}/user/${userId}`)
+  let user = await data.json()
+  console.log(user)
+  return user
+}
+
+export { getHotels, getImages, reserveSlot, getHotelById, getUserById }

@@ -3,6 +3,7 @@ import cors from "cors"
 import { initDB } from "./models/config/init.js"
 import { getHotelById, getHotels, getImages } from "./models/hotelModel.js"
 import { reserveSlot } from "./models/bookingsModel.js"
+import { getUserById, getUserByUserName } from "./models/userModel.js"
 
 const PORT = 8000
 
@@ -26,6 +27,17 @@ app.get("/hotel/:id", async (req, res) => {
   const hotelId = req.params.id
   const hotel = await getHotelById(hotelId)
   res.json(hotel)
+})
+
+app.get("/user/:id", async (req, res) => {
+  const userId = req.params.id
+  if (Number(userId)) {
+    const user = await getUserById(userId)
+    res.json(user)
+  } else {
+    const user = await getUserByUserName(userId)
+    res.json(user)
+  }
 })
 
 app.post("/hotel/booking/:id", async (req, res) => {

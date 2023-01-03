@@ -6,14 +6,14 @@ const PropertyImages = () => {
   const [hotelImages, setHotelImages] = useState([])
   const params = useParams()
 
-  const loadHotelList = async () => {
+  const loadHotelImages = async () => {
     const loadImageList = await getImages(params.id)
     const images = loadImageList[0]?.images?.imageUrl
     setHotelImages(images)
   }
 
   useEffect(() => {
-    loadHotelList()
+    loadHotelImages()
   }, [])
 
   return (
