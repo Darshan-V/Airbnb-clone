@@ -44,14 +44,17 @@ app.post("/hotel/booking/:id", async (req, res) => {
   const hotelId = req.params.id
   const checkIn = req.body.checkIn
   const checkOut = req.body.checkOut
-  const bookingStatus = req.body.bookingStatus
   const userId = req.body.userId
-  const night = req.body.nights
+  const total = req.body.total
+
+  // console.log(hotelId, checkIn, checkOut, userId, total)
+
   const confirmBooking = await reserveSlot(
     checkIn,
     checkOut,
-    bookingStatus,
-    hotelId
+    hotelId,
+    userId,
+    total
   )
   res.json(confirmBooking)
 })
