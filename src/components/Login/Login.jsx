@@ -1,18 +1,18 @@
 import React, { useState } from "react"
 import { checkUser } from "./utils/config.js"
+import { useNavigate } from "react-router"
 
 const Login = () => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
-  const validateUser = (uName, uPassword) => {
-    if (checkUser(uName, uPassword)) {
-      console.log("user exist")
+  const validateUser = async (uName, uPassword) => {
+    if (await checkUser(uName, uPassword)) {
+      const userid = await checkUser(uName, uPassword)
+      navigate(`/home/${userid}`)
     }
   }
-
-  console.log(password)
-  console.log(userName)
 
   return (
     <div className=" flex flex-col justify-center m-auto  flex-auto w-92">
