@@ -1,18 +1,16 @@
 import React from "react"
-import { useNavigate } from "react-router"
+import { TbAerialLift, TbSearch } from "react-icons/tb"
 
 const Topbar = () => {
-  const navigate = useNavigate()
-
   return (
-    <div className="flex w-full m-auto p-5 bg-orange-300">
-      <div className="flex justify-center hover:bg-sky-500 hover:ring-sky-500 ml-auto rounded-lg  w-24 h-12 ">
-        <button
-          className="text-slate-900 hover:text-white text-sm font-semibold w-full"
-          onClick={() => navigate("/Login")}
-        >
-          Login
-        </button>
+    <div className="flex justify-between w-full m-auto p-5 bg-white-300 border">
+      <div className="flex justify-center mr-auto rounded-lg  ">
+        <TbAerialLift className="text text-6xl font text-yellow-600 hover:text-yellow-400" />
+      </div>
+      <div className="flex m-auto">
+        <button>Places</button>
+        <button>Search</button>
+        <TbSearch />
       </div>
     </div>
   )

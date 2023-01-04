@@ -16,14 +16,7 @@ async function getImages(hotelId) {
   }
 }
 
-async function reserveSlot(
-  hotelId,
-  checkinDate,
-  checkoutDate,
-  bookingStatus,
-  userId,
-  nights
-) {
+async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, total) {
   let reserve = await fetch(`${apiUrl}/hotel/booking/${hotelId}`, {
     method: "POST",
     headers: {
@@ -32,26 +25,25 @@ async function reserveSlot(
     body: JSON.stringify({
       checkIn: checkinDate,
       checkOut: checkoutDate,
-      bookingStatus: bookingStatus,
       userId: userId,
-      nights: nights
+      total: total
     })
   })
-  const postResponse = await reserve.json()
-  console.log(postResponse)
+  console.log(reserve)
+  return reserve
 }
 
 async function getHotelById(hotelId) {
   let data = await fetch(`${apiUrl}/hotel/${hotelId}`)
   let hotel = await data.json()
-  console.log(hotel)
+  // console.log(hotel)
   return hotel
 }
 
 async function getUserById(userId) {
   let data = await fetch(`${apiUrl}/user/${userId}`)
   let user = await data.json()
-  console.log(user)
+  // console.log(user)
   return user
 }
 
