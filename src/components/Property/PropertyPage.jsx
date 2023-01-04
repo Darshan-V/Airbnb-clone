@@ -36,7 +36,7 @@ const PropertyPage = () => {
           <button
             className="border border-black"
             onClick={() => {
-              navigate(`/property_images/${propertyData[0]?.id}`)
+              navigate(`/property_images/${hotelId}`)
             }}
           >
             Show images

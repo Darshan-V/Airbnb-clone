@@ -19,8 +19,8 @@ const PropertyImages = () => {
   return (
     <div>
       <div className="flex flex-col justify-center w-full m-1 ">
-        {hotelImages.map((images) => (
-          <div className="flex flex-row m-1 ">
+        {hotelImages.map((images, i) => (
+          <div className="flex flex-row m-1 " key={i}>
             <img src={images} className="w-3/4 h-2/4" />
           </div>
         ))}

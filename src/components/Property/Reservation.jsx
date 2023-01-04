@@ -1,13 +1,21 @@
+import { check } from "prettier"
 import React, { useState, useEffect } from "react"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { getHotels, reserveSlot } from "../lib/apiClient"
 
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
-  const [checkIn, setCheckin] = useState([])
-  const [checkOut, setCheckout] = useState([])
-  const [nightsNumber, setNights] = useState([])
+  const [checkIn, setCheckin] = useState("")
+  const [checkOut, setCheckout] = useState("")
+  const [nightsNumber, setNights] = useState("")
   const navigate = useNavigate()
+  const params = useParams()
+  const hotelId = params.id
+  const userid = params.userid
+  const start = new Date(checkIn).getTime()
+  const end = new Date(checkOut).getTime()
+
+  console.log(new Date(checkIn))
 
   useEffect(() => {
     const loadHotelList = async () => {
@@ -18,20 +26,8 @@ const Reservation = () => {
   }, [])
 
   const makeBooking = () => {
-    const hotelId = hotel[0].placeid
-    const checkInDate = checkIn
-    const checkOutDate = checkOut
-    const userId = 1
-    const bookingStatus = true
-    const nights = nightsNumber
-    reserveSlot(
-      hotelId,
-      checkInDate,
-      checkOutDate,
-      bookingStatus,
-      userId,
-      nights
-    )
+    const total = hotel[0]?.price
+    if (start > end || start) reserveSlot(hotelId, start, end, userid, total)
   }
 
   const getCheckout = (event) => {
@@ -54,6 +50,8 @@ const Reservation = () => {
     console.log(nights)
   }
 
+  //TODO date validation checkin
+
   return (
     <div className="flex  border border-black  justify-center mt-4 w-96 sticky">
       <div className="flex m-auto">
@@ -71,12 +69,12 @@ const Reservation = () => {
                   <div className="flex justify-between border-2 border-black rounded-md">
                     <div className="border border-black w-1/2">
                       <span>
-                        <i>Checkin Date</i>
+                        <i className="pl-2">Checkin Date</i>
                       </span>
                       <input
                         type="date"
                         value={checkIn}
-                        className="w-full"
+                        className="w-full pl-2"
                         onChange={(e) => {
                           getCheckin(e)
                         }}
@@ -84,12 +82,12 @@ const Reservation = () => {
                     </div>
                     <div className="border border-black w-1/2">
                       <span>
-                        <i>Checkout Date</i>
+                        <i className="pl-2">Checkout Date</i>
                       </span>
                       <input
                         type="date"
                         value={checkOut}
-                        className="w-full"
+                        className="w-full pl-2"
                         onChange={(e) => {
                           getCheckout(e)
                           countNights()
