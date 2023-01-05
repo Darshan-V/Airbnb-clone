@@ -4,6 +4,7 @@ import { initDB } from "./models/config/init.js"
 import { getHotelById, getHotels, getImages } from "./models/hotelModel.js"
 import { reserveSlot } from "./models/bookingsModel.js"
 import { getUserById, getUserByUserName } from "./models/userModel.js"
+import { checkCheckIn } from "./controllers/reservation.js"
 
 const PORT = 8000
 
@@ -38,6 +39,14 @@ app.get("/user/:id", async (req, res) => {
     const user = await getUserByUserName(userId)
     res.json(user)
   }
+})
+
+app.get("/validate/:checkin?/:id", async (req, res) => {
+  const checkIn = req.params.checkin
+  const hotelId = req.params.id
+
+  const checkStartDate = await checkCheckIn(checkIn, hotelId)
+  res.json(checkStartDate)
 })
 
 app.post("/hotel/booking/:id", async (req, res) => {
