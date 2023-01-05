@@ -15,8 +15,8 @@ const createPlaces = `create table if not exists property(
 
 const createBookings = `create table if not exists bookings(
     id serial not null,
-    check_in varchar(20) not null,
-    check_out varchar(20) not null,
+    check_in date not null ,
+    check_out date not null,
     property_id int,
     user_id int,
     total_price int,
