@@ -14,8 +14,13 @@ const reserveSlot = async (
     )
     return "reserved slot"
   } catch (error) {
-    console.error(error)
+    return error.stack
   }
 }
 
-export { reserveSlot }
+const bookingData = async () => {
+  const bookings = await pool.query("select * from bookings")
+  return bookings
+}
+
+export { reserveSlot, bookingData }
