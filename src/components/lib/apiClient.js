@@ -47,4 +47,16 @@ async function getUserById(userId) {
   return user
 }
 
-export { getHotels, getImages, reserveSlot, getHotelById, getUserById }
+async function validateCheckIn(checkIn, propertyId) {
+  let data = await fetch(`${apiUrl}/validate/${checkIn}/${propertyId}`)
+  return data
+}
+
+export {
+  getHotels,
+  getImages,
+  reserveSlot,
+  getHotelById,
+  getUserById,
+  validateCheckIn
+}
