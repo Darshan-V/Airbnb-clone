@@ -1,13 +1,12 @@
-import { check } from "prettier"
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
-import { getHotels, reserveSlot } from "../lib/apiClient"
+import { getHotels, reserveSlot, validateCheckIn } from "../lib/apiClient"
 
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
-  const [nightsNumber, setNights] = useState("")
+
   const navigate = useNavigate()
   const params = useParams()
   const hotelId = params.id
@@ -15,7 +14,9 @@ const Reservation = () => {
   const start = new Date(checkIn).getTime()
   const end = new Date(checkOut).getTime()
 
-  console.log(new Date(checkIn))
+  const diff = new Date(checkOut).valueOf() - new Date(checkIn).valueOf()
+  const diffInHours = diff / 1000 / 60 / 60
+  const nights = diffInHours / 24
 
   useEffect(() => {
     const loadHotelList = async () => {
@@ -26,8 +27,13 @@ const Reservation = () => {
   }, [])
 
   const makeBooking = () => {
-    const total = hotel[0]?.price
-    if (start > end || start) reserveSlot(hotelId, start, end, userid, total)
+    const total = hotel[0]?.price * nights
+    if (start < Date.now() || start >= end) {
+      console.log("403 invalid date format")
+    } else {
+      navigate("/booking")
+      reserveSlot(hotelId, checkIn, checkOut, userid, total)
+    }
   }
 
   const getCheckout = (event) => {
@@ -38,16 +44,8 @@ const Reservation = () => {
   const getCheckin = (event) => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
-  }
-
-  const countNights = (checkInDate, checkOutDate) => {
-    checkInDate = checkIn
-    checkOutDate = checkOut
-    let res = new Date(checkInDate) - new Date(checkOutDate)
-    if (res < 0) res = -res
-    const nights = res / 1000 / 3600 / 24
-    setNights(nights)
-    console.log(nights)
+    console.log(checkInDate)
+    validateCheckIn(checkInDate, hotelId)
   }
 
   //TODO date validation checkin
@@ -90,7 +88,6 @@ const Reservation = () => {
                         className="w-full pl-2"
                         onChange={(e) => {
                           getCheckout(e)
-                          countNights()
                         }}
                       />
                     </div>
@@ -100,13 +97,7 @@ const Reservation = () => {
                   <button
                     className="bg-red-600 border rounded-lg w-28 h-8 m-2"
                     onClick={() => {
-                      checkIn.length !== 0 && checkOut.length !== 0 ? (
-                        (makeBooking(), navigate("/booking"))
-                      ) : (
-                        <p className="text text-red-600 ">
-                          Select Checkin and Checkout
-                        </p>
-                      )
+                      makeBooking()
                     }}
                   >
                     Reserve
@@ -121,9 +112,9 @@ const Reservation = () => {
                   <div className="flex flex-col">
                     <div className="flex flex-row justify-between">
                       <p className="underline">
-                        Rs {hotel[0]?.price} x {nightsNumber}
+                        Rs {hotel[0]?.price} x {!nights ? 0 : nights}
                       </p>
-                      <p>{`${hotel[0]?.price * nightsNumber}`}</p>
+                      <p>{`${hotel[0]?.price * (!nights ? 0 : nights)}`}</p>
                     </div>
                     <div className="flex justify-between">
                       <p className="underline">service fee</p>
