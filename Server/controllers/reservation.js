@@ -42,10 +42,11 @@ const getDatesInbetween = async (hotelId) => {
   )
   const dateList = daylist
     .map((date) => date.toISOString().slice(0, 10))
-    .join(", ")
-  return JSON.stringify(dateList)
+    .join(",")
+  return dateList
 }
 
 //TODO check betweeen checkin and checkout
+//TODO change getDatesInbetween query to get all checkin and checkout dates
 
 export { checkCheckIn, getDatesInbetween }
