@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
-import { getHotelById, reserveSlot, validateCheckIn } from "../lib/apiClient"
+import {
+  getHotelById,
+  reserveSlot,
+  // validateCheckIn,
+  getDatesBetween
+} from "../lib/apiClient"
+import { splitString } from "./utils/utils"
 
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
-  const [isReserved, setIsReserved] = useState("")
+  const [blockedSlots, setBlockedSlots] = useState([])
 
   const navigate = useNavigate()
   const params = useParams()
@@ -19,13 +25,21 @@ const Reservation = () => {
   const diffInHours = diff / 1000 / 60 / 60
   const nights = diffInHours / 24
 
-  const loadHotelList = async () => {
+  const loadHotelList = async (hotelId) => {
     const hotelList = await getHotelById(hotelId)
     setHotel(hotelList)
   }
 
+  const getBlockedDates = async (hotelId) => {
+    let blockedDates = await getDatesBetween(hotelId)
+    blockedDates = splitString(blockedDates)
+    setBlockedSlots(blockedDates)
+  }
+  // console.log(blockedSlots)
+
   useEffect(() => {
-    loadHotelList()
+    loadHotelList(hotelId)
+    getBlockedDates(hotelId)
   }, [])
 
   const makeBooking = () => {
@@ -43,14 +57,14 @@ const Reservation = () => {
     setCheckout(checkOutDate)
   }
 
+  // console.log(blockedSlots)
   const getCheckin = async (event) => {
     const checkInDate = event.target.value
-    const isAvailable = await validateCheckIn(checkInDate, hotelId)
-    setIsReserved(isAvailable[0]?.exists)
-    if (isAvailable[0]?.exists === true) {
-      alert(`Date is already reserved ${checkInDate} select other date`)
-    } else {
+    setCheckin(checkInDate)
+    if (!blockedSlots.find((date) => date === checkInDate)) {
       setCheckin(checkInDate)
+    } else {
+      alert("slot not available")
     }
   }
 
