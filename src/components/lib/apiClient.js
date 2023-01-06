@@ -68,6 +68,16 @@ async function getBookingsbyProperty(hotelId) {
   }
 }
 
+async function getDatesBetween(hotelId) {
+  try {
+    let data = await fetch(`${apiUrl}/booking/getDates/${hotelId}`)
+    const blockedDates = await data.json()
+    return blockedDates
+  } catch (error) {
+    return error.stack
+  }
+}
+
 export {
   getHotels,
   getImages,
@@ -75,5 +85,6 @@ export {
   getHotelById,
   getUserById,
   validateCheckIn,
-  getBookingsbyProperty
+  getBookingsbyProperty,
+  getDatesBetween
 }
