@@ -36,6 +36,8 @@ const getDatesInbetween = async (hotelId) => {
   const startDate = start.rows
   const endDate = end.rows
 
+  console.log(startDate)
+
   const daylist = getDaysArray(
     new Date(startDate[0]?.check_in),
     new Date(endDate[0]?.check_out)
@@ -48,5 +50,6 @@ const getDatesInbetween = async (hotelId) => {
 
 //TODO check betweeen checkin and checkout
 //TODO change getDatesInbetween query to get all checkin and checkout dates
+//FIXME checkin assigned to the vaiable write logic to include of the next slot into the returned array
 
 export { checkCheckIn, getDatesInbetween }
