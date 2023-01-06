@@ -58,11 +58,22 @@ async function validateCheckIn(checkIn, propertyId) {
   }
 }
 
+async function getBookingsbyProperty(hotelId) {
+  try {
+    let data = await fetch(`${apiUrl}/booking/${hotelId}`)
+    const bookingData = await data.json()
+    return bookingData
+  } catch (error) {
+    return error.stack
+  }
+}
+
 export {
   getHotels,
   getImages,
   reserveSlot,
   getHotelById,
   getUserById,
-  validateCheckIn
+  validateCheckIn,
+  getBookingsbyProperty
 }
