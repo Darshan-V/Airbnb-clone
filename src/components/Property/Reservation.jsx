@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
-import { getHotels, reserveSlot, validateCheckIn } from "../lib/apiClient"
+import { getHotelById, reserveSlot, validateCheckIn } from "../lib/apiClient"
 
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
@@ -20,7 +20,7 @@ const Reservation = () => {
   const nights = diffInHours / 24
 
   const loadHotelList = async () => {
-    const hotelList = await getHotels()
+    const hotelList = await getHotelById(hotelId)
     setHotel(hotelList)
   }
 
@@ -53,8 +53,6 @@ const Reservation = () => {
       setCheckin(checkInDate)
     }
   }
-
-  console.log(isReserved)
 
   //TODO date validation checkin
 
