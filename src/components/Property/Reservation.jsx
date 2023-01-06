@@ -6,6 +6,7 @@ const Reservation = () => {
   const [hotel, setHotel] = useState([])
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
+  const [isReserved, setIsReserved] = useState("")
 
   const navigate = useNavigate()
   const params = useParams()
@@ -18,11 +19,12 @@ const Reservation = () => {
   const diffInHours = diff / 1000 / 60 / 60
   const nights = diffInHours / 24
 
+  const loadHotelList = async () => {
+    const hotelList = await getHotels()
+    setHotel(hotelList)
+  }
+
   useEffect(() => {
-    const loadHotelList = async () => {
-      const hotelList = await getHotels()
-      setHotel(hotelList)
-    }
     loadHotelList()
   }, [])
 
@@ -41,12 +43,18 @@ const Reservation = () => {
     setCheckout(checkOutDate)
   }
 
-  const getCheckin = (event) => {
+  const getCheckin = async (event) => {
     const checkInDate = event.target.value
-    setCheckin(checkInDate)
-    console.log(checkInDate)
-    validateCheckIn(checkInDate, hotelId)
+    const isAvailable = await validateCheckIn(checkInDate, hotelId)
+    setIsReserved(isAvailable[0]?.exists)
+    if (isAvailable[0]?.exists === true) {
+      alert(`Date is already reserved ${checkInDate} select other date`)
+    } else {
+      setCheckin(checkInDate)
+    }
   }
+
+  console.log(isReserved)
 
   //TODO date validation checkin
 
@@ -73,6 +81,7 @@ const Reservation = () => {
                         type="date"
                         value={checkIn}
                         className="w-full pl-2"
+                        min={Date.now()}
                         onChange={(e) => {
                           getCheckin(e)
                         }}
