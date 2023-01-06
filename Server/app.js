@@ -58,16 +58,17 @@ app.get("/booking/getDates/:propertyId", async (req, res) => {
     res.json(err)
   }
 })
-
+//FIXME route params /hotel/:id/...
 app.post("/hotel/booking/:id", async (req, res) => {
   const hotelId = req.params.id
   const checkIn = req.body.checkIn
   const checkOut = req.body.checkOut
   const userId = req.body.userId
   const total = req.body.total
-
+  //TODO destructure req.body
   // console.log(hotelId, checkIn, checkOut, userId, total)
-
+  // TODO error handling
+  //FIXME total-> backend, userId->from the session(login)
   const confirmBooking = await reserveSlot(
     checkIn,
     checkOut,

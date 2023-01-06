@@ -47,7 +47,7 @@ const getDatesInbetween = async (hotelId) => {
     .join(",")
   return dateList
 }
-
+//TODO create table with reserved dates and hotelid
 //TODO check betweeen checkin and checkout
 //TODO change getDatesInbetween query to get all checkin and checkout dates
 //FIXME checkin assigned to the vaiable write logic to include of the next slot into the returned array
