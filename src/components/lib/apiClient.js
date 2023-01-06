@@ -48,8 +48,14 @@ async function getUserById(userId) {
 }
 
 async function validateCheckIn(checkIn, propertyId) {
-  let data = await fetch(`${apiUrl}/validate/${checkIn}/${propertyId}`)
-  return data
+  try {
+    let data = await fetch(`${apiUrl}/validate/${checkIn}/${propertyId}`)
+    const isReserved = await data.json()
+    // console.log(isReserved)
+    return isReserved
+  } catch (err) {
+    return err
+  }
 }
 
 export {
