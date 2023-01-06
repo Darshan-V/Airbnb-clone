@@ -4,7 +4,7 @@ import { initDB } from "./models/config/init.js"
 import { getHotelById, getHotels, getImages } from "./models/hotelModel.js"
 import { reserveSlot } from "./models/bookingsModel.js"
 import { getUserById, getUserByUserName } from "./models/userModel.js"
-import { checkCheckIn } from "./controllers/reservation.js"
+import { checkCheckIn, getDatesInbetween } from "./controllers/reservation.js"
 
 const PORT = 8000
 
@@ -47,6 +47,16 @@ app.get("/validate/:checkin?/:id", async (req, res) => {
 
   const checkStartDate = await checkCheckIn(checkIn, hotelId)
   res.json(checkStartDate)
+})
+
+app.get("/booking/getDates/:propertyId", async (req, res) => {
+  try {
+    const hotelId = req.params.propertyId
+    const getDates = await getDatesInbetween(hotelId)
+    res.json(getDates)
+  } catch (err) {
+    res.json(err)
+  }
 })
 
 app.post("/hotel/booking/:id", async (req, res) => {
