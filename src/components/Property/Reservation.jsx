@@ -125,7 +125,7 @@ const Reservation = () => {
                     </div>
                     <div className="flex justify-between">
                       <p className="underline">service fee</p>
-                      <span>Rs 0</span>
+                      <span>Rs 1000</span>
                     </div>
                   </div>
                   <div className="total before taxes"></div>

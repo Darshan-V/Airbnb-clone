@@ -25,7 +25,7 @@ const PropertyPage = () => {
 
   return (
     <div className="flex flex-col m-auto">
-      <div className="flex flex-col  mt-1">
+      <div className="flex flex-col  m-3">
         <p className="font-sans font-bold text-lg">
           {propertyData[0]?.name},{propertyData[0]?.type}
         </p>
