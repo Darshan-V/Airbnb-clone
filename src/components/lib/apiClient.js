@@ -8,7 +8,7 @@ async function getHotels() {
 
 async function getImages(hotelId) {
   try {
-    let data = await fetch(`${apiUrl}/hotel/images/${hotelId}`)
+    let data = await fetch(`${apiUrl}/hotel/${hotelId}/images`)
     let images = await data.json()
     return images
   } catch (err) {
@@ -16,8 +16,8 @@ async function getImages(hotelId) {
   }
 }
 
-async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, total) {
-  let reserve = await fetch(`${apiUrl}/hotel/booking/${hotelId}`, {
+async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, nights) {
+  let reserve = await fetch(`${apiUrl}/hotel/${hotelId}/booking`, {
     method: "POST",
     headers: {
       "content-type": "application/json"
@@ -26,7 +26,7 @@ async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, total) {
       checkIn: checkinDate,
       checkOut: checkoutDate,
       userId: userId,
-      total: total
+      nights: nights
     })
   })
   console.log(reserve)
@@ -47,15 +47,12 @@ async function getUserById(userId) {
   return user
 }
 
-async function validateCheckIn(checkIn, propertyId) {
-  try {
-    let data = await fetch(`${apiUrl}/validate/${checkIn}/${propertyId}`)
-    const isReserved = await data.json()
-    // console.log(isReserved)
-    return isReserved
-  } catch (err) {
-    return err
-  }
+async function checkSlots(checkIn, checkOut, hotelId) {
+  let data = await fetch(
+    `${apiUrl}/check/slots/${hotelId}/${checkIn}/${checkOut}`
+  )
+  let isAvailable = await data.json()
+  return isAvailable
 }
 
 async function getBookingsbyProperty(hotelId) {
@@ -68,23 +65,12 @@ async function getBookingsbyProperty(hotelId) {
   }
 }
 
-async function getDatesBetween(hotelId) {
-  try {
-    let data = await fetch(`${apiUrl}/booking/getDates/${hotelId}`)
-    const blockedDates = await data.json()
-    return blockedDates
-  } catch (error) {
-    return error.stack
-  }
-}
-
 export {
   getHotels,
   getImages,
   reserveSlot,
   getHotelById,
   getUserById,
-  validateCheckIn,
   getBookingsbyProperty,
-  getDatesBetween
+  checkSlots
 }
