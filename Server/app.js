@@ -15,7 +15,7 @@ initDB()
 
 app.get("/hotels", async (req, res) => {
   const hotels = await getHotels()
-  res.json(hotels[0])
+  res.json(hotels)
 })
 
 app.get("/hotel/:id/images", async (req, res) => {
