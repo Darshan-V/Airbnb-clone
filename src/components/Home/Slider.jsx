@@ -11,15 +11,13 @@ const Slider = (id) => {
     setPropertyImages(loadImageList)
   }
 
-  // console.log(propertyImages)
-
   useEffect(() => {
     loadHotelList()
   }, [id.id])
 
   return (
-    <div className="flex flex-row">
-      <img src={propertyImages[0]?.images?.imageUrl[1]} className="w-60 h-52" />
+    <div className="w-60 h-40 border rounded-md">
+      <img src={propertyImages[0]} className="border rounded-md" />
     </div>
   )
 }
