@@ -15,7 +15,7 @@ initDB()
 
 app.get("/hotels", async (req, res) => {
   const hotels = await getHotels()
-  res.json(hotels)
+  res.json(hotels[0])
 })
 
 app.get("/hotel/:id/images", async (req, res) => {
@@ -28,7 +28,7 @@ app.get("/hotel/:id/images", async (req, res) => {
 app.get("/hotel/:id", async (req, res) => {
   const hotelId = req.params.id
   const hotel = await getHotelById(hotelId)
-  res.json(hotel)
+  res.json(hotel[0])
 })
 
 app.get("/user/:id", async (req, res) => {
