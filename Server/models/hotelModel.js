@@ -10,7 +10,7 @@ const getImages = async (hotelId) => {
     [hotelId]
   )
   return images.rows
-} //TODO send only images
+}
 
 const getHotelById = async (hotelId) => {
   const hotel = await pool.query("select * from property where id = $1", [
