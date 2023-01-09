@@ -18,10 +18,11 @@ app.get("/hotels", async (req, res) => {
   res.json(hotels)
 })
 
-app.get("/hotel/images/:id", async (req, res) => {
+app.get("/hotel/:id/images", async (req, res) => {
   const hotelId = req.params.id
   const images = await getImages(hotelId)
-  res.json(images)
+  console.log(images[0].imageUrl)
+  res.json(images[0].imageurl)
 })
 
 app.get("/hotel/:id", async (req, res) => {
@@ -41,13 +42,13 @@ app.get("/user/:id", async (req, res) => {
   }
 })
 
-app.get("/validate/:checkin?/:id", async (req, res) => {
-  const checkIn = req.params.checkin
-  const hotelId = req.params.id
+// app.get("/validate/:checkin?/:id", async (req, res) => {
+//   const checkIn = req.params.checkin
+//   const hotelId = req.params.id
 
-  const checkStartDate = await checkCheckIn(checkIn, hotelId)
-  res.json(checkStartDate)
-})
+//   const checkStartDate = await checkCheckIn(checkIn, hotelId)
+//   res.json(checkStartDate)
+// })
 
 app.get("/booking/getDates/:propertyId", async (req, res) => {
   try {
@@ -59,14 +60,11 @@ app.get("/booking/getDates/:propertyId", async (req, res) => {
   }
 })
 //FIXME route params /hotel/:id/...
-app.post("/hotel/booking/:id", async (req, res) => {
+app.post("/hotel/:id/booking/", async (req, res) => {
   const hotelId = req.params.id
-  const checkIn = req.body.checkIn
-  const checkOut = req.body.checkOut
-  const userId = req.body.userId
-  const total = req.body.total
-  //TODO destructure req.body
-  // console.log(hotelId, checkIn, checkOut, userId, total)
+  const { checkIn, checkOut, userId, total } = req.body
+  console.log("🚀 ~ file: app.js:65 ~ app.post ~ req.body", req.body)
+
   // TODO error handling
   //FIXME total-> backend, userId->from the session(login)
   const confirmBooking = await reserveSlot(
@@ -76,7 +74,7 @@ app.post("/hotel/booking/:id", async (req, res) => {
     userId,
     total
   )
-  res.json(confirmBooking)
+  res.json(req.body)
 })
 
 app.listen(PORT, () => {
