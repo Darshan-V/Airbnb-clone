@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
-import {
-  getHotelById,
-  reserveSlot,
-  // validateCheckIn,
-  getDatesBetween
-} from "../lib/apiClient"
-import { splitString } from "./utils/utils"
+import { getHotelById, reserveSlot, checkSlots } from "../lib/apiClient"
 
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
-  const [blockedSlots, setBlockedSlots] = useState([])
+  const [isBooked, setIsBooked] = useState(false)
 
   const navigate = useNavigate()
   const params = useParams()
@@ -30,42 +24,39 @@ const Reservation = () => {
     setHotel(hotelList)
   }
 
-  const getBlockedDates = async (hotelId) => {
-    let blockedDates = await getDatesBetween(hotelId)
-    blockedDates = splitString(blockedDates)
-    setBlockedSlots(blockedDates)
+  const validateDates = async (checkIn, checkOut, hotelId) => {
+    const isAvailable = await checkSlots(checkIn, checkOut, hotelId)
+    console.log(isAvailable)
   }
-  // console.log(blockedSlots)
 
   useEffect(() => {
     loadHotelList(hotelId)
-    getBlockedDates(hotelId)
-  }, [])
+  }, [hotelId])
 
   const makeBooking = () => {
-    const total = hotel[0]?.price * nights
+    const total = hotel?.price * nights
     if (start < Date.now() || start >= end) {
       console.log("403 invalid date format")
     } else {
-      navigate("/booking")
-      reserveSlot(hotelId, checkIn, checkOut, userid, total)
+      if (isBooked === false) {
+        navigate("/booking")
+        reserveSlot(hotelId, checkIn, checkOut, userid, total)
+      }
+      return "slot not available"
     }
   }
 
   const getCheckout = (event) => {
     const checkOutDate = event.target.value
+    if (validateDates(checkIn, checkOutDate, hotelId) !== []) {
+      setIsBooked(true)
+    }
     setCheckout(checkOutDate)
   }
 
-  // console.log(blockedSlots)
   const getCheckin = async (event) => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
-    if (!blockedSlots.find((date) => date === checkInDate)) {
-      setCheckin(checkInDate)
-    } else {
-      alert("slot not available")
-    }
   }
 
   //TODO date validation checkin
@@ -79,9 +70,9 @@ const Reservation = () => {
               <div className="flex flex-col m-1">
                 <div className="flex justify-between align-middle">
                   <span className="text-lg m-1 font-sans font-semibold">
-                    {hotel[0]?.price} night
+                    {hotel?.price}/night
                   </span>
-                  <i className="m-1">{hotel[0]?.stars}</i>
+                  <i className="m-1">{hotel?.stars}</i>
                 </div>
                 <div className="flex flex-col justify-evenly m-1 ">
                   <div className="flex justify-between border-2 border-black rounded-md">
@@ -126,16 +117,20 @@ const Reservation = () => {
                 </div>
               </div>
               <ul className="m-auto">
-                <li>You won't be charged yet</li>
+                {isBooked ? (
+                  <p className="text text-red-600">Slot not available</p>
+                ) : (
+                  <p>You won't be charged yet</p>
+                )}
               </ul>
               <div className=" m-1 ">
                 <section className="calculations sec">
                   <div className="flex flex-col">
                     <div className="flex flex-row justify-between">
                       <p className="underline">
-                        Rs {hotel[0]?.price} x {!nights ? 0 : nights}
+                        Rs {hotel?.price} x {!nights ? 0 : nights}
                       </p>
-                      <p>{`${hotel[0]?.price * (!nights ? 0 : nights)}`}</p>
+                      <p>{`${hotel?.price * (!nights ? 0 : nights)}`}</p>
                     </div>
                     <div className="flex justify-between">
                       <p className="underline">service fee</p>
