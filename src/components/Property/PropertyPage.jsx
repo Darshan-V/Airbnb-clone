@@ -13,7 +13,7 @@ const PropertyPage = () => {
     const hotelList = await getHotelById(hotelId)
     setPropertyData(hotelList)
     const loadImageList = await getImages(hotelId)
-    const images = loadImageList[0]?.images?.imageUrl
+    const images = loadImageList
     setHotelImages(images)
   }
 
@@ -22,6 +22,7 @@ const PropertyPage = () => {
   }, [propertyData.id])
 
   const navigate = useNavigate()
+  // console.log(hotelImages)
 
   return (
     <div className="flex flex-col m-auto">

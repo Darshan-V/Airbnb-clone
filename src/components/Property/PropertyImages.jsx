@@ -8,7 +8,7 @@ const PropertyImages = () => {
 
   const loadHotelImages = async () => {
     const loadImageList = await getImages(params.id)
-    const images = loadImageList[0]?.images?.imageUrl
+    const images = loadImageList
     setHotelImages(images)
   }
 
