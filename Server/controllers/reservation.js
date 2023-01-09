@@ -15,7 +15,8 @@ const checkCheckIn = async (checkIn, hotelId) => {
 const checkAvailableSlots = async (checkIn, checkOut, hotelId) => {
   try {
     const isAvailable = await pool.query(
-      "select * from bookings where $1 between check_in and check_out or $2 between check_in and check_out and property_id = $3",
+      //   "select * from bookings where $1 between check_in and check_out or $2 between check_in and check_out and property_id = $3",
+      "select * from bookings where check_in >= $1 and check_out <= $2 and property_id=$3",
       [checkIn, checkOut, hotelId]
     )
     return isAvailable.rows
