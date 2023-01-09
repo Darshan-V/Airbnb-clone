@@ -28,4 +28,3 @@ package.json
 postcss.config.cjs
 tailwind.config.cjs
 .gitignore
-temp.txt

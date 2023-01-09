@@ -1,0 +1,42 @@
+1xx -> Informational responses
+2xx -> successful responses
+3xx -> Redirection messages
+4xx -> client error responses
+5xx -> server error responses 
+
+## SUCCESSFUL RESPONSES
+200 OK -> request succeeded
+201 -> Created
+202 -> Accepted
+203 -> Non authoritative information
+204 -> No content
+205 -> Reset content
+206 -> Partial content
+
+## REDIRECTION RESPONSES
+300 -> Multiple choices(request having more than one response)
+301 -> Changed permanently
+302 -> Found
+303 -> See other
+304 -> Not modified
+307 -> Temporary Redirect
+308 -> permanent Redirect
+
+##	CLIENT ERROR MESSAGES
+400 -> bad request
+401 -> unauthorised
+402 -> Payment required
+403 -> forbidden
+404 -> not Found
+405 -> method not allowed
+406 -> not Acceptable
+408 -> request timeout
+409 -> conflict
+410 -> gone(requested content deleted from the server)
+413 -> payload too large
+415 -> unsupported media type
+429 -> too many requests
+451 -> unavailable for legal reasons
+
+## SERVER ERROR MESSAGES
+500 -> internal server error
