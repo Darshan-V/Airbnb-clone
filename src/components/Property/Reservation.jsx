@@ -6,7 +6,7 @@ const Reservation = () => {
   const [hotel, setHotel] = useState([])
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
-  const [isBooked, setIsBooked] = useState(false)
+  const [isBooked, setIsBooked] = useState(true)
 
   const navigate = useNavigate()
   const params = useParams()
@@ -45,11 +45,11 @@ const Reservation = () => {
       return "slot not available"
     }
   }
-
+  console.log(isBooked)
   const getCheckout = (event) => {
     const checkOutDate = event.target.value
-    if (validateDates(checkIn, checkOutDate, hotelId) !== []) {
-      setIsBooked(true)
+    if (validateDates(checkIn, checkOutDate, hotelId)) {
+      setIsBooked(false)
     }
     setCheckout(checkOutDate)
   }
