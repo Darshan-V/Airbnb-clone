@@ -4,12 +4,13 @@ import Login from "./components/Login/Login"
 import BookingSlots from "./components/Property/BookingSlots"
 import PropertyImages from "./components/Property/PropertyImages"
 import PropertyPage from "./components/Property/PropertyPage"
-// import Topbar from "./components/Topbar/Topbar"
+import Topbar from "./components/Topbar/Topbar"
 
 function App() {
   return (
     <div className="flex flex-col">
       <Router>
+        <Topbar />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home/:userid?" element={<Places />} />

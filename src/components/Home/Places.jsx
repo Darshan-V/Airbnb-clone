@@ -21,7 +21,6 @@ const Places = () => {
 
   return (
     <div className="flex flex-wrap m-auto w-full">
-      <Topbar />
       {propertyData.map((property, i) => (
         <div className="flex flex-row" key={i}>
           <div className="flex flex-col flex-auto  m-5 " key={i}>
