@@ -62,10 +62,6 @@ app.get("/check/slots/:hotelId/:checkIn/:checkOut", async (req, res) => {
   try {
     const { hotelId, checkIn, checkOut } = req.params
     const bookedSlots = await checkAvailableSlots(checkIn, checkOut, hotelId)
-    let isAvailable
-    if (bookedSlots) {
-      res.json({ bookedSlots, isAvailable: true })
-    }
     res.json(bookedSlots)
   } catch (err) {
     res.sendStatus(500)
