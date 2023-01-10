@@ -4,16 +4,17 @@ import { getHotelById, reserveSlot, checkSlots } from "../lib/apiClient"
 
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
-  const [checkIn, setCheckin] = useState("")
-  const [checkOut, setCheckout] = useState("")
-  const [isBooked, setIsBooked] = useState(true)
+  const [currentDate, setCurrentDate] = useState(
+    new Date().toISOString().slice(0, 10)
+  )
+  const [checkIn, setCheckin] = useState(currentDate)
+  const [checkOut, setCheckout] = useState(currentDate)
+  const [isBooked, setIsBooked] = useState()
 
   const navigate = useNavigate()
   const params = useParams()
   const hotelId = params.id
   const userid = params.userid
-  const start = new Date(checkIn).getTime()
-  const end = new Date(checkOut).getTime()
 
   const diff = new Date(checkOut).valueOf() - new Date(checkIn).valueOf()
   const diffInHours = diff / 1000 / 60 / 60
@@ -26,16 +27,21 @@ const Reservation = () => {
 
   const validateDates = async (checkIn, checkOut, hotelId) => {
     const isAvailable = await checkSlots(checkIn, checkOut, hotelId)
-    console.log(isAvailable)
+    if (isAvailable.length === 0) {
+      setIsBooked(false)
+    } else {
+      setIsBooked(true)
+    }
   }
 
   useEffect(() => {
     loadHotelList(hotelId)
-  }, [hotelId])
+    validateDates(checkIn, checkOut, hotelId)
+  }, [checkIn, checkOut, hotelId])
 
   const makeBooking = () => {
     const total = hotel?.price * nights
-    if (start < Date.now() || start >= end) {
+    if (checkIn < Date.now() || checkIn >= checkOut) {
       console.log("403 invalid date format")
     } else {
       if (isBooked === false) {
@@ -45,12 +51,11 @@ const Reservation = () => {
       return "slot not available"
     }
   }
-  console.log(isBooked)
+
+  // console.log(isBooked)
+
   const getCheckout = (event) => {
     const checkOutDate = event.target.value
-    if (validateDates(checkIn, checkOutDate, hotelId)) {
-      setIsBooked(false)
-    }
     setCheckout(checkOutDate)
   }
 
@@ -58,8 +63,7 @@ const Reservation = () => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
   }
-
-  //TODO date validation checkin
+  // console.log(currentDate)
 
   return (
     <div className="flex  border border-black  justify-center mt-4 w-96 sticky">
@@ -89,6 +93,13 @@ const Reservation = () => {
                           getCheckin(e)
                         }}
                       />
+                      {checkIn < currentDate ? (
+                        <span className="text text-red-500">
+                          Invalid checkin date
+                        </span>
+                      ) : (
+                        <span className="text text-green-500">Proceed</span>
+                      )}
                     </div>
                     <div className="border border-black w-1/2">
                       <span>

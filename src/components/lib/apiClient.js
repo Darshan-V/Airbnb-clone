@@ -16,7 +16,7 @@ async function getImages(hotelId) {
   }
 }
 
-async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, nights) {
+async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, total) {
   let reserve = await fetch(`${apiUrl}/hotel/${hotelId}/booking`, {
     method: "POST",
     headers: {
@@ -26,7 +26,7 @@ async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, nights) {
       checkIn: checkinDate,
       checkOut: checkoutDate,
       userId: userId,
-      nights: nights
+      total: total
     })
   })
   console.log(reserve)
