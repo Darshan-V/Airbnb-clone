@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Reservation from "./Reservation.jsx"
-import { getImages, getHotelById, getHotels } from "../lib/apiClient.js"
+import { getImages, getHotelById } from "../lib/apiClient.js"
 import { useNavigate, useParams } from "react-router"
 
 const PropertyPage = () => {
@@ -22,13 +22,12 @@ const PropertyPage = () => {
   }, [propertyData.id])
 
   const navigate = useNavigate()
-  // console.log(hotelImages)
 
   return (
     <div className="flex flex-col m-auto">
       <div className="flex flex-col  m-3">
         <p className="font-sans font-bold text-lg">
-          {propertyData[0]?.name},{propertyData[0]?.type}
+          {propertyData?.name}, {propertyData?.type}
         </p>
         <div className=" flex justify-center w-1/2 ">
           <img src={hotelImages[0]} />
