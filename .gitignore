@@ -28,3 +28,5 @@ package.json
 postcss.config.cjs
 tailwind.config.cjs
 .gitignore
+.env
+.env.local
