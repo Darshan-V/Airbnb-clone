@@ -1,24 +1,19 @@
 import express from "express"
 import cors from "cors"
-import cookieParser from "cookie-parser"
 import session from "express-session"
-import passport from "passport"
 import { initDB } from "./models/config/init.js"
 import { getHotelById, getHotels, getImages } from "./models/hotelModel.js"
 import { reserveSlot } from "./models/bookingsModel.js"
 import { getUserById, getUserByUserName } from "./models/userModel.js"
 import { checkAvailableSlots } from "./controllers/reservation.js"
-import "./auth.js"
+import { routes as loginRouter } from "./routes/Login.js"
 
 const PORT = 8000
 
 const app = express()
-app.use(cookieParser())
+app.use(express.json())
 app.use(
-  cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
-    methods: "GET,POST,PUT,DELETE,OPTIONS"
-  })
+  cors({ origin: "http://localhost:5173", methods: "GET,PUT,POST,DELETE" })
 )
 initDB()
 
@@ -97,44 +92,17 @@ app.post("/hotel/:id/booking/", async (req, res) => {
 })
 
 //-------------------------------test oauth---------------------------------------------
-function isLoggedIn(req, res, next) {
-  req.user ? next() : res.sendStatus(401)
-}
+// app.use(
+//   session({
+//     secret: "shhhhh",
+//     saveUninitialized: false, // don't save unmodified session
+//     resave: true,
+//     cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 },
+//     unset: "destroy"
+//   })
+// )
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }))
-app.use(passport.initialize())
-app.use(passport.session())
-
-app.get("/", (req, res) => {
-  res.send('<a href="/auth/google">Authenticate with Google</a>')
-})
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
-)
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/protected",
-    failureRedirect: "/auth/google/failure"
-  })
-)
-
-app.get("/protected", isLoggedIn, (req, res) => {
-  res.send(`Hello ${req.user.displayName}`)
-})
-
-app.get("/logout", (req, res) => {
-  req.logout()
-  req.session.destroy()
-  res.send("Goodbye!")
-})
-
-app.get("/auth/google/failure", (req, res) => {
-  res.send("Failed to authenticate..")
-})
+app.use("/", loginRouter)
 
 app.listen(PORT, () => {
   console.log(`Server running at port:${PORT}`)
