@@ -13,6 +13,7 @@ function App() {
         <Topbar />
         <Routes>
           <Route path="/" element={<Login />} />
+
           <Route path="/home/:userid?" element={<Places />} />
           <Route path="/property/:id?/:userid?" element={<PropertyPage />} />
           <Route
