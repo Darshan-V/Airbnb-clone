@@ -1,5 +1,6 @@
 const createUsers = `create table if not exists users(
     name varchar unique,
+    email varchar unique not null,
     password varchar,
     id serial primary key
 )`
