@@ -2,11 +2,6 @@ import { google } from "googleapis"
 import dotenv from "dotenv"
 dotenv.config()
 
-console.log(
-  process.env.GOOGLE_OAUTH_CLIENT_ID,
-  process.env.GOOGLE_OAUTH_CLIENT_SECRET,
-  process.env.GOOGLE_OAUTH_REDIRECT_URL
-)
 function initoAuth2Client() {
   const oAuth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_OAUTH_CLIENT_ID,
@@ -38,6 +33,7 @@ const oauthInitialization = (req, res) => {
   })
 
   // redirect to OAuth consent screen
+
   res.redirect(oauth_Url)
 }
 
@@ -56,38 +52,36 @@ const processOauthResponse = async (req, res) => {
   }
 
   const code = req.query.code
-  console.log("🚀 ~ file: Login.js:56 ~ processOauthResponse ~ code", code)
 
   try {
     const { tokens } = await oAuth2Client.getToken(code)
     oAuth2Client.setCredentials(tokens)
-
-    console.log(
-      "🚀 ~ file: Login.js:60 ~ processOauthResponse ~ tokens",
-      tokens
-    )
+    console.log(tokens)
   } catch (err) {
     res.status(401).send("please authorize again")
     return
   }
 
   try {
-    const email_addr = await getUserEmail(oAuth2Client)
-
-    console.log("user email: " + email_addr)
-    const result = email_addr
-    console.log(result)
-
-    console.log("[LOG] old user login")
-    // req.session.loggedin = true
-    // req.session.username = email_addr
-    res.redirect("http://localhost:5173/home")
-
-    // res.json(email_addr)
+    var email_addr = await getUserEmail(oAuth2Client)
   } catch (err) {
     console.log(err)
     res.status(500).send("A server error occurred")
     return
+  }
+  console.log("user email: " + email_addr)
+
+  const result = "darshankml13@gmail.com"
+
+  if (result) {
+    console.log("[LOG] old user login")
+    req.session.loggedin = true
+    req.session.username = email_addr
+    res.redirect(`http://localhost:5173/home/`)
+  } else {
+    console.log("[LOG] NEW user login")
+    req.session.loggedin = true
+    req.session.username = email_addr
   }
 }
 
