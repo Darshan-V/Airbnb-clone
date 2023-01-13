@@ -7,17 +7,28 @@ import { reserveSlot } from "./models/bookingsModel.js"
 import { getUserById, getUserByUserName } from "./models/userModel.js"
 import { checkAvailableSlots } from "./controllers/reservation.js"
 import { routes as loginRouter } from "./routes/Login.js"
+import { authSession } from "./controllers/authMiddleware.js"
 
 const PORT = 8000
 
 const app = express()
 app.use(express.json())
 app.use(
-  cors({ origin: "http://localhost:5173", methods: "GET,PUT,POST,DELETE" })
+  cors({
+    origin: "http://localhost:5173",
+    methods: "GET,PUT,POST,DELETE",
+    credentials: true
+  })
 )
 initDB()
 
-app.get("/hotels", async (req, res) => {
+app.use(
+  session({
+    secret: "lol"
+  })
+)
+
+app.get("/hotels", authSession, async (req, res) => {
   try {
     const hotels = await getHotels()
     res.json(hotels)
@@ -26,7 +37,7 @@ app.get("/hotels", async (req, res) => {
   }
 })
 
-app.get("/hotel/:id/images", async (req, res) => {
+app.get("/hotel/:id/images", authSession, async (req, res) => {
   try {
     const hotelId = req.params.id
     const images = await getImages(hotelId)
@@ -37,7 +48,7 @@ app.get("/hotel/:id/images", async (req, res) => {
   }
 })
 
-app.get("/hotel/:id", async (req, res) => {
+app.get("/hotel/:id", authSession, async (req, res) => {
   try {
     const hotelId = req.params.id
     const hotel = await getHotelById(hotelId)
@@ -52,27 +63,31 @@ app.get("/user/:id", async (req, res) => {
     const userId = req.params.id
     if (Number(userId)) {
       const user = await getUserById(userId)
-      res.json(user)
+      res.json(user[0])
     } else {
       const user = await getUserByUserName(userId)
-      res.json(user)
+      res.json(user[0])
     }
   } catch (err) {
     res.sendStatus(500)
   }
 })
 
-app.get("/check/slots/:hotelId/:checkIn/:checkOut", async (req, res) => {
-  try {
-    const { hotelId, checkIn, checkOut } = req.params
-    const bookedSlots = await checkAvailableSlots(checkIn, checkOut, hotelId)
-    res.json(bookedSlots)
-  } catch (err) {
-    res.sendStatus(500)
+app.get(
+  "/check/slots/:hotelId/:checkIn/:checkOut",
+  authSession,
+  async (req, res) => {
+    try {
+      const { hotelId, checkIn, checkOut } = req.params
+      const bookedSlots = await checkAvailableSlots(checkIn, checkOut, hotelId)
+      res.json(bookedSlots)
+    } catch (err) {
+      res.sendStatus(500)
+    }
   }
-})
+)
 
-app.post("/hotel/:id/booking/", async (req, res) => {
+app.post("/hotel/:id/booking/", authSession, async (req, res) => {
   try {
     const hotelId = req.params.id
     const { checkIn, checkOut, userId, total } = req.body
@@ -92,15 +107,6 @@ app.post("/hotel/:id/booking/", async (req, res) => {
 })
 
 //-------------------------------test oauth---------------------------------------------
-// app.use(
-//   session({
-//     secret: "shhhhh",
-//     saveUninitialized: false, // don't save unmodified session
-//     resave: true,
-//     cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 },
-//     unset: "destroy"
-//   })
-// )
 
 app.use("/", loginRouter)
 
