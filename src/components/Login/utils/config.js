@@ -5,12 +5,12 @@ const getUserData = async (userName) => {
   return userData
 }
 
-const checkUser = async (userName, password) => {
+const checkUser = async (userName) => {
   const userData = await getUserData(userName)
-  if (userData[0]?.name !== userName || userData[0]?.password !== password) {
+  if (userData?.email !== userName) {
     return false
   } else {
-    return userData[0]?.id
+    return userData?.id
   }
 }
 
