@@ -13,7 +13,6 @@ async function getHotelImages(req, res) {
   try {
     const hotelId = req.params.id
     const images = await getImages(hotelId)
-    console.log(images[0].imageUrl)
     res.json(images[0].imageurl)
   } catch (err) {
     res.sendStatus(500)
