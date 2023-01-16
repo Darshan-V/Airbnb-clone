@@ -40,17 +40,6 @@ const oauthInitialization = (req, res) => {
 const processOauthResponse = async (req, res) => {
   const oAuth2Client = initoAuth2Client()
 
-  const err = req.query.error
-  if (err) {
-    console.log("Error: " + err)
-
-    if (err === "access_denied") {
-      res.status(401).send("Access not granted")
-    } else {
-      res.status(500).send("A server error occurred.")
-    }
-  }
-
   const code = req.query.code
 
   try {
