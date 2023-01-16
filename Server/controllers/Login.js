@@ -39,7 +39,6 @@ const oauthInitialization = (req, res) => {
 
 const processOauthResponse = async (req, res) => {
   const oAuth2Client = initoAuth2Client()
-
   const code = req.query.code
 
   try {
@@ -58,7 +57,7 @@ const processOauthResponse = async (req, res) => {
     res.status(500).send("A server error occurred")
     return
   }
-  console.log("user email: " + email_addr)
+  console.log("useremail: " + email_addr)
 
   const result = "darshankml13@gmail.com"
 
@@ -66,7 +65,7 @@ const processOauthResponse = async (req, res) => {
     console.log("[LOG] old user login")
     req.session.loggedin = true
     req.session.username = email_addr
-    res.redirect(`http://localhost:5173/home/`)
+    res.redirect("/")
   } else {
     console.log("[LOG] NEW user login")
     req.session.loggedin = true

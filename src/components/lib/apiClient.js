@@ -7,15 +7,11 @@ async function getHotels() {
 }
 
 async function getImages(hotelId) {
-  try {
-    let data = await fetch(`${apiUrl}/hotel/${hotelId}/images`, {
-      credentials: "include"
-    })
-    let images = await data.json()
-    return images
-  } catch (err) {
-    console.log(err.stack)
-  }
+  let data = await fetch(`${apiUrl}/hotel/${hotelId}/images`, {
+    credentials: "include"
+  })
+  let images = await data.json()
+  return images
 }
 
 async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, total) {
@@ -62,14 +58,21 @@ async function checkSlots(checkIn, checkOut, hotelId) {
 }
 
 async function getBookingsbyProperty(hotelId) {
+  let data = await fetch(`${apiUrl}/booking/${hotelId}`, {
+    credentials: "include"
+  })
+  const bookingData = await data.json()
+  return bookingData
+}
+
+async function login() {
   try {
-    let data = await fetch(`${apiUrl}/booking/${hotelId}`, {
-      credentials: "include"
-    })
-    const bookingData = await data.json()
-    return bookingData
-  } catch (error) {
-    return error.stack
+    let data = await fetch(`${apiUrl}/login`)
+    const loggedIn = await data.json()
+    console.log(loggedIn)
+    return loggedIn
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -80,5 +83,6 @@ export {
   getHotelById,
   getUserById,
   getBookingsbyProperty,
-  checkSlots
+  checkSlots,
+  login
 }
