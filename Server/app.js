@@ -4,9 +4,10 @@ import session from "express-session"
 import { initDB } from "./models/config/init.js"
 import { getHotelById, getHotels, getImages } from "./models/hotelModel.js"
 import { reserveSlot } from "./models/bookingsModel.js"
-import { getUserById, getUserByUserName } from "./models/userModel.js"
 import { checkAvailableSlots } from "./controllers/reservation.js"
 import { routes as loginRouter } from "./routes/Login.js"
+import { routes as hotelRouter } from "./routes/hotel.js"
+import { routes as userRouter } from "./routes/user.js"
 import { authSession } from "./controllers/authMiddleware.js"
 
 const PORT = 8000
@@ -27,51 +28,9 @@ app.use(
     secret: "lol"
   })
 )
+app.use("/", hotelRouter)
 
-app.get("/hotels", authSession, async (req, res) => {
-  try {
-    const hotels = await getHotels()
-    res.json(hotels)
-  } catch (err) {
-    res.sendStatus(500)
-  }
-})
-
-app.get("/hotel/:id/images", authSession, async (req, res) => {
-  try {
-    const hotelId = req.params.id
-    const images = await getImages(hotelId)
-    console.log(images[0].imageUrl)
-    res.json(images[0].imageurl)
-  } catch (err) {
-    res.sendStatus(500)
-  }
-})
-
-app.get("/hotel/:id", authSession, async (req, res) => {
-  try {
-    const hotelId = req.params.id
-    const hotel = await getHotelById(hotelId)
-    res.json(hotel[0])
-  } catch (err) {
-    res.sendStatus(500)
-  }
-})
-
-app.get("/user/:id", async (req, res) => {
-  try {
-    const userId = req.params.id
-    if (Number(userId)) {
-      const user = await getUserById(userId)
-      res.json(user[0])
-    } else {
-      const user = await getUserByUserName(userId)
-      res.json(user[0])
-    }
-  } catch (err) {
-    res.sendStatus(500)
-  }
-})
+app.use("/", userRouter)
 
 app.get(
   "/check/slots/:hotelId/:checkIn/:checkOut",
