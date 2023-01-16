@@ -1,19 +1,31 @@
-import { pool } from "../models/config/init.js"
+import { checkAvailableSlots, reserveSlot } from "../models/bookingsModel.js"
 
-const checkCheckIn = async (checkIn, hotelId) => {
-  const isReserved = await pool.query(
-    `select exists (select true from bookings where check_in = $1 and property_id = $2)`,
-    [checkIn, hotelId]
-  )
-  return isReserved.rows
+async function checkAvailablity(req, res) {
+  try {
+    const { hotelId, checkIn, checkOut } = req.params
+    const bookedSlots = await checkAvailableSlots(checkIn, checkOut, hotelId)
+    res.json(bookedSlots)
+  } catch (err) {
+    res.sendStatus(500)
+  }
 }
 
-const checkAvailableSlots = async (checkIn, checkOut, hotelId) => {
-  const isAvailable = await pool.query(
-    "select * from bookings where check_in between $1 and $2 or check_out between $1 and $2 or check_in <= $1 and check_out >= $2 and property_id = $3",
-    [checkIn, checkOut, hotelId]
-  )
-  return isAvailable.rows
+async function makeBooking(req, res) {
+  try {
+    const hotelId = req.params.id
+    const { checkIn, checkOut, userId, total } = req.body
+
+    const confirmBooking = await reserveSlot(
+      checkIn,
+      checkOut,
+      hotelId,
+      userId,
+      total
+    )
+    res.json(confirmBooking)
+  } catch (err) {
+    res.sendStatus(500)
+  }
 }
 
-export { checkCheckIn, checkAvailableSlots }
+export { checkAvailablity, makeBooking }
