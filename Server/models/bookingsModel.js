@@ -14,12 +14,12 @@ const reserveSlot = async (
   return "reserved slot"
 }
 
-const bookingDatabyProperty = async (propertyId) => {
-  const bookings = await pool.query(
-    "select * from bookings where property_id = $1",
-    [propertyId]
+const checkAvailableSlots = async (checkIn, checkOut, hotelId) => {
+  const isAvailable = await pool.query(
+    "select * from bookings where check_in between $1 and $2 and check_out between $1 and $2 or check_in <= $1 and check_out >= $2 and property_id = $3",
+    [checkIn, checkOut, hotelId]
   )
-  return bookings
+  return isAvailable.rows
 }
 
-export { reserveSlot, bookingDatabyProperty }
+export { reserveSlot, checkAvailableSlots }
