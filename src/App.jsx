@@ -5,7 +5,6 @@ import BookingSlots from "./components/Property/BookingSlots"
 import PropertyImages from "./components/Property/PropertyImages"
 import PropertyPage from "./components/Property/PropertyPage"
 import Topbar from "./components/Topbar/Topbar"
-import { GoogleOAuthProvider } from "@react-oauth/google"
 
 function App() {
   return (
