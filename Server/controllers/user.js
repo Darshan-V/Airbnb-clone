@@ -1,4 +1,5 @@
-import { getUserById, getUserByUserName } from "../models/userModel.js"
+import { getUserById, getUserByEmail, addNewUser } from "../models/userModel.js"
+import { hashPassword } from "./hashPassword.js"
 
 async function getUserByUserData(req, res) {
   try {
@@ -7,7 +8,7 @@ async function getUserByUserData(req, res) {
       const user = await getUserById(userId)
       res.json(user[0])
     } else {
-      const user = await getUserByUserName(userId)
+      const user = await getUserByEmail(userId)
       res.json(user[0])
     }
   } catch (err) {
@@ -15,4 +16,23 @@ async function getUserByUserData(req, res) {
   }
 }
 
-export { getUserByUserData }
+async function registerNewUser(name, email, password) {
+  try {
+    name = String(name)
+    email = String(email)
+    password = String(password)
+    const isExistingUser = await getUserByEmail(email)
+    console.log(isExistingUser)
+    if (isExistingUser.length !== 0) {
+      return "user exist proceed to login"
+    } else {
+      const hashedPassword = await hashPassword(password)
+      const newUser = await addNewUser(name, email, hashedPassword)
+      console.log(newUser)
+    }
+  } catch (error) {
+    console.log(error.stack)
+  }
+}
+
+export { getUserByUserData, registerNewUser }
