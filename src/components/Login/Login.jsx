@@ -1,48 +1,65 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
 
 const Login = () => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
+  const doSignup = () => {
+    navigate("/signup")
+  }
   return (
-    <div className=" flex flex-col justify-center m-auto  flex-auto w-92 border border-black p-3">
-      <p className="text font-semibold text-2xl pb-3">Login</p>
-      <label>Username</label>
-      <input
-        placeholder="Username"
-        className="w-80 border rounded-sm h-10 border-black"
-        onChange={(e) => {
-          setUserName(e.target.value)
-        }}
-      />
+    <div className="flex flex-col m-auto pt-2  border border-black rounded-md bg-slate-200">
+      <p className="text font-semibold text-2xl pb-3 pl-2">Login</p>
+      <div>
+        <div className="flex flex-col m-2">
+          <span>Username</span>
+          <input
+            placeholder=" Username"
+            className="w-80 border rounded-md h-8 border-black"
+            onBlur={(e) => {
+              setUserName(e.target.value)
+            }}
+          />
+          {userName.length === 0 ? (
+            <p className="text-red-500 italic text-sm">* Required field</p>
+          ) : null}
+        </div>
+        <div className="flex flex-col m-2">
+          <span>Password</span>
+          <input
+            placeholder=" Password"
+            type="password"
+            className="w-80 border rounded-md h-8 border-black"
+            onBlur={(e) => {
+              setPassword(e.target.value)
+            }}
+          />
+          {password.length === 0 ? (
+            <p className="text-red-500 italic text-sm">* Required field</p>
+          ) : null}
+        </div>
 
-      {userName.length === 0 ? (
-        <p className="text text-red-600">* Email Required</p>
-      ) : null}
-
-      <label>Password</label>
-      <input
-        placeholder="password"
-        type="password"
-        className="w-80 border rounded-sm h-10 border-black"
-        onChange={(e) => {
-          setPassword(e.target.value)
-        }}
-      />
-
-      {password.length === 0 ? (
-        <p className="text text-red-600">* Password Required</p>
-      ) : null}
-
-      <div className="ml-auto p-2 w-40">
-        <button className="border p-2 w-full rounded-md font-bold">
-          Login
-        </button>
+        <div className="ml-auto p-2 w-40 ">
+          <button className="border p-2 w-full rounded-md font-bold bg-green-600  text-white">
+            Login
+          </button>
+        </div>
       </div>
-      <br />
-      <p className="m-auto">-or-</p>
-      <div className="flex flex-row justify-center w-full p-1 m-auto bg-blue-600 border rounded-md">
-        <button>Signup</button>
+
+      <div className="bg-slate-300">
+        <div className="flex flex-col justify-center w-full p-1 m-auto border rounded-md">
+          <p className="m-auto">Don't have an account?</p>
+          <button
+            onClick={() => {
+              doSignup()
+            }}
+            className="text underline text-blue-700"
+          >
+            Signup
+          </button>
+        </div>
       </div>
     </div>
   )
