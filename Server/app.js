@@ -3,6 +3,7 @@ import cors from "cors"
 import session from "express-session"
 import { initDB } from "./models/config/init.js"
 import { routes as signupRouter } from "./routes/Signup.js"
+import { routes as signinRouter } from "./routes/signin.js"
 import { routes as loginRouter } from "./routes/Login.js"
 import { routes as hotelRouter } from "./routes/hotel.js"
 import { routes as userRouter } from "./routes/user.js"
@@ -24,6 +25,8 @@ app.use("/", hotelRouter)
 app.use("/", userRouter)
 
 app.use("/", reservationRouter)
+
+app.use("/", signinRouter)
 
 //-------------------------------test oauth---------------------------------------------
 app.set("trust proxy", 1) // trust first proxy
