@@ -5,11 +5,19 @@ const getUserById = async (userId) => {
   return user.rows
 }
 
-const getUserByUserName = async (userName) => {
+const getUserByEmail = async (userName) => {
   const user = await pool.query("select * from users where email = $1", [
     userName
   ])
   return user.rows
 }
 
-export { getUserById, getUserByUserName }
+const addNewUser = async (userName, email, password) => {
+  const userData = await pool.query("insert into users values($1, $2, $3)", [
+    userName,
+    email,
+    password
+  ])
+  return userData.rows
+}
+export { getUserById, getUserByEmail, addNewUser }
