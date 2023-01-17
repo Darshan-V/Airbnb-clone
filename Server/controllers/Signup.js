@@ -17,11 +17,10 @@ async function signup(req, res) {
         .status(406)
         .json("password length should be greater than 8 characters")
     } else {
-      const newUser = await registerNewUser(name, email, password)
+      await registerNewUser(name, email, password)
       res.json(`${name} registered proceed to login`)
     }
   } catch (err) {
-    console.log(err.stack)
     res.sendStatus(500)
   }
 }
