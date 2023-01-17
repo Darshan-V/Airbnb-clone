@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import session from "express-session"
 import { initDB } from "./models/config/init.js"
+import { routes as signupRouter } from "./routes/Signup.js"
 import { routes as loginRouter } from "./routes/Login.js"
 import { routes as hotelRouter } from "./routes/hotel.js"
 import { routes as userRouter } from "./routes/user.js"
@@ -13,6 +14,8 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 initDB()
+
+app.use("/", signupRouter)
 
 app.use("/", hotelRouter)
 
