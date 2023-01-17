@@ -22,7 +22,6 @@ async function registerNewUser(name, email, password) {
     email = String(email)
     password = String(password)
     const isExistingUser = await getUserByEmail(email)
-    console.log(isExistingUser)
     if (isExistingUser.length !== 0) {
       return "user exist proceed to login"
     } else {
