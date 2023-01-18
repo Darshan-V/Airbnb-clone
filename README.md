@@ -2,9 +2,9 @@
 
 - [x] move routes to routes folder
 - [ ] read cors mdn
-- [ ] exception handling in controllers
+- [x] exception handling in controllers
 - [ ] use session data to get user details after login
-- [ ] handle exception according to the response
+- [x] handle exception according to the response
 - [x] move the checkAvailableSlots to the booking route -> dep: calender
 - [ ] fix date slice Reservation.jsx
 - [ ] why oAuth , why code , why tokens,
