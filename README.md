@@ -6,7 +6,7 @@
 - [ ] use session data to get user details after login
 - [x] handle exception according to the response
 - [x] move the checkAvailableSlots to the booking route -> dep: calender
-- [ ] fix date slice Reservation.jsx
+- [x] fix date slice Reservation.jsx
 - [ ] why oAuth , why code , why tokens,
 - [ ] store updated session somewhere
 - [ ] send the session details to the frontend
