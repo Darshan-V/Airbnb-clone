@@ -1,13 +1,15 @@
 const apiUrl = "http://localhost:8000"
 
 async function getHotels() {
-  let data = await fetch(`${apiUrl}/hotels`, { credentials: "include" })
+  let data = await fetch(`${apiUrl}/hotels`, {
+    credentials: "include"
+  })
   let hotels = await data.json()
   return hotels
 }
 
 async function getImages(hotelId) {
-  let data = await fetch(`${apiUrl}/hotel/${hotelId}/images`, {
+  let data = await fetch(`${apiUrl}/hotels/${hotelId}/images`, {
     credentials: "include"
   })
   let images = await data.json()
@@ -15,7 +17,7 @@ async function getImages(hotelId) {
 }
 
 async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, total) {
-  let reserve = await fetch(`${apiUrl}/hotel/${hotelId}/booking`, {
+  let reserve = await fetch(`${apiUrl}/hotels/${hotelId}/booking`, {
     method: "POST",
     headers: {
       "content-type": "application/json"
@@ -33,7 +35,7 @@ async function reserveSlot(hotelId, checkinDate, checkoutDate, userId, total) {
 }
 
 async function getHotelById(hotelId) {
-  let data = await fetch(`${apiUrl}/hotel/${hotelId}`, {
+  let data = await fetch(`${apiUrl}/hotels/${hotelId}`, {
     credentials: "include"
   })
   let hotel = await data.json()
@@ -42,7 +44,9 @@ async function getHotelById(hotelId) {
 }
 
 async function getUserById(userId) {
-  let data = await fetch(`${apiUrl}/user/${userId}`, { credentials: "include" })
+  let data = await fetch(`${apiUrl}/users/${userId}`, {
+    credentials: "include"
+  })
   let user = await data.json()
   // console.log(user)
   return user
@@ -58,7 +62,7 @@ async function checkSlots(checkIn, checkOut, hotelId) {
 }
 
 async function getBookingsbyProperty(hotelId) {
-  let data = await fetch(`${apiUrl}/booking/${hotelId}`, {
+  let data = await fetch(`${apiUrl}/bookings/${hotelId}`, {
     credentials: "include"
   })
   const bookingData = await data.json()
