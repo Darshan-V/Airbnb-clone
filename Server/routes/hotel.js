@@ -10,8 +10,8 @@ const routes = express.Router()
 
 routes.get("/hotels", verifyToken, getAllHotels)
 
-routes.get("/hotel/:id/images", verifyToken, getHotelImages)
+routes.get("/hotels/:id/images", verifyToken, getHotelImages)
 
-routes.get("/hotel/:id", verifyToken, getHotelByHotelId)
+routes.get("/hotels/:id", verifyToken, getHotelByHotelId)
 
 export { routes }
