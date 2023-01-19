@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
+import { signin } from "./utils/config"
 
 const Login = () => {
   const [userName, setUserName] = useState("")
@@ -8,6 +9,11 @@ const Login = () => {
 
   const doSignup = () => {
     navigate("/signup")
+  }
+
+  const login = async () => {
+    await signin(userName, password)
+    navigate("/home")
   }
   return (
     <div className="flex flex-col m-auto pt-2  border border-black rounded-md bg-slate-200">
@@ -42,7 +48,12 @@ const Login = () => {
         </div>
 
         <div className="ml-auto p-2 w-40 ">
-          <button className="border p-2 w-full rounded-md font-bold bg-green-600  text-white">
+          <button
+            className="border p-2 w-full rounded-md font-bold bg-green-600  text-white"
+            onClick={() => {
+              login()
+            }}
+          >
             Login
           </button>
         </div>
