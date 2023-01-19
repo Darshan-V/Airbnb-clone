@@ -5,7 +5,7 @@ import { getHotelById, reserveSlot, checkSlots } from "../lib/apiClient"
 const Reservation = () => {
   const [hotel, setHotel] = useState([])
   const [currentDate, setCurrentDate] = useState(
-    new Date().toISOString().slice(0, 10)
+    new Date().toISOString().substring(0, 10)
   )
   const [checkIn, setCheckin] = useState(currentDate)
   const [checkOut, setCheckout] = useState(currentDate)
