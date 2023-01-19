@@ -6,8 +6,8 @@ async function signin(req, res) {
     if (email.length === 0 || password.length === 0) {
       res.status(406).json("empty credentials")
     } else {
-      const authenticatedUser = await authenticateUser(email, password)
-      res.status(200).json(authenticatedUser)
+      const token = await authenticateUser(email, password)
+      res.cookie("token", token, { httpOnly: true }).sentStatus(200)
     }
   } catch (error) {
     res.json(error)
