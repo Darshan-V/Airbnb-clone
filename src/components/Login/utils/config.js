@@ -15,4 +15,16 @@ async function registerUser(name, email, password) {
   return postData
 }
 
-export { registerUser }
+async function signin(email, password) {
+  const doSignin = await fetch(`${apiUrl}/signin`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({ email: email, password: password }),
+    credentials: "include"
+  })
+  return doSignin
+}
+
+export { registerUser, signin }
