@@ -2,22 +2,23 @@ import React, { useEffect, useState } from "react"
 import Slider from "./Slider.jsx"
 import { useNavigate, useParams } from "react-router"
 import { getHotels } from "../lib/apiClient.js"
-import Topbar from "../Topbar/Topbar.jsx"
 
 const Places = () => {
   const [propertyData, setPropertyData] = useState([])
+  const navigate = useNavigate()
+  const params = useParams()
 
   const loadHotelList = async () => {
     const hotelList = await getHotels()
+    if (hotelList === "unauthorized") {
+      navigate("/")
+    }
     setPropertyData(hotelList)
   }
 
   useEffect(() => {
     loadHotelList()
-  }, [propertyData.id])
-
-  const navigate = useNavigate()
-  const params = useParams()
+  }, [])
 
   return (
     <div className="flex flex-wrap m-auto w-full">
