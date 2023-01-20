@@ -11,7 +11,7 @@ const Signup = () => {
 
   const userRegistration = async () => {
     const user = await registerUser(name, email, confirmPassword)
-    console.log(user)
+    navigate("/")
   }
 
   return (
