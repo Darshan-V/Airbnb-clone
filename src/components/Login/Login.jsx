@@ -10,7 +10,6 @@ const Login = () => {
   const doSignup = () => {
     navigate("/signup")
   }
-  console.log(document.cookie.indexOf("token"))
 
   const login = async () => {
     await signin(userName, password)
