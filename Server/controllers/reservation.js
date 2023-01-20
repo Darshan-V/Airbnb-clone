@@ -13,7 +13,8 @@ async function checkAvailablity(req, res) {
 async function makeBooking(req, res) {
   try {
     const hotelId = req.params.id
-    const { checkIn, checkOut, userId, total } = req.body
+    const { checkIn, checkOut, total } = req.body
+    const userId = req.userId
 
     const confirmBooking = await reserveSlot(
       checkIn,
