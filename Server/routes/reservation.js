@@ -9,6 +9,6 @@ routes.get(
   checkAvailablity
 )
 
-routes.post("/hotel/:id/booking/", verifyToken, makeBooking)
+routes.post("/hotels/:id/booking/", verifyToken, makeBooking)
 
 export { routes }
