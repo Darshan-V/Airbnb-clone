@@ -15,9 +15,12 @@ async function authenticateUser(email, password) {
       if (!matchPassword) {
         return "invalid password"
       } else {
-        // console.log(process.env.JWT_SECRET)
         const token = jwt.sign(
-          { email: fetchedUser[0].email, name: fetchedUser[0].name },
+          {
+            email: fetchedUser[0].email,
+            id: fetchedUser[0].id,
+            name: fetchedUser[0].name
+          },
           process.env.JWT_SECRET,
           {
             expiresIn: "1h"
