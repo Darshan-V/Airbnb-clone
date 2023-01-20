@@ -15,12 +15,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="signup" element={<Signup />} />
-          <Route path="/home/:userid?" element={<Places />} />
-          <Route path="/property/:id?/:userid?" element={<PropertyPage />} />
-          <Route
-            path="/booking/:userName?/:propertyname?"
-            element={<BookingSlots />}
-          />
+          <Route path="/home?" element={<Places />} />
+          <Route path="/property/:id?/?" element={<PropertyPage />} />
+          <Route path="/booking/:propertyname?" element={<BookingSlots />} />
           <Route path="/property_images/:id" element={<PropertyImages />} />
         </Routes>
       </Router>
