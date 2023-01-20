@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router"
 import { signin } from "./utils/config"
 
@@ -10,10 +10,11 @@ const Login = () => {
   const doSignup = () => {
     navigate("/signup")
   }
+  console.log(document.cookie.indexOf("token"))
 
   const login = async () => {
     await signin(userName, password)
-    navigate("/home")
+    navigate(`/home`)
   }
   return (
     <div className="flex flex-col m-auto pt-2  border border-black rounded-md bg-slate-200">
@@ -24,7 +25,7 @@ const Login = () => {
           <input
             placeholder=" Username"
             className="w-80 border rounded-md h-8 border-black"
-            onBlur={(e) => {
+            onChange={(e) => {
               setUserName(e.target.value)
             }}
           />
@@ -38,7 +39,7 @@ const Login = () => {
             placeholder=" Password"
             type="password"
             className="w-80 border rounded-md h-8 border-black"
-            onBlur={(e) => {
+            onChange={(e) => {
               setPassword(e.target.value)
             }}
           />
