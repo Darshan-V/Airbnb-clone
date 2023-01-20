@@ -13,7 +13,7 @@ const Slider = (id) => {
 
   useEffect(() => {
     loadHotelList()
-  }, [id.id])
+  }, [])
 
   return (
     <div className="w-60 h-40 border rounded-md">
