@@ -10,3 +10,8 @@
 - [ ] why oAuth , why code , why tokens,
 - [ ] store updated session somewhere
 - [ ] send the session details to the frontend
+- [ ] BUG signup confirm password mismatch -> registered : split credentials check into functions: no trim password
+- [x] signin error response for wrong password
+- [x] send proper status code never error object
+
+* Bcrypt.compare returns true when password matched and return false when not matched
