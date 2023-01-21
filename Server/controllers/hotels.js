@@ -3,6 +3,7 @@ import { getHotels, getImages, getHotelById } from "../models/hotelModel.js"
 async function getAllHotels(req, res) {
   try {
     const hotels = await getHotels()
+    console.log(req.headers)
     res.json(hotels)
   } catch (err) {
     res.sendStatus(500)
