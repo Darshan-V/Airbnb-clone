@@ -17,20 +17,18 @@ async function getUserByUserData(req, res) {
 }
 
 async function registerNewUser(name, email, password) {
-  try {
-    name = String(name)
-    email = String(email)
-    password = String(password)
-    const isExistingUser = await getUserByEmail(email)
-    if (isExistingUser.length !== 0) {
-      return "user exist proceed to login"
-    } else {
-      const hashedPassword = await hashPassword(password)
-      const newUser = await addNewUser(name, email, hashedPassword)
-      console.log(newUser)
+  name = name
+  email = email
+  password = password
+  const isExistingUser = await getUserByEmail(email)
+  if (isExistingUser.length !== 0) {
+    throw new Error("user exist proceed to login")
+  } else {
+    const hashedPassword = await hashPassword(password)
+    const newUser = await addNewUser(name, email, hashedPassword)
+    if (!newUser) {
+      throw new Error("user not regestered")
     }
-  } catch (error) {
-    console.log(error.stack)
   }
 }
 
