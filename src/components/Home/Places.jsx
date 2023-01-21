@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react"
 import Slider from "./Slider.jsx"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate } from "react-router"
 import { getHotels } from "../lib/apiClient.js"
 
 const Places = () => {
   const [propertyData, setPropertyData] = useState([])
   const navigate = useNavigate()
-  const params = useParams()
 
   const loadHotelList = async () => {
     const hotelList = await getHotels()
@@ -32,7 +31,7 @@ const Places = () => {
             <div
               className="flex flex-row hover:cursor-pointer"
               onClick={() => {
-                navigate(`/property/${property.id}/${params.userid}`)
+                navigate(`/property/${property.id}`)
               }}
             >
               <p className="font-thin text-gray-800 w-60 h-12 overflow-hidden">
