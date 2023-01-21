@@ -14,8 +14,6 @@ const Reservation = () => {
   const navigate = useNavigate()
   const params = useParams()
   const hotelId = params.id
-  const userid = params.userid
-  console.log(userid)
 
   const diff = new Date(checkOut).valueOf() - new Date(checkIn).valueOf()
   const diffInHours = diff / 1000 / 60 / 60
@@ -38,7 +36,7 @@ const Reservation = () => {
   useEffect(() => {
     loadHotelList(hotelId)
     validateDates(checkIn, checkOut, hotelId)
-  }, [checkIn, checkOut, hotelId])
+  }, [])
 
   const makeBooking = () => {
     const total = hotel?.price * nights
