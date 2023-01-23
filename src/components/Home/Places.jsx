@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Slider from "./Slider.jsx"
 import { useNavigate } from "react-router"
 import { getHotels } from "../lib/apiClient.js"
 
@@ -14,6 +13,7 @@ const Places = () => {
     }
     setPropertyData(hotelList)
   }
+  console.log(propertyData[0]?.imageurl[0])
 
   useEffect(() => {
     loadHotelList()
@@ -24,8 +24,11 @@ const Places = () => {
       {propertyData.map((property, i) => (
         <div className="flex flex-row" key={i}>
           <div className="flex flex-col flex-auto  m-5 " key={i}>
-            <div className="flex">
-              <Slider id={property.id} />
+            <div className="w-60 h-40 border rounded-md">
+              <img
+                src={propertyData[i]?.imageurl[i]}
+                className="border rounded-md w-60 h-40"
+              />
             </div>
 
             <div
