@@ -11,6 +11,7 @@ const PropertyPage = () => {
 
   const loadHotelList = async () => {
     const hotelList = await getHotelById(hotelId)
+    if (hotelList === "unauthorized") navigate("/")
     setPropertyData(hotelList)
     const loadImageList = await getImages(hotelId)
     const images = loadImageList
