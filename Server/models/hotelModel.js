@@ -1,7 +1,11 @@
 import { pool } from "./config/init.js"
 
 const getHotels = async () => {
-  const hotels = await pool.query(`select * from property;`)
+  const hotels =
+    await pool.query(`select images.imageUrl, property.id, property.name,property.address,property.price,property.type
+  from images 
+  left join property 
+  on images.property_id = property.id`)
   return hotels.rows
 }
 const getImages = async (hotelId) => {
