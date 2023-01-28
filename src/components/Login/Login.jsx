@@ -21,27 +21,31 @@ const Login = () => {
       <div>
         <div className="flex flex-col m-2">
           <span>Username</span>
-          <input
-            placeholder=" Username"
-            className="w-80 border rounded-md h-8 border-black"
-            onChange={(e) => {
-              setUserName(e.target.value)
-            }}
-          />
+          <div className="w-80 border rounded-md h-8 ">
+            <input
+              placeholder=" Username"
+              className="w-full h-full p-1"
+              onChange={(e) => {
+                setUserName(e.target.value)
+              }}
+            />
+          </div>
           {userName.length === 0 ? (
             <p className="text-red-500 italic text-sm">* Required field</p>
           ) : null}
         </div>
         <div className="flex flex-col m-2">
           <span>Password</span>
-          <input
-            placeholder=" Password"
-            type="password"
-            className="w-80 border rounded-md h-8 border-black"
-            onChange={(e) => {
-              setPassword(e.target.value)
-            }}
-          />
+          <div className="w-80 border rounded-md h-8">
+            <input
+              placeholder=" Password"
+              type="password"
+              className="w-full h-full p-1"
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
+            />
+          </div>
           {password.length === 0 ? (
             <p className="text-red-500 italic text-sm">* Required field</p>
           ) : null}
