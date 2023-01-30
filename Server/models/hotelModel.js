@@ -23,4 +23,11 @@ const getHotelById = async (hotelId) => {
   return hotel.rows
 }
 
-export { getHotels, getImages, getHotelById }
+const getHotelByType = async (type) => {
+  const hotels = await pool.query("select * from property where type = $1", [
+    type
+  ])
+  return hotels.rows
+}
+
+export { getHotels, getImages, getHotelById, getHotelByType }
