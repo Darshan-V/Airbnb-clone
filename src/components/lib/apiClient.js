@@ -69,14 +69,17 @@ async function getBookingsbyProperty(hotelId) {
 }
 
 async function login() {
-  try {
-    let data = await fetch(`${apiUrl}/login`)
-    const loggedIn = await data.json()
-    console.log(loggedIn)
-    return loggedIn
-  } catch (err) {
-    console.log(err)
-  }
+  let data = await fetch(`${apiUrl}/login`)
+  const loggedIn = await data.json()
+  return loggedIn
+}
+
+async function getHotelsByType(hotelType) {
+  let data = await fetch(`${apiUrl}/hotels/types/${hotelType}`, {
+    credentials: "include"
+  })
+  const filteredHotels = await data.json()
+  return filteredHotels
 }
 
 export {
@@ -87,5 +90,6 @@ export {
   getUserById,
   getBookingsbyProperty,
   checkSlots,
-  login
+  login,
+  getHotelsByType
 }
