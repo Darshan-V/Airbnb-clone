@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
 import { getHotelById, reserveSlot, checkSlots } from "../lib/apiClient"
 
-const Reservation = () => {
-  const [hotel, setHotel] = useState([])
+const Reservation = (price) => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().substring(0, 10)
   )
@@ -19,11 +18,6 @@ const Reservation = () => {
   const diffInHours = diff / 1000 / 60 / 60
   const nights = diffInHours / 24
 
-  const loadHotelList = async (hotelId) => {
-    const hotelList = await getHotelById(hotelId)
-    setHotel(hotelList)
-  }
-
   const validateDates = async (checkIn, checkOut, hotelId) => {
     const isAvailable = await checkSlots(checkIn, checkOut, hotelId)
     if (isAvailable.length === 0) {
@@ -34,12 +28,11 @@ const Reservation = () => {
   }
 
   useEffect(() => {
-    loadHotelList(hotelId)
     validateDates(checkIn, checkOut, hotelId)
   }, [])
 
   const makeBooking = () => {
-    const total = hotel?.price * nights
+    const total = price.price * nights
     if (checkIn < Date.now() || checkIn >= checkOut) {
       console.log("403 invalid date format")
     } else {
@@ -51,8 +44,6 @@ const Reservation = () => {
     }
   }
 
-  // console.log(isBooked)
-
   const getCheckout = (event) => {
     const checkOutDate = event.target.value
     setCheckout(checkOutDate)
@@ -62,10 +53,9 @@ const Reservation = () => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
   }
-  // console.log(currentDate)
 
   return (
-    <div className="flex  border border-black  justify-center mt-4 w-96 sticky">
+    <div className="flex  border border-black justify-center m-auto w-96 sticky">
       <div className="flex m-auto">
         <div className="flex m-auto ">
           <div className="flex m-auto">
@@ -73,9 +63,9 @@ const Reservation = () => {
               <div className="flex flex-col m-1">
                 <div className="flex justify-between align-middle">
                   <span className="text-lg m-1 font-sans font-semibold">
-                    {hotel?.price}/night
+                    {price?.price}/night
                   </span>
-                  <i className="m-1">{hotel?.stars}</i>
+                  {/* <i className="m-1">{hotel?.stars}</i> */}
                 </div>
                 <div className="flex flex-col justify-evenly m-1 ">
                   <div className="flex justify-between border-2 border-black rounded-md">
@@ -115,9 +105,9 @@ const Reservation = () => {
                     </div>
                   </div>
                 </div>
-                <div className="ml-auto m-1">
+                <div className="m-auto">
                   <button
-                    className="bg-red-600 border rounded-lg w-28 h-8 m-2"
+                    className="bg-red-600 border rounded-lg w-80 h-8 m-3"
                     onClick={() => {
                       makeBooking()
                     }}
@@ -138,9 +128,9 @@ const Reservation = () => {
                   <div className="flex flex-col">
                     <div className="flex flex-row justify-between">
                       <p className="underline">
-                        Rs {hotel?.price} x {!nights ? 0 : nights}
+                        Rs {price?.price} x {!nights ? 0 : nights}
                       </p>
-                      <p>{`${hotel?.price * (!nights ? 0 : nights)}`}</p>
+                      <p>{`${price?.price * (!nights ? 0 : nights)}`}</p>
                     </div>
                     <div className="flex justify-between">
                       <p className="underline">service fee</p>
