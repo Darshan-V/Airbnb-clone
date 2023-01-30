@@ -31,7 +31,7 @@ const Places = () => {
     <div className="flex flex-wrap justify-center w-full">
       <Topbar />
       <div className="flex w-full flex-wrap justify-center m-auto">
-        <HomeTab />
+        <HomeTab data={propertyData} change={setPropertyData} />
         {propertyData.map((property, i) => (
           <div className="flex flex-row" key={i}>
             <div className="flex flex-col flex-auto m-2 " key={i}>
