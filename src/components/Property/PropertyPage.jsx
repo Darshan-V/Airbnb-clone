@@ -26,7 +26,7 @@ const PropertyPage = () => {
   }, [propertyData.id])
 
   const navigate = useNavigate()
-  console.log(hotelImages)
+
   return (
     <div className="flex flex-col w-full m-auto">
       <div className="flex flex-col w-4/6 m-auto">
