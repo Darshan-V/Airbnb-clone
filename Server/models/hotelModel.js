@@ -23,9 +23,9 @@ const getHotelById = async (hotelId) => {
   return hotel.rows
 }
 
-const getHotelByType = async (type) => {
+const getHotelByType = async (hotelType) => {
   const hotels = await pool.query("select * from property where type = $1", [
-    type
+    hotelType
   ])
   return hotels.rows
 }
