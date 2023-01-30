@@ -1,4 +1,9 @@
-import { getHotels, getImages, getHotelById } from "../models/hotelModel.js"
+import {
+  getHotels,
+  getImages,
+  getHotelById,
+  getHotelByType
+} from "../models/hotelModel.js"
 
 async function getAllHotels(req, res) {
   try {
@@ -30,4 +35,14 @@ async function getHotelByHotelId(req, res) {
   }
 }
 
-export { getAllHotels, getHotelImages, getHotelByHotelId }
+async function getHotelsByHotelType(req, res) {
+  try {
+    const hotelType = req.params.hotelType
+    const hotels = await getHotelByType(hotelType)
+    res.json(hotels)
+  } catch (err) {
+    res.sendStatus(500)
+  }
+}
+
+export { getAllHotels, getHotelImages, getHotelByHotelId, getHotelsByHotelType }
