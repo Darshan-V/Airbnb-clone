@@ -17,24 +17,15 @@ const Topbar = () => {
       </div>
       <div className="flex ml-auto">
         <div className="flex flex-row">
-          <button
-            className="w-20 text-slate-600 font-bold"
-            onClick={() => {
-              setSearch(true)
-            }}
-          >
-            Search
-          </button>
-          <TbSearch className="m-auto" />
+          <TbSearch className="m-auto text-yellow-700 text-3xl font-bold" />
         </div>
-        {search ? (
-          <div className="m-auto">
-            <input
-              placeholder="Search destination..."
-              className="h-8 w-96 border-2 border-indigo-200 border-b-indigo-500 focus:outline-none rounded-md"
-            />
-          </div>
-        ) : null}
+
+        <div className="m-auto">
+          <input
+            placeholder="Search destination..."
+            className="h-10 w-96 border-2 border-orange-200 border-b-orange-500 focus:outline-none rounded-md "
+          />
+        </div>
       </div>
     </div>
   )
