@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import {
   TbPool,
   TbBeach,
@@ -15,21 +15,21 @@ import {
 } from "react-icons/gi"
 import { getHotelsByType } from "../lib/apiClient"
 
-const HomeTab = () => {
-  const [data, setData] = useState({ hotels: "", loading: true })
+const HomeTab = ({ data, change }) => {
+  const [hotelData, setHotelData] = useState([])
 
   const getHotelsByHotelType = async (type) => {
     const hotels = await getHotelsByType(type)
-    setData({ hotels: hotels, loading: false })
+    change(hotels)
+    setHotelData(hotels)
   }
-  console.log(data)
 
   const links = [
     {
       name: "Pool Side",
       icon: (
         <TbPool
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("poolside")
           }}
@@ -40,7 +40,7 @@ const HomeTab = () => {
       name: "Beach Front",
       icon: (
         <TbBeach
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("beachside")
           }}
@@ -51,7 +51,7 @@ const HomeTab = () => {
       name: "Manison",
       icon: (
         <TbBuildingSkyscraper
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("manison")
           }}
@@ -62,7 +62,7 @@ const HomeTab = () => {
       name: "Private Villa",
       icon: (
         <TbBuildingCottage
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("privatevilla")
           }}
@@ -73,7 +73,7 @@ const HomeTab = () => {
       name: "Camping",
       icon: (
         <GiCampingTent
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("camping")
           }}
@@ -84,7 +84,7 @@ const HomeTab = () => {
       name: "Arctic",
       icon: (
         <GiFrozenOrb
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("arctic")
           }}
@@ -95,7 +95,7 @@ const HomeTab = () => {
       name: "Farmhouse",
       icon: (
         <GiFarmTractor
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("farmhouse")
           }}
@@ -106,7 +106,7 @@ const HomeTab = () => {
       name: "Island",
       icon: (
         <GiIsland
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("island")
           }}
@@ -117,7 +117,7 @@ const HomeTab = () => {
       name: "Tropical",
       icon: (
         <GiPalmTree
-          className="text-slate-600 font-light text-3xl"
+          className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("tropical")
           }}
