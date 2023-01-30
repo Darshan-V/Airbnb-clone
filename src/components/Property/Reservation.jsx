@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
-import { getHotelById, reserveSlot, checkSlots } from "../lib/apiClient"
+import { reserveSlot, checkSlots } from "../lib/apiClient"
 
 const Reservation = (price) => {
   const [currentDate, setCurrentDate] = useState(
