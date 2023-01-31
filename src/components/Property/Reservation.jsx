@@ -8,7 +8,7 @@ const Reservation = (price) => {
   )
   const [checkIn, setCheckin] = useState(currentDate)
   const [checkOut, setCheckout] = useState(currentDate)
-  const [isBooked, setIsBooked] = useState()
+  const [isBooked, setIsBooked] = useState(true)
 
   const navigate = useNavigate()
   const params = useParams()
@@ -27,26 +27,27 @@ const Reservation = (price) => {
     }
   }
 
-  useEffect(() => {
-    validateDates(checkIn, checkOut, hotelId)
-  }, [])
-
   const makeBooking = () => {
     const total = price.price * nights
     if (checkIn < Date.now() || checkIn >= checkOut) {
-      console.log("403 invalid date format")
+      return (
+        <p className="text text-red-500 font-bold font-serif">
+          Invalid Date format
+        </p>
+      )
     } else {
       if (isBooked === false) {
         navigate("/booking")
         reserveSlot(hotelId, checkIn, checkOut, total)
       }
-      return "slot not available"
     }
+    return "slot not available"
   }
 
   const getCheckout = (event) => {
     const checkOutDate = event.target.value
     setCheckout(checkOutDate)
+    validateDates(checkIn, checkOutDate, hotelId)
   }
 
   const getCheckin = async (event) => {
@@ -55,8 +56,8 @@ const Reservation = (price) => {
   }
 
   return (
-    <div className="flex  border border-black justify-center m-auto w-96 sticky">
-      <div className="flex m-auto">
+    <div className="flex  border border-black justify-center ml-auto w-96 h-80 sticky">
+      <div className="flex mb-auto">
         <div className="flex m-auto ">
           <div className="flex m-auto">
             <div className="flex flex-col justify-center align-middle w-96 m-1">
@@ -68,7 +69,7 @@ const Reservation = (price) => {
                   {/* <i className="m-1">{hotel?.stars}</i> */}
                 </div>
                 <div className="flex flex-col justify-evenly m-1 ">
-                  <div className="flex justify-between border-2 border-black rounded-md">
+                  <div className="flex justify-between border-2 mt-auto border-black rounded-md">
                     <div className="border border-black w-1/2">
                       <span>
                         <i className="pl-2">Checkin Date</i>
@@ -82,13 +83,6 @@ const Reservation = (price) => {
                           getCheckin(e)
                         }}
                       />
-                      {checkIn < currentDate ? (
-                        <span className="text text-red-500">
-                          Invalid checkin date
-                        </span>
-                      ) : (
-                        <span className="text text-green-500">Proceed</span>
-                      )}
                     </div>
                     <div className="border border-black w-1/2">
                       <span>
@@ -104,6 +98,18 @@ const Reservation = (price) => {
                       />
                     </div>
                   </div>
+                  {checkOut < checkIn ||
+                  checkOut < currentDate ||
+                  checkIn < currentDate ||
+                  isBooked ? (
+                    <span className="text text-red-500 font-sans italic font-bold m-auto">
+                      Invalid date range
+                    </span>
+                  ) : (
+                    <span className="text text-green-500 font-sans italic font-bold m-auto">
+                      Proceed
+                    </span>
+                  )}
                 </div>
                 <div className="m-auto">
                   <button
@@ -116,13 +122,13 @@ const Reservation = (price) => {
                   </button>
                 </div>
               </div>
-              <ul className="m-auto">
+              <div className="m-auto">
                 {isBooked ? (
                   <p className="text text-red-600">Slot not available</p>
                 ) : (
                   <p>You won't be charged yet</p>
                 )}
-              </ul>
+              </div>
               <div className=" m-1 ">
                 <section className="calculations sec">
                   <div className="flex flex-col">
