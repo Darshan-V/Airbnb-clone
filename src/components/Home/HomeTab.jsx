@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate } from "react-router"
 import {
   TbPool,
   TbBeach,
@@ -19,8 +19,6 @@ import { getHotelsByType } from "../lib/apiClient"
 const HomeTab = ({ data, change }) => {
   const [hotelData, setHotelData] = useState([])
   const navigate = useNavigate()
-  const params = useParams()
-  console.log(params)
 
   const getHotelsByHotelType = async (type) => {
     const hotels = await getHotelsByType(type)
