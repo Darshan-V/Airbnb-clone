@@ -3,7 +3,9 @@ import {
   getAllHotels,
   getHotelImages,
   getHotelByHotelId,
-  getHotelsByHotelType
+  getHotelsByHotelType,
+  searchHotels,
+  controlFilterHotels
 } from "../controllers/hotels.js"
 import { verifyToken } from "../controllers/verifyToken.js"
 
@@ -16,5 +18,13 @@ routes.get("/hotels/:id/images", verifyToken, getHotelImages)
 routes.get("/hotels/:id", verifyToken, getHotelByHotelId)
 
 routes.get("/hotels/types/:hotelType?", verifyToken, getHotelsByHotelType)
+
+routes.get("/hotels/search/:hotelName", verifyToken, searchHotels)
+
+routes.get(
+  "/hotels/price/:minPrice?/:maxPrice?",
+  verifyToken,
+  controlFilterHotels
+)
 
 export { routes }
