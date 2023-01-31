@@ -2,23 +2,22 @@ import React, { useEffect, useState } from "react"
 import Reservation from "./Reservation.jsx"
 import { getImages, getHotelById } from "../lib/apiClient.js"
 import { useNavigate, useParams } from "react-router"
+import ImageCarousel from "./ImageCarousel.jsx"
+import AboutProperty from "./AboutProperty.jsx"
 
 const PropertyPage = () => {
-  const [propertyData, setPropertyData] = useState({
-    property: "",
-    loading: true
-  })
-  const [hotelImages, setHotelImages] = useState({ images: [], loading: true })
+  const [propertyData, setPropertyData] = useState([])
+  const [hotelImages, setHotelImages] = useState([])
   const params = useParams()
   const hotelId = params.id
 
   const loadHotelList = async () => {
     const hotelList = await getHotelById(hotelId)
     if (hotelList === "unauthorized") navigate("/")
-    setPropertyData({ property: hotelList, loading: false })
+    setPropertyData(hotelList)
     const loadImageList = await getImages(hotelId)
     const images = loadImageList
-    setHotelImages({ images: images, loading: false })
+    setHotelImages(images)
   }
 
   useEffect(() => {
@@ -31,30 +30,17 @@ const PropertyPage = () => {
     <div className="flex flex-col w-full m-auto">
       <div className="flex flex-col w-4/6 m-auto">
         <p className="font-sans font-bold text-lg">
-          {propertyData?.property.name}, {propertyData?.property.type}
+          {propertyData?.name}, {propertyData?.type}
         </p>
-        <div className="flex flex-col w-full flex-wrap h-96 overflow-hidden no-scrollbar ">
-          {hotelImages.images.map((image, i) => (
-            <div className="m-1 h-96" key={i}>
-              <div>
-                <img src={image} className="h-96 w-96" />
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-start ml-auto ">
-          <button
-            className=" border-2 border-indigo-200 border-b-indigo-500 rounded-md"
-            onClick={() => {
-              navigate(`/property_images/${hotelId}`)
-            }}
-          >
-            Show more images
-          </button>
+        <div className="flex flex-row">
+          <div className="m-auto w-full">
+            <ImageCarousel images={hotelImages} />
+          </div>
         </div>
       </div>
-      <div className="flex justify-end sticky top-0">
-        <Reservation price={propertyData?.property?.price} />
+      <div className="flex justify-end sticky top-10">
+        <AboutProperty />
+        <Reservation price={propertyData?.price} />
       </div>
     </div>
   )
