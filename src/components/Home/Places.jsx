@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router"
-import { getHotels } from "../lib/apiClient.js"
+import { useNavigate, useParams } from "react-router"
+import { getHotelsByType, getHotels } from "../lib/apiClient.js"
 import HomeTab from "./HomeTab.jsx"
 
 const Places = () => {
   const [propertyData, setPropertyData] = useState([])
   const navigate = useNavigate()
+  const params = useParams()
 
   const loadHotelList = async () => {
-    const hotelList = await getHotels()
-    if (hotelList === "unauthorized") {
-      navigate("/")
+    if (!params?.type) {
+      const defaultView = await getHotels()
+      setPropertyData(defaultView)
+      navigate(`/home`)
+    } else {
+      const hotels = await getHotelsByType(params?.type)
+      setPropertyData(hotels)
+      navigate(`/home/${params?.type}`)
     }
-    setPropertyData(hotelList)
   }
-
   useEffect(() => {
     loadHotelList()
   }, [])
