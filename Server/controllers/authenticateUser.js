@@ -23,7 +23,7 @@ async function authenticateUser(email, password) {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: "1h"
+      expiresIn: "3h"
     }
   )
   return token
