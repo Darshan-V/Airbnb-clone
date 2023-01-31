@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router"
 import {
   TbPool,
   TbBeach,
@@ -17,6 +18,7 @@ import { getHotelsByType } from "../lib/apiClient"
 
 const HomeTab = ({ data, change }) => {
   const [hotelData, setHotelData] = useState([])
+  const navigate = useNavigate()
 
   const getHotelsByHotelType = async (type) => {
     const hotels = await getHotelsByType(type)
@@ -32,6 +34,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("poolside")
+            navigate(`/home/poolside`)
           }}
         />
       )
@@ -43,6 +46,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("beachside")
+            navigate(`/home/beachside`)
           }}
         />
       )
@@ -54,6 +58,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("manison")
+            navigate(`/home/manison`)
           }}
         />
       )
@@ -65,6 +70,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("privatevilla")
+            navigate(`/home/privatevilla`)
           }}
         />
       )
@@ -76,6 +82,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("camping")
+            navigate(`/home/camping`)
           }}
         />
       )
@@ -87,6 +94,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("arctic")
+            navigate(`/home/arctic`)
           }}
         />
       )
@@ -98,6 +106,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("farmhouse")
+            navigate(`/home/farmhouse`)
           }}
         />
       )
@@ -109,6 +118,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("island")
+            navigate(`/home/island`)
           }}
         />
       )
@@ -120,6 +130,7 @@ const HomeTab = ({ data, change }) => {
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
             getHotelsByHotelType("tropical")
+            navigate(`/home/tropical`)
           }}
         />
       )
@@ -127,7 +138,7 @@ const HomeTab = ({ data, change }) => {
   ]
 
   return (
-    <div className="flex flex-row  justify-center w-full h-16 overflow-auto no-scrollbar sticky top-24 bg-white">
+    <div className="flex flex-row  justify-center w-full h-16 overflow-auto no-scrollbar sticky top-14 bg-white">
       {links.map((link, i) => (
         <button key={i} className="flex flex-col w-16 m-auto">
           <div className="flex flex-col m-auto">
