@@ -2,7 +2,9 @@ import {
   getHotels,
   getImages,
   getHotelById,
-  getHotelByType
+  getHotelByType,
+  searchHotel,
+  filterHotels
 } from "../models/hotelModel.js"
 
 async function getAllHotels(req, res) {
@@ -45,4 +47,33 @@ async function getHotelsByHotelType(req, res) {
   }
 }
 
-export { getAllHotels, getHotelImages, getHotelByHotelId, getHotelsByHotelType }
+async function searchHotels(req, res) {
+  try {
+    const hotelName = req.params.hotelName
+    const hotels = await searchHotel(hotelName)
+    res.json(hotels)
+  } catch (error) {
+    res.sendStatus(500)
+  }
+}
+
+async function controlFilterHotels(req, res) {
+  try {
+    const maxPrice = req.params.maxPrice
+    const minPrice = req.params.minPrice
+    const hotels = await filterHotels(minPrice, maxPrice)
+    res.json(hotels)
+  } catch (error) {
+    console.log(error.stack)
+    res.sendStatus(500)
+  }
+}
+
+export {
+  getAllHotels,
+  getHotelImages,
+  getHotelByHotelId,
+  getHotelsByHotelType,
+  searchHotels,
+  controlFilterHotels
+}
