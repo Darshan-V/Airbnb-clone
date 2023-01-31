@@ -34,4 +34,26 @@ const getHotelByType = async (hotelType) => {
   return hotels.rows
 }
 
-export { getHotels, getImages, getHotelById, getHotelByType }
+const searchHotel = async (hotelName) => {
+  const hotels = await pool.query("select * from property where name = $1", [
+    hotelName
+  ])
+  return hotels.rows
+}
+
+const filterHotels = async (minPrice, maxPrice) => {
+  const hotels = await pool.query(
+    "select * from property where price < $1 and price > $2",
+    [maxPrice, minPrice]
+  )
+  return hotels.rows
+}
+
+export {
+  getHotels,
+  getImages,
+  getHotelById,
+  getHotelByType,
+  searchHotel,
+  filterHotels
+}
