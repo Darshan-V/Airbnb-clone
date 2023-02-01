@@ -49,8 +49,8 @@ async function getHotelsByHotelType(req, res) {
 
 async function searchHotels(req, res) {
   try {
-    const hotelName = req.params.hotelName
-    const hotels = await searchHotel(hotelName)
+    const searchString = req.params.searchString
+    const hotels = await searchHotel(searchString)
     res.json(hotels)
   } catch (error) {
     res.sendStatus(500)
