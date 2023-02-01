@@ -34,10 +34,10 @@ const getHotelByType = async (hotelType) => {
   return hotels.rows
 }
 
-const searchHotel = async (hotelName) => {
-  const hotels = await pool.query("select * from property where name = $1", [
-    hotelName
-  ])
+const searchHotel = async (searchString) => {
+  const hotels = await pool.query(
+    `select * from property where address->>'location' ilike '%${searchString}%' or name ilike '%${searchString}%'`
+  )
   return hotels.rows
 }
 
