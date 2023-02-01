@@ -4,6 +4,7 @@ import { getImages, getHotelById } from "../lib/apiClient.js"
 import { useNavigate, useParams } from "react-router"
 import ImageCarousel from "./ImageCarousel.jsx"
 import AboutProperty from "./AboutProperty.jsx"
+import Topbar from "../Topbar/Topbar.jsx"
 
 const PropertyPage = () => {
   const [propertyData, setPropertyData] = useState([])
@@ -28,6 +29,7 @@ const PropertyPage = () => {
 
   return (
     <div className="flex flex-col w-full m-auto">
+      <Topbar />
       <div className="flex flex-col w-4/6 m-auto">
         <p className="font-sans font-bold text-lg">
           {propertyData?.name}, {propertyData?.type}
