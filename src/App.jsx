@@ -5,13 +5,11 @@ import Signup from "./components/Login/Signup"
 import BookingSlots from "./components/Property/BookingSlots"
 import PropertyImages from "./components/Property/PropertyImages"
 import PropertyPage from "./components/Property/PropertyPage"
-import Topbar from "./components/Topbar/Topbar"
 
 function App() {
   return (
     <div className="flex flex-col m-12">
       <Router>
-        <Topbar />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="signup" element={<Signup />} />
