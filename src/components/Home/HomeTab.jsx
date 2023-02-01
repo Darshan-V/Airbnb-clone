@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import {
   TbPool,
   TbBeach,
@@ -17,18 +17,18 @@ import {
 import { getHotelsByType } from "../lib/apiClient"
 
 const HomeTab = ({ data, change }) => {
-  const [hotelData, setHotelData] = useState([])
   const navigate = useNavigate()
+  const params = useParams()
 
   const getHotelsByHotelType = async (type) => {
     const hotels = await getHotelsByType(type)
     change(hotels)
-    setHotelData(hotels)
   }
 
   const links = [
     {
       name: "Pool Side",
+      iconName: "poolside",
       icon: (
         <TbPool
           className="text-orange-600 font-light text-3xl"
@@ -40,7 +40,8 @@ const HomeTab = ({ data, change }) => {
       )
     },
     {
-      name: "Beach Front",
+      name: "Beach Side",
+      iconName: "beachside",
       icon: (
         <TbBeach
           className="text-orange-600 font-light text-3xl"
@@ -53,6 +54,7 @@ const HomeTab = ({ data, change }) => {
     },
     {
       name: "Manison",
+      iconName: "manison",
       icon: (
         <TbBuildingSkyscraper
           className="text-orange-600 font-light text-3xl"
@@ -65,6 +67,7 @@ const HomeTab = ({ data, change }) => {
     },
     {
       name: "Private Villa",
+      iconName: "privatevilla",
       icon: (
         <TbBuildingCottage
           className="text-orange-600 font-light text-3xl"
@@ -77,6 +80,7 @@ const HomeTab = ({ data, change }) => {
     },
     {
       name: "Camping",
+      iconName: "camping",
       icon: (
         <GiCampingTent
           className="text-orange-600 font-light text-3xl"
@@ -89,6 +93,7 @@ const HomeTab = ({ data, change }) => {
     },
     {
       name: "Arctic",
+      iconName: "arctic",
       icon: (
         <GiFrozenOrb
           className="text-orange-600 font-light text-3xl"
@@ -101,6 +106,7 @@ const HomeTab = ({ data, change }) => {
     },
     {
       name: "Farmhouse",
+      iconName: "farmhouse",
       icon: (
         <GiFarmTractor
           className="text-orange-600 font-light text-3xl"
@@ -113,6 +119,7 @@ const HomeTab = ({ data, change }) => {
     },
     {
       name: "Island",
+      iconName: "island",
       icon: (
         <GiIsland
           className="text-orange-600 font-light text-3xl"
@@ -125,6 +132,7 @@ const HomeTab = ({ data, change }) => {
     },
     {
       name: "Tropical",
+      iconName: "tropical",
       icon: (
         <GiPalmTree
           className="text-orange-600 font-light text-3xl"
@@ -144,9 +152,15 @@ const HomeTab = ({ data, change }) => {
           <div className="flex flex-col m-auto">
             <span className="m-auto">
               <div className="w-full m-auto">{link.icon}</div>
-              <div className="text-slate-600 w-full text-xs h-4 overflow-hidden">
-                {link.name}
-              </div>
+              {params.type === link.iconName ? (
+                <div className="text-white w-full text-xs h-4 overflow-hidden bg-orange-500 rounded-sm">
+                  <span>{link.name}</span>
+                </div>
+              ) : (
+                <div className="text-slate-600 w-full text-xs h-4 overflow-hidden">
+                  <span>{link.name}</span>
+                </div>
+              )}
             </span>
           </div>
         </button>
