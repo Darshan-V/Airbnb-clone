@@ -6,8 +6,9 @@ const Reservation = (price) => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().substring(0, 10)
   )
-  const [checkIn, setCheckin] = useState(currentDate)
-  const [checkOut, setCheckout] = useState(currentDate)
+
+  const [checkIn, setCheckin] = useState("")
+  const [checkOut, setCheckout] = useState("")
   const [isBooked, setIsBooked] = useState(true)
 
   const navigate = useNavigate()
@@ -29,19 +30,20 @@ const Reservation = (price) => {
 
   const makeBooking = () => {
     const total = price.price * nights
-    if (checkIn < Date.now() || checkIn >= checkOut) {
-      return (
-        <p className="text text-red-500 font-bold font-serif">
-          Invalid Date format
-        </p>
-      )
+    if (
+      checkIn < Date.now() ||
+      checkIn >= checkOut ||
+      checkOut <= checkIn ||
+      checkOut <= Date.now()
+    ) {
+      setIsBooked(true)
     } else {
       if (isBooked === false) {
         navigate("/booking")
         reserveSlot(hotelId, checkIn, checkOut, total)
       }
     }
-    return "slot not available"
+    return <p>slot not available</p>
   }
 
   const getCheckout = (event) => {
@@ -53,6 +55,7 @@ const Reservation = (price) => {
   const getCheckin = async (event) => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
+    if (checkOut) validateDates(checkInDate, checkOut, hotelId)
   }
 
   return (
@@ -83,6 +86,11 @@ const Reservation = (price) => {
                           getCheckin(e)
                         }}
                       />
+                      {checkIn <= Date.now() || checkIn > checkOut ? (
+                        <p className="text-red-600 text-xs ml-2">
+                          Invalid check in date
+                        </p>
+                      ) : null}
                     </div>
                     <div className="border border-black w-1/2">
                       <span>
@@ -96,20 +104,13 @@ const Reservation = (price) => {
                           getCheckout(e)
                         }}
                       />
+                      {checkOut <= checkIn || checkOut <= Date.now() ? (
+                        <p className="text-red-600 text-xs ml-2">
+                          Invalid check out date
+                        </p>
+                      ) : null}
                     </div>
                   </div>
-                  {checkOut < checkIn ||
-                  checkOut < currentDate ||
-                  checkIn < currentDate ||
-                  isBooked ? (
-                    <span className="text text-red-500 font-sans italic font-bold m-auto">
-                      Invalid date range
-                    </span>
-                  ) : (
-                    <span className="text text-green-500 font-sans italic font-bold m-auto">
-                      Proceed
-                    </span>
-                  )}
                 </div>
                 <div className="m-auto">
                   <button
@@ -124,7 +125,11 @@ const Reservation = (price) => {
               </div>
               <div className="m-auto">
                 {isBooked ? (
-                  <p className="text text-red-600">Slot not available</p>
+                  <div>
+                    <span className="text text-red-600">
+                      Slot not available
+                    </span>
+                  </div>
                 ) : (
                   <p>You won't be charged yet</p>
                 )}
