@@ -14,14 +14,23 @@ import {
   GiIsland,
   GiPalmTree
 } from "react-icons/gi"
-import { getHotelsByType } from "../lib/apiClient"
+import Popup from "reactjs-popup"
+import { filterByPrice, getHotelsByType } from "../lib/apiClient"
 
 const HomeTab = ({ data, change }) => {
+  const [minPrice, setMinPrice] = useState(0)
+  const [maxPrice, setMaxPrice] = useState(0)
   const navigate = useNavigate()
   const params = useParams()
 
   const getHotelsByHotelType = async (type) => {
     const hotels = await getHotelsByType(type)
+    change(hotels)
+  }
+
+  const filterHotelsbyPrice = async (min, max) => {
+    const hotels = await filterByPrice(min, max)
+    // console.log(hotels)
     change(hotels)
   }
 
@@ -166,10 +175,62 @@ const HomeTab = ({ data, change }) => {
         </button>
       ))}
       <div className="flex flex-col w-24 m-auto border border-slate-400 rounded-md">
-        <TbFilter className="text-black font-bold text-3xl m-auto" />
-        <span className="text text-slate-600 text-sm font-serif italic m-auto">
-          Filter
-        </span>
+        <Popup
+          trigger={
+            <button className="text text-slate-600 text-sm font-serif italic h-10 w-full m-auto ">
+              Filter
+            </button>
+          }
+          modal
+          nested
+        >
+          {(close) => (
+            <div className="flex flex-col bg-slate-300 w-full">
+              <button className="ml-auto w-5 h-5" onClick={close}>
+                &times;
+              </button>
+              <div className="m-auto">
+                <span className="text text-md font-sans font-semibold text-slate-600">
+                  Price Range
+                </span>
+              </div>
+              <div className="flex flex-row m-2">
+                <div className="mr-auto w-48 p-2">
+                  <input
+                    placeholder="min"
+                    className="w-full h-full p-1 rounded-md"
+                    onChange={(e) => {
+                      setMinPrice(e.target.value)
+                    }}
+                  />
+                </div>
+                <div className="mr-auto w-48 p-2">
+                  <input
+                    placeholder="max"
+                    className="w-full h-full p-1 rounded-md"
+                    onChange={(e) => {
+                      setMaxPrice(e.target.value)
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="actions">
+                <Popup position="top center" nested>
+                  <span></span>
+                </Popup>
+                <button
+                  className="button"
+                  onClick={() => {
+                    filterHotelsbyPrice(minPrice, maxPrice)
+                    close()
+                  }}
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          )}
+        </Popup>
       </div>
     </div>
   )
