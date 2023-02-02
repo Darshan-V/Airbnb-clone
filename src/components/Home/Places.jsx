@@ -13,6 +13,9 @@ const Places = () => {
   const loadHotelList = async () => {
     if (params?.type === undefined) {
       const defaultView = await getHotels()
+      if (defaultView == "unauthorized") {
+        return navigate("/")
+      }
       setPropertyData(defaultView)
       navigate(`/home`)
     } else {
