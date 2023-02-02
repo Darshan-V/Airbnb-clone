@@ -82,6 +82,22 @@ async function getHotelsByType(hotelType) {
   return filteredHotels
 }
 
+async function searchHotels(searchString) {
+  let data = await fetch(`${apiUrl}/hotels/search/${searchString}`, {
+    credentials: "include"
+  })
+  const hotels = await data.json()
+  return hotels
+}
+
+async function filterByPrice(min, max) {
+  let data = await fetch(`${apiUrl}/hotels/price/${min}/${max}`, {
+    credentials: "include"
+  })
+  const hotels = await data.json()
+  return hotels
+}
+
 export {
   getHotels,
   getImages,
@@ -91,5 +107,7 @@ export {
   getBookingsbyProperty,
   checkSlots,
   login,
-  getHotelsByType
+  getHotelsByType,
+  searchHotels,
+  filterByPrice
 }
