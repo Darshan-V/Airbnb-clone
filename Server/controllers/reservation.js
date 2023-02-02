@@ -15,15 +15,18 @@ async function makeBooking(req, res) {
     const hotelId = req.params.id
     const { checkIn, checkOut, total } = req.body
     const userId = req.userId
-
-    const confirmBooking = await reserveSlot(
-      checkIn,
-      checkOut,
-      hotelId,
-      userId,
-      total
-    )
-    res.json(confirmBooking)
+    if (checkIn < Date.now() || checkOut <= checkIn || checkOut <= Date.now()) {
+      res.json("invalid date format").status(409)
+    } else {
+      const confirmBooking = await reserveSlot(
+        checkIn,
+        checkOut,
+        hotelId,
+        userId,
+        total
+      )
+      res.json(confirmBooking)
+    }
   } catch (err) {
     res.sendStatus(500)
   }
