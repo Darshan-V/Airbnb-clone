@@ -36,14 +36,20 @@ const getHotelByType = async (hotelType) => {
 
 const searchHotel = async (searchString) => {
   const hotels = await pool.query(
-    `select * from property where address->>'location' ilike '%${searchString}%' or name ilike '%${searchString}%'`
+    `select images.imageUrl, property.id, property.name,property.address,property.price,property.type
+    from images 
+    left join property 
+    on images.property_id = property.id where address->>'location' ilike '%${searchString}%' or name ilike '%${searchString}%'`
   )
   return hotels.rows
 }
 
 const filterHotels = async (minPrice, maxPrice) => {
   const hotels = await pool.query(
-    "select * from property where price < $1 and price > $2",
+    `select images.imageUrl, property.id, property.name,property.address,property.price,property.type
+    from images 
+    left join property 
+    on images.property_id = property.id where price < $1 and price > $2`,
     [maxPrice, minPrice]
   )
   return hotels.rows
