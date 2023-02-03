@@ -41,7 +41,7 @@ const PropertyPage = () => {
         </div>
       </div>
       <div className="flex justify-end sticky top-10">
-        <AboutProperty />
+        <AboutProperty data={propertyData} />
         <Reservation price={propertyData?.price} />
       </div>
     </div>
