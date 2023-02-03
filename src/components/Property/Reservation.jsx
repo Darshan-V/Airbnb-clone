@@ -9,7 +9,7 @@ const Reservation = (price) => {
 
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
-  const [isBooked, setIsBooked] = useState(true)
+  const [isBooked, setIsBooked] = useState(false)
 
   const navigate = useNavigate()
   const params = useParams()
@@ -60,7 +60,7 @@ const Reservation = (price) => {
   }
 
   return (
-    <div className="flex  border border-black justify-center ml-auto w-96 h-80 sticky">
+    <div className="flex  border border-black justify-center w-96 h-80 sticky top-40">
       <div className="flex mb-auto">
         <div className="flex m-auto ">
           <div className="flex m-auto">
