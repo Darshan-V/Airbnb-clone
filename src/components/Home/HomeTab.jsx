@@ -20,18 +20,23 @@ import { filterByPrice, getHotelsByType } from "../lib/apiClient"
 const HomeTab = ({ data, change }) => {
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(0)
+  const [filteredHotels, setFilteredHotels] = useState([])
   const navigate = useNavigate()
   const params = useParams()
 
   const getHotelsByHotelType = async (type) => {
     const hotels = await getHotelsByType(type)
     change(hotels)
+    setFilteredHotels(hotels)
   }
 
   const filterHotelsbyPrice = async (min, max) => {
+    if (min > max || min < 500 || max < min) {
+      return "minimum cannot be greater than maximum value"
+    }
     const hotels = await filterByPrice(min, max)
-    // console.log(hotels)
     change(hotels)
+    setFilteredHotels(hotels)
   }
 
   const links = [
@@ -199,7 +204,7 @@ const HomeTab = ({ data, change }) => {
                   <input
                     placeholder="min"
                     className="w-full h-full p-1 rounded-md"
-                    onChange={(e) => {
+                    onBlur={(e) => {
                       setMinPrice(e.target.value)
                     }}
                   />
@@ -208,8 +213,10 @@ const HomeTab = ({ data, change }) => {
                   <input
                     placeholder="max"
                     className="w-full h-full p-1 rounded-md"
-                    onChange={(e) => {
-                      setMaxPrice(e.target.value)
+                    onBlur={(e) => {
+                      if (e.target.value > minPrice) {
+                        setMaxPrice(e.target.value)
+                      }
                     }}
                   />
                 </div>
@@ -218,6 +225,7 @@ const HomeTab = ({ data, change }) => {
                 <Popup position="top center" nested>
                   <span></span>
                 </Popup>
+                {maxPrice < minPrice ? <p>Invalid price range</p> : null}
                 <button
                   className="button"
                   onClick={() => {
