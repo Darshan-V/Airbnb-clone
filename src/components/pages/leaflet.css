@@ -1,0 +1,17 @@
+.leaflet-container {
+  display: flex;
+  height: 40rem; /* <-- map height */
+  width: 100%;
+  border: groove;
+  margin: auto;
+}
+
+.leaflet-pane {
+  height: 100%; /* <-- map height */
+  width: 100%;
+}
+
+.leaflet-popup {
+  position: fixed;
+  height: 45rem;
+}
