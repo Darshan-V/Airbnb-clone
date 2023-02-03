@@ -1,6 +1,6 @@
 import React from "react"
 
-const AboutProperty = () => {
+const AboutProperty = ({ data }) => {
   return (
     <div className="flex flex-col m-auto w-3/5">
       <div className="w-42">
@@ -71,6 +71,12 @@ const AboutProperty = () => {
             <li className="text-slate-700 font-thin italic">feature</li>
           </ul>
         </div>
+      </div>
+      <div className="w-full h-96">
+        <iframe
+          src={`https://maps.google.com/maps?q=${data?.address?.lat},${data?.address?.long}&output=embed`}
+          className="w-full h-full"
+        />
       </div>
     </div>
   )
