@@ -15,8 +15,11 @@ function App() {
           <Route path="signup" element={<Signup />} />
           <Route path="/home/:type?" element={<Places />} />
           <Route path="/property/:id?/?" element={<PropertyPage />} />
-          <Route path="/booking/:propertyname?" element={<BookingSlots />} />
-          <Route path="/property_images/:id" element={<PropertyImages />} />
+          <Route path="/booking/:id?" element={<BookingSlots />} />
+          <Route
+            path="/property_images/:property_id?/:user_id?"
+            element={<PropertyImages />}
+          />
         </Routes>
       </Router>
     </div>
