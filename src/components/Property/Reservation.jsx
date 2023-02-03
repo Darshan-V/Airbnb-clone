@@ -38,9 +38,10 @@ const Reservation = (price) => {
     ) {
       setIsBooked(true)
     } else {
+      validateDates(checkIn, checkOut, hotelId)
       if (isBooked === false) {
-        navigate("/booking")
-        reserveSlot(hotelId, checkIn, checkOut, total)
+        navigate(`/booking/${hotelId}`)
+        // reserveSlot(hotelId, checkIn, checkOut, total)
       }
     }
     return <p>slot not available</p>
