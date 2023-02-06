@@ -15,3 +15,7 @@
 .leaflet-popup {
   position: fixed;
 }
+
+.leaflet-popup-content-wrapper {
+  width: 15rem;
+}

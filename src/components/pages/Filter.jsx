@@ -1,8 +1,6 @@
 import React from "react"
 import { Marker, Popup, TileLayer, MapContainer, Tooltip } from "react-leaflet"
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import "./leaflet.css"
-import { Icon } from "leaflet"
 import { useNavigate } from "react-router"
 
 const Filter = ({ data }) => {
@@ -24,17 +22,10 @@ const Filter = ({ data }) => {
         {data.map((property, i) => (
           <Marker
             position={[property?.address?.lat, property?.address?.long]}
-            icon={
-              new Icon({
-                iconUrl: markerIconPng,
-                iconSize: [20, 30],
-                iconAnchor: [12, 42]
-              })
-            }
             key={i}
           >
             <Popup>
-              <div className="flex flex-row w-auto ">
+              <div className="flex flex-row w-full">
                 <div className="mr-auto rounded-xl">
                   <img
                     src={property?.imageurl[0]}
