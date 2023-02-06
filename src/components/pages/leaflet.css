@@ -4,14 +4,14 @@
   width: 100%;
   border: groove;
   margin: auto;
+  z-index: auto;
 }
 
 .leaflet-pane {
-  height: 100%; /* <-- map height */
-  width: 100%;
+  height: auto; /* <-- map height */
+  width: auto;
 }
 
 .leaflet-popup {
   position: fixed;
-  height: 45rem;
 }
