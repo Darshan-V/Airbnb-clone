@@ -8,7 +8,7 @@ import PropertyPage from "./components/Property/PropertyPage"
 
 function App() {
   return (
-    <div className="flex flex-col m-12">
+    <div className="flex flex-col m-1">
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
