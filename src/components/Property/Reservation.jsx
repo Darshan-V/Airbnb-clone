@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
 import { reserveSlot, checkSlots } from "../lib/apiClient"
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Input,
+  Button
+} from "@chakra-ui/react"
+import { useDispatch } from "react-redux"
+import { setReservation } from "../../redux/reservationSlice"
 
-const Reservation = (price) => {
+const Reservation = ({ price }) => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().substring(0, 10)
   )
+
+  const dispatch = useDispatch()
 
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
@@ -22,29 +34,31 @@ const Reservation = (price) => {
   const validateDates = async (checkIn, checkOut, hotelId) => {
     const isAvailable = await checkSlots(checkIn, checkOut, hotelId)
     if (isAvailable.length === 0) {
-      setIsBooked(false)
+      return setIsBooked(false)
     } else {
-      setIsBooked(true)
+      return setIsBooked(true)
     }
   }
 
   const makeBooking = () => {
-    const total = price.price * nights
-    if (
-      checkIn < Date.now() ||
-      checkIn >= checkOut ||
-      checkOut <= checkIn ||
-      checkOut <= Date.now()
-    ) {
-      setIsBooked(true)
-    } else {
+    const total = price * nights
+    if (isBooked) {
       validateDates(checkIn, checkOut, hotelId)
-      if (isBooked === false) {
-        navigate(`/booking/${hotelId}`)
-        // reserveSlot(hotelId, checkIn, checkOut, total)
-      }
     }
-    return <p>slot not available</p>
+
+    dispatch(
+      setReservation({
+        checkIn: checkIn,
+        checkOut: checkOut,
+        nights: nights,
+        hotelId: hotelId,
+        price: price
+      })
+    )
+    console.log(isBooked)
+    navigate(`/booking/${hotelId}`)
+    const status = "reserved"
+    reserveSlot(hotelId, checkIn, checkOut, total, status)
   }
 
   const getCheckout = (event) => {
@@ -56,107 +70,144 @@ const Reservation = (price) => {
   const getCheckin = async (event) => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
+
     if (checkOut) validateDates(checkInDate, checkOut, hotelId)
   }
 
   return (
-    <div className="flex  border border-black justify-center w-96 h-80 sticky top-40">
-      <div className="flex mb-auto">
-        <div className="flex m-auto ">
-          <div className="flex m-auto">
-            <div className="flex flex-col justify-center align-middle w-96 m-1">
-              <div className="flex flex-col m-1">
-                <div className="flex justify-between align-middle">
-                  <span className="text-lg m-1 font-sans font-semibold">
-                    {price?.price}/night
-                  </span>
-                  {/* <i className="m-1">{hotel?.stars}</i> */}
-                </div>
-                <div className="flex flex-col justify-evenly m-1 ">
-                  <div className="flex justify-between border-2 mt-auto border-black rounded-md">
-                    <div className="border border-black w-1/2">
-                      <span>
-                        <i className="pl-2">Checkin Date</i>
-                      </span>
-                      <input
-                        type="date"
-                        value={checkIn}
-                        className="w-full pl-2"
-                        min={Date.now()}
-                        onChange={(e) => {
-                          getCheckin(e)
-                        }}
-                      />
-                      {checkIn <= Date.now() || checkIn > checkOut ? (
-                        <p className="text-red-600 text-xs ml-2">
-                          Invalid check in date
-                        </p>
-                      ) : null}
-                    </div>
-                    <div className="border border-black w-1/2">
-                      <span>
-                        <i className="pl-2">Checkout Date</i>
-                      </span>
-                      <input
-                        type="date"
-                        value={checkOut}
-                        className="w-full pl-2"
-                        onChange={(e) => {
-                          getCheckout(e)
-                        }}
-                      />
-                      {checkOut <= checkIn || checkOut <= Date.now() ? (
-                        <p className="text-red-600 text-xs ml-2">
-                          Invalid check out date
-                        </p>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-                <div className="m-auto">
-                  <button
-                    className="bg-red-600 border rounded-lg w-80 h-8 m-3"
-                    onClick={() => {
-                      makeBooking()
-                    }}
-                  >
-                    Reserve
-                  </button>
-                </div>
+    <Card
+      w="25rem"
+      h="20rem"
+      display="flex"
+      border="2px"
+      position="sticky"
+      top="30rem"
+    >
+      <CardHeader mr="auto" borderBottom="1px" w="full">
+        <span className="text-xl font-mono font-semibold">&#8377; {price}</span>
+        <span className="text-md font-mono font-thin">/Night</span>
+      </CardHeader>
+      <CardBody w="full" m="auto" borderBottom="1px" h="full">
+        <div className="flex flex-col w-full">
+          <div className="flex flex-row w-full  rounded-lg">
+            {checkIn < currentDate ? (
+              <div className="w-full flex flex-col h-full border rounded-md border-red-600 bg-red-300">
+                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
+                  CheckIn Date
+                </span>
+                <Input
+                  placeholder="Select Checkin Date"
+                  size="sm"
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => {
+                    getCheckin(e)
+                  }}
+                />
               </div>
-              <div className="m-auto">
-                {isBooked ? (
-                  <div>
-                    <span className="text text-red-600">
-                      Slot not available
-                    </span>
-                  </div>
-                ) : (
-                  <p>You won't be charged yet</p>
-                )}
+            ) : (
+              <div className="w-full flex flex-col h-full border border-black rounded-md mr-1">
+                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
+                  CheckIn Date
+                </span>
+                <Input
+                  placeholder="Select Checkin Date"
+                  size="sm"
+                  type="date"
+                  value={checkIn}
+                  borderTop="1px"
+                  onChange={(e) => {
+                    getCheckin(e)
+                  }}
+                />
               </div>
-              <div className=" m-1 ">
-                <section className="calculations sec">
-                  <div className="flex flex-col">
-                    <div className="flex flex-row justify-between">
-                      <p className="underline">
-                        Rs {price?.price} x {!nights ? 0 : nights}
-                      </p>
-                      <p>{`${price?.price * (!nights ? 0 : nights)}`}</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="underline">service fee</p>
-                      <span>Rs 1000</span>
-                    </div>
-                  </div>
-                  <div className="total before taxes"></div>
-                </section>
+            )}
+            {checkOut <= currentDate || checkOut <= checkIn ? (
+              <div className="w-full flex flex-col h-full border rounded-md border-red-600 bg-red-300">
+                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
+                  CheckOut Date
+                </span>
+                <Input
+                  placeholder="Select CheckOut Date"
+                  size="sm"
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => {
+                    getCheckout(e)
+                  }}
+                />
               </div>
+            ) : (
+              <div className="w-full flex flex-col  border border-black rounded-md h-full ">
+                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
+                  CheckOut Date
+                </span>
+                <Input
+                  placeholder="Select CheckOut Date"
+                  size="sm"
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => {
+                    getCheckout(e)
+                  }}
+                />
+              </div>
+            )}
+          </div>
+          <div className="w-full m-1">
+            {isBooked ||
+            checkIn < currentDate ||
+            checkOut <= checkIn ||
+            checkOut <= currentDate ? (
+              <div className="mt-4">
+                <Button colorScheme="red" isDisabled w="full">
+                  Reserve
+                </Button>
+                <span className="text-xs text-red-700 italic">
+                  *Invalid Date
+                </span>
+              </div>
+            ) : (
+              <div className="mt-4">
+                <Button
+                  colorScheme="red"
+                  m="auto"
+                  w="full"
+                  onClick={makeBooking}
+                >
+                  Reserve
+                </Button>
+              </div>
+            )}
+          </div>
+          {isBooked ? (
+            <p className="text-red text-sm italic font-sans font-thin">
+              *Slot not available
+            </p>
+          ) : null}
+          <div className="flex flex-col w-full mt-4">
+            <div className="flex flex-row ">
+              <span className="mr-auto text-slate-600 font-mono font-semibold">
+                &#8377;{price} x {nights}
+              </span>
+              <span className="ml-auto text-slate-700 font-mono font-bold">
+                &#8377;{price * nights}
+              </span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </CardBody>
+      <CardFooter>
+        <div className="flex w-full">
+          <span className="mr-auto text-slate-800 font-mono font-semibold text-lg">
+            Total
+          </span>
+          <span className="ml-auto text-slate-900 font-mono font-bold text-lg">
+            &#8377; {price * nights}
+          </span>
+        </div>
+      </CardFooter>
+    </Card>
   )
 }
 

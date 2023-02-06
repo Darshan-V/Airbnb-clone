@@ -28,7 +28,7 @@ const PropertyPage = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="flex flex-col w-full m-auto">
+    <div className="flex flex-col w-full ">
       <Topbar />
       <div className="flex flex-col w-4/6 m-auto">
         <p className="font-sans font-bold text-lg">

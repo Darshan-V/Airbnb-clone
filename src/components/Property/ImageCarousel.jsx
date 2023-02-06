@@ -1,10 +1,11 @@
 import React from "react"
 import { Carousel } from "react-responsive-carousel"
 import "react-responsive-carousel/lib/styles/carousel.min.css"
+import "./carousel.css"
 
 const ImageCarousel = ({ images }) => {
   return (
-    <div className="w-3/4 mr-auto rounded-lg">
+    <div className="w-3/4 h-full mr-auto rounded-lg">
       <Carousel
         showArrows={true}
         autoPlay={false}

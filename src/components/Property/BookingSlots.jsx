@@ -1,6 +1,10 @@
 import React from "react"
+import { useSelector } from "react-redux"
 
 const BookingSlots = () => {
+  const reservation = useSelector((state) => state.reservation)
+  console.log(reservation)
+  console.log(localStorage.getItem("reserveData"))
   return (
     <div className="flex ">
       <div className="flex flex-col w-96">
