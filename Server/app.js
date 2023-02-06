@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import { initDB } from "./models/config/init.js"
-import { routes as signupRouter } from "./routes/Signup.js"
+import { routes as signupRouter } from "./routes/signup.js"
 import { routes as signinRouter } from "./routes/signin.js"
 import { routes as hotelRouter } from "./routes/hotel.js"
 import { routes as userRouter } from "./routes/user.js"
