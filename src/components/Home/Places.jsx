@@ -30,6 +30,7 @@ const Places = () => {
       }
     }
   }
+
   useEffect(() => {
     loadHotelList()
   }, [])
@@ -50,7 +51,7 @@ const Places = () => {
                 >
                   <div className=" w-80 h-60 border rounded-md ">
                     <img
-                      src={propertyData[i]?.imageurl[i]}
+                      src={propertyData[i]?.imageurl[0]}
                       className="border rounded-lg w-80 h-60"
                     />
                   </div>
