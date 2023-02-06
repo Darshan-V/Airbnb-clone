@@ -1,5 +1,5 @@
 import React from "react"
-import { Marker, Popup, TileLayer, MapContainer } from "react-leaflet"
+import { Marker, Popup, TileLayer, MapContainer, Tooltip } from "react-leaflet"
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import "./leaflet.css"
 import { Icon } from "leaflet"
@@ -19,7 +19,7 @@ const Filter = ({ data }) => {
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {data.map((property, i) => (
           <Marker
@@ -56,6 +56,14 @@ const Filter = ({ data }) => {
                 </div>
               </div>
             </Popup>
+            <Tooltip>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold">{property?.name}</span>
+                <span className="text-xs text-slate-700">
+                  Rs {property?.price} / Night
+                </span>
+              </div>
+            </Tooltip>
           </Marker>
         ))}
       </MapContainer>
