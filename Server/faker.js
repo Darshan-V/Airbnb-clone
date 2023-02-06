@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker"
 import { pool } from "./models/config/init.js"
 async function insertFake() {
+  const type = ["island", "poolside", "camping"]
   for (let i = 0; i < 10; i++) {
     let name = faker.address.cityName()
     let address = faker.address.city()
@@ -12,11 +13,14 @@ async function insertFake() {
       lat: latitude,
       long: longitude
     }
+    price = Number(price)
+    let ptype = type[Math.floor(Math.random() * type.length)]
     await pool.query(
-      "insert into property(name,address,price) values($1, $2, $3)",
-      [name, fullAddress, price]
+      "insert into property(name,address,price,type) values($1, $2, $3, $4)",
+      [name, fullAddress, price, ptype]
     )
-    console.log(name)
+    // console.log(name, price, fullAddress)
+    // console.log(ptype)
   }
 }
 
@@ -27,10 +31,12 @@ async function fakerImages() {
     store.push(images)
   }
   store = JSON.stringify(store)
-
-  await pool.query("insert into images(property_id,Imageurl) values($1, $2)", [
-    13,
-    store
-  ])
+  for (let i = 24; i <= 33; i++) {
+    // await pool.query(
+    //   "insert into images(property_id,Imageurl) values($1, $2)",
+    //   [i, store]
+    // )
+    console.log(i, store)
+  }
 }
 fakerImages()
