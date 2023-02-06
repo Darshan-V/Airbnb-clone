@@ -21,7 +21,7 @@
 - [ ] React date picker / disable booked dates
 - [ ] use query params for the filter/search -> one filter api
 - [x] file naming use only camelCase
-- [ ] implement the middleware for verify token
+- [x] implement the middleware for verify token
 - [ ] fix routes
 - [x] move verify token to middleware folder
 - [ ] better exception handling {backend} different error codes for all the possible cases
