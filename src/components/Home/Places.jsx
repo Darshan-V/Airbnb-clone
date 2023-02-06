@@ -38,7 +38,7 @@ const Places = () => {
   return (
     <div className="flex flex-wrap justify-center w-full">
       <div className="flex w-full flex-wrap justify-center m-auto">
-        <Topbar />
+        <Topbar data={propertyData} change={setPropertyData} />
         <HomeTab data={propertyData} change={setPropertyData} />
         {!mapView ? (
           <div className="flex w-full flex-wrap justify-center m-auto">
