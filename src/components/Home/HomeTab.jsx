@@ -31,7 +31,7 @@ const HomeTab = ({ data, change }) => {
   }
 
   const filterHotelsbyPrice = async (min, max) => {
-    if (min > max || min < 500 || max < min) {
+    if (min > max || min < 500) {
       return "minimum cannot be greater than maximum value"
     }
     const hotels = await filterByPrice(min, max)
