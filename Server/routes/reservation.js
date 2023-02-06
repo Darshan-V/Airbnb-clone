@@ -1,6 +1,6 @@
 import express from "express"
 import { checkAvailablity, makeBooking } from "../controllers/reservation.js"
-import { verifyToken } from "../controllers/verifyToken.js"
+import { verifyToken } from "../middleware/verifyToken.js"
 const routes = express.Router()
 
 routes.get(

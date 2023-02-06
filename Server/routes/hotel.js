@@ -7,7 +7,7 @@ import {
   searchHotels,
   controlFilterHotels
 } from "../controllers/hotels.js"
-import { verifyToken } from "../controllers/verifyToken.js"
+import { verifyToken } from "../middleware/verifyToken.js"
 
 const routes = express.Router()
 
