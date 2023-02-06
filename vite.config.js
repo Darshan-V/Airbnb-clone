@@ -4,5 +4,10 @@ import tailwind from "./tailwind.config.cjs"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwind]
+  plugins: [react(), tailwind],
+  server: {
+    watch: {
+      usePolling: true
+    }
+  }
 })
