@@ -13,7 +13,7 @@ async function checkAvailablity(req, res) {
 async function makeBooking(req, res) {
   try {
     const hotelId = req.params.id
-    const { checkIn, checkOut, total } = req.body
+    const { checkIn, checkOut, total, status } = req.body
     const userId = req.userId
     if (checkIn < Date.now() || checkOut <= checkIn || checkOut <= Date.now()) {
       res.json("invalid date format").status(409)
@@ -23,7 +23,8 @@ async function makeBooking(req, res) {
         checkOut,
         hotelId,
         userId,
-        total
+        total,
+        status
       )
       res.json(confirmBooking)
     }
