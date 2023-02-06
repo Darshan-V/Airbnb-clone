@@ -8,7 +8,7 @@ const createUsers = `create table if not exists users(
 const createPlaces = `create table if not exists property(
     name varchar(100),
     address JSON,
-    price varchar(10),
+    price integer,
     id serial primary key,
     type text
 
