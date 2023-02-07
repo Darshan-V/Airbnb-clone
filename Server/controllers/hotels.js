@@ -30,7 +30,14 @@ async function getHotelImages(req, res) {
 async function getHotelByHotelId(req, res) {
   try {
     const hotelId = req.params.id
+    if (!hotelId || hotelId === "undefined") {
+      res.status(400).json("required hotel field")
+      return
+    }
     const hotel = await getHotelById(hotelId)
+    if (hotel.length === 0) {
+      res.status(404).json("Requested property not exist")
+    }
     res.json(hotel[0])
   } catch (err) {
     res.sendStatus(500)
@@ -61,6 +68,7 @@ async function controlFilterHotels(req, res) {
   try {
     const maxPrice = req.params.maxPrice
     const minPrice = req.params.minPrice
+    console.log(req.params)
     const hotels = await filterHotels(minPrice, maxPrice)
     res.json(hotels)
   } catch (error) {
