@@ -31,9 +31,6 @@ const HomeTab = ({ data, change }) => {
   }
 
   const filterHotelsbyPrice = async (min, max) => {
-    if (min > max || min < 500) {
-      return "minimum cannot be greater than maximum value"
-    }
     const hotels = await filterByPrice(min, max)
     change(hotels)
     setFilteredHotels(hotels)
@@ -204,7 +201,7 @@ const HomeTab = ({ data, change }) => {
                   <input
                     placeholder="min"
                     className="w-full h-full p-1 rounded-md"
-                    onBlur={(e) => {
+                    onChange={(e) => {
                       setMinPrice(e.target.value)
                     }}
                   />
@@ -213,7 +210,7 @@ const HomeTab = ({ data, change }) => {
                   <input
                     placeholder="max"
                     className="w-full h-full p-1 rounded-md"
-                    onBlur={(e) => {
+                    onChange={(e) => {
                       if (e.target.value > minPrice) {
                         setMaxPrice(e.target.value)
                       }
@@ -221,13 +218,13 @@ const HomeTab = ({ data, change }) => {
                   />
                 </div>
               </div>
-              <div className="actions">
+              <div className="flex m-2 ">
                 <Popup position="top center" nested>
                   <span></span>
                 </Popup>
-                {maxPrice < minPrice ? <p>Invalid price range</p> : null}
+
                 <button
-                  className="button"
+                  className="ml-auto bg-orange-400 w-24 rounded-md"
                   onClick={() => {
                     filterHotelsbyPrice(minPrice, maxPrice)
                     close()
