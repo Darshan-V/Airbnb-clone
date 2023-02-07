@@ -22,7 +22,7 @@ routes.get("/hotels/types/:hotelType?", verifyToken, getHotelsByHotelType)
 routes.get("/hotels/search/:searchString", verifyToken, searchHotels)
 
 routes.get(
-  "/hotels/price/:minPrice?/:maxPrice?",
+  "/hotels/price/:minPrice-:maxPrice",
   verifyToken,
   controlFilterHotels
 )
