@@ -87,7 +87,7 @@ const Reservation = ({ price }) => {
         <span className="text-xl font-mono font-semibold">&#8377; {price}</span>
         <span className="text-md font-mono font-thin">/Night</span>
       </CardHeader>
-      <CardBody w="full" m="auto" borderBottom="1px" h="full">
+      <CardBody w="full" m="auto" h="full">
         <div className="flex flex-col w-full">
           <div className="flex flex-row w-full  rounded-lg">
             {checkIn < currentDate ? (
@@ -196,8 +196,6 @@ const Reservation = ({ price }) => {
             </div>
           </div>
         </div>
-      </CardBody>
-      <CardFooter>
         <div className="flex w-full">
           <span className="mr-auto text-slate-800 font-mono font-semibold text-lg">
             Total
@@ -206,7 +204,7 @@ const Reservation = ({ price }) => {
             &#8377; {price * nights}
           </span>
         </div>
-      </CardFooter>
+      </CardBody>
     </Card>
   )
 }
