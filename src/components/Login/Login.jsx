@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { signin } from "./utils/config"
 
@@ -10,11 +10,15 @@ const Login = () => {
   const doSignup = () => {
     navigate("/signup")
   }
-
   const login = async () => {
-    await signin(userName, password)
+    const message = await signin(userName, password)
+    console.log(message)
+    if (message.status === 401) {
+      return <p>user not exist signup</p>
+    }
     navigate(`/home`)
   }
+
   return (
     <div className="flex flex-col m-auto pt-2  border border-black rounded-md bg-slate-200">
       <p className="text font-semibold text-2xl pb-3 pl-2">Login</p>
