@@ -7,6 +7,10 @@ async function signin(req, res) {
       res.status(406).json("empty credentials")
     } else {
       const token = await authenticateUser(email, password)
+      if (!token) {
+        res.status(417).json("no token")
+        return
+      }
       res
         .cookie("token", token, { httpOnly: true, sameSite: true })
         .json("loggend in")
