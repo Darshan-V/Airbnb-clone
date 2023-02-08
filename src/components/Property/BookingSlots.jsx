@@ -1,10 +1,12 @@
 import React from "react"
-import { useSelector } from "react-redux"
+import { useParams } from "react-router"
+import { useGetBookingsQuery } from "../../redux/utils"
 
 const BookingSlots = () => {
-  const reservation = useSelector((state) => state.reservation)
-  console.log(reservation)
-  console.log(localStorage.getItem("reserveData"))
+  const params = useParams()
+  const hotelId = params.id
+  const { data } = useGetBookingsQuery(hotelId)
+  console.log(data)
   return (
     <div className="flex ">
       <div className="flex flex-col w-96">
@@ -13,17 +15,21 @@ const BookingSlots = () => {
             Confirm Booking
           </h1>
         </div>
-        <div>
-          <div className="flex flex-col w-96 mr-auto border m-5">
-            <span>Your Trip</span>
-            <div>
+        {data?.map((reservation, i) => (
+          <div key={i}>
+            <div className="flex flex-col w-96 mr-auto border m-5">
+              <span>Your Trip</span>
               <div>
-                <span>Dates</span>
-                <p>from-to month</p>
+                <div>
+                  <span>
+                    {reservation?.check_in} to {reservation?.check_out}
+                  </span>
+                  <p></p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ))}
         <div className="flex m-auto w-4/5 bg-pink-600 h-10 rounded-md">
           <button className="w-84 bg-pink-600 m-auto text-white text-semibold text-xl font-mono">
             Continue
