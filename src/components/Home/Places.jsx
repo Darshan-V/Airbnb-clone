@@ -75,26 +75,37 @@ const Places = () => {
           <Filter data={propertyData} />
         )}
       </div>
-      <div
-        className="flex sticky bottom-10 m-auto w-52 bg-black h-10 rounded-2xl"
-        onClick={() => {
-          if (mapView === true) {
-            setMapView(false)
-          } else {
-            setMapView(true)
-          }
-        }}
-      >
-        {mapView ? (
+      {mapView ? (
+        <div
+          className="flex sticky bottom-10 m-auto w-52 bg-black h-10 rounded-2xl"
+          onClick={() => {
+            if (mapView === true) {
+              setMapView(false)
+            } else {
+              setMapView(true)
+            }
+          }}
+        >
           <button className="text-white m-auto w-full h-full rounded-2xl">
             Show List
           </button>
-        ) : (
+        </div>
+      ) : (
+        <div
+          className="flex sticky bottom-10 m-auto w-52 bg-black h-10 rounded-2xl"
+          onClick={() => {
+            if (mapView === true) {
+              setMapView(false)
+            } else {
+              setMapView(true)
+            }
+          }}
+        >
           <button className="text-white m-auto w-full h-full rounded-2xl">
-            Show on map
+            Show on Map
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
