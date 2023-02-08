@@ -16,7 +16,7 @@ async function signin(req, res) {
         .json("loggend in")
     }
   } catch (error) {
-    res.status(401).send(error.message)
+    res.status(401).send("test error")
   }
 }
 
