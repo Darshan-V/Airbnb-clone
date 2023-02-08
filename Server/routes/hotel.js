@@ -11,19 +11,21 @@ import { verifyToken } from "../middleware/verifyToken.js"
 
 const routes = express.Router()
 
-routes.get("/hotels", verifyToken, getAllHotels)
+routes.use("/hotels", verifyToken)
 
-routes.get("/hotels/:id/images", verifyToken, getHotelImages)
+routes.get("/hotels", getAllHotels)
 
-routes.get("/hotels/:id", verifyToken, getHotelByHotelId)
+routes.get("/hotels/:id/images", getHotelImages)
 
-routes.get("/hotels/types/:hotelType?", verifyToken, getHotelsByHotelType)
+routes.get("/hotels/:id", getHotelByHotelId)
 
-routes.get("/hotels/search/:searchString", verifyToken, searchHotels)
+routes.get("/hotels/types/:hotelType?", getHotelsByHotelType)
+
+routes.get("/hotels/search/:searchString", searchHotels)
 
 routes.get(
   "/hotels/price/:minPrice-:maxPrice",
-  verifyToken,
+
   controlFilterHotels
 )
 
