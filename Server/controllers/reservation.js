@@ -1,4 +1,8 @@
-import { checkAvailableSlots, reserveSlot } from "../models/bookingsModel.js"
+import {
+  checkAvailableSlots,
+  reserveSlot,
+  getReservation
+} from "../models/bookingsModel.js"
 
 async function checkAvailablity(req, res) {
   try {
@@ -52,4 +56,22 @@ async function makeBooking(req, res) {
   }
 }
 
-export { checkAvailablity, makeBooking }
+async function getReservedEntry(req, res) {
+  try {
+    const hotelId = req.params.propertyId
+    const userId = req.userId
+    // console.log(hotelId, userId)
+    if (!hotelId || hotelId === "undefined") {
+      res.status(406).json("required hotel id")
+    } else if (!userId || userId === "undefined") {
+      res.status(403).json("invalid user")
+    } else {
+      const reservationData = await getReservation(hotelId, userId)
+      res.json(reservationData)
+    }
+  } catch (error) {
+    res.sendStatus(500)
+  }
+}
+
+export { checkAvailablity, makeBooking, getReservedEntry }
