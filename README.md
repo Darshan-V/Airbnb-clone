@@ -26,7 +26,9 @@
 - [x] move verify token to middleware folder
 - [ ] better exception handling {backend} different error codes for all the possible cases
 - [ ] validations backend
+- [ ] include created at to all the tables
 
 Frontend
 
 - [ ] default map center getfrom geolocation
+- [ ] include routes for mapview, filter, search
