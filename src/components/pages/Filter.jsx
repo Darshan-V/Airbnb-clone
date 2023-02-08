@@ -8,7 +8,7 @@ const Filter = ({ data }) => {
   const navigate = useNavigate()
 
   return (
-    <div className="w-full">
+    <div className="w-full sticky overflow-hidden">
       <MapContainer
         center={defaultCenter}
         zoom={5}
