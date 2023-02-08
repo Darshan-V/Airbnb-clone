@@ -1,5 +1,9 @@
 import express from "express"
-import { checkAvailablity, makeBooking } from "../controllers/reservation.js"
+import {
+  checkAvailablity,
+  makeBooking,
+  getReservedEntry
+} from "../controllers/reservation.js"
 import { verifyToken } from "../middleware/verifyToken.js"
 const routes = express.Router()
 
@@ -9,6 +13,8 @@ routes.get(
   checkAvailablity
 )
 
-routes.post("/hotels/:id/booking/", verifyToken, makeBooking)
+routes.post("/hotels/:id/booking/", makeBooking)
+
+routes.get("/bookings/:propertyId", verifyToken, getReservedEntry)
 
 export { routes }
