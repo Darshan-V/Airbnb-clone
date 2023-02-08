@@ -1,7 +1,8 @@
 const createUsers = `create table if not exists users(
     name varchar unique,
     email varchar unique not null,
-    password varchar,
+    password varchar not null,
+    created_at timestamp default current_timestamp,
     id serial primary key
 )`
 
@@ -10,6 +11,7 @@ const createPlaces = `create table if not exists property(
     address JSON,
     price integer,
     id serial primary key,
+    created_at timestamp default current_timestamp,
     type text
 
 )`
@@ -21,6 +23,7 @@ const createBookings = `create table if not exists bookings(
     property_id int not null,
     user_id int not null,
     total_price int,
+    created_at timestamp default current_timestamp,
     primary key(id),
     constraint fk_place foreign key(property_id) references property(id),
     constraint fk_user foreign key(user_id) references users(id)
@@ -29,6 +32,7 @@ const createBookings = `create table if not exists bookings(
 const createImages = `create table if not exists images(
     property_id int primary key  ,
     imageUrl JSON,
+    created_at timestamp default current_timestamp,
     constraint fk_property foreign key(property_id) references property(id))`
 
 export { createBookings, createImages, createPlaces, createUsers }
