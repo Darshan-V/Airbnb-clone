@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
 import { reserveSlot, checkSlots } from "../lib/apiClient"
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Input,
-  Button
-} from "@chakra-ui/react"
+import { Card, CardHeader, CardBody, Input, Button } from "@chakra-ui/react"
 import { useDispatch } from "react-redux"
 import { setReservation } from "../../redux/reservationSlice"
 
@@ -56,9 +49,9 @@ const Reservation = ({ price }) => {
       })
     )
     console.log(isBooked)
-    navigate(`/booking/${hotelId}`)
     const status = "reserved"
     reserveSlot(hotelId, checkIn, checkOut, total, status)
+    navigate(`/booking/${hotelId}`)
   }
 
   const getCheckout = (event) => {
