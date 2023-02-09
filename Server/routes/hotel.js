@@ -25,7 +25,7 @@ routes.get("/hotels/types/:hotelType?", getHotelsByHotelType)
 routes.get("/hotels/search/:searchString", searchHotels)
 
 routes.get(
-  "/filters/price",
+  "/filters",
 
   controlFilterHotels
 )
