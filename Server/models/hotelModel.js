@@ -55,11 +55,33 @@ const filterHotels = async (minPrice, maxPrice) => {
   return hotels.rows
 }
 
+const searchListing = async (queryString) => {
+  const min = queryString.minPrice
+  const max = queryString.maxPrice
+  const type = queryString.type
+  const search = queryString.search
+  console.log(search)
+  const searchedListing = await pool.query(
+    `SELECT *
+      FROM property
+      WHERE (
+         name ilike '%' || $1 || '%' or $1 is NULL
+      )  AND (
+        price >= $2 OR $2 IS NULL
+      ) AND (
+        price <= $3 OR $3 IS NULL
+      )AND type = $4 or $4 is NULL`,
+    [search, min, max, type]
+  )
+  return searchedListing.rows
+}
+
 export {
   getHotels,
   getImages,
   getHotelById,
   getHotelByType,
   searchHotel,
-  filterHotels
+  filterHotels,
+  searchListing
 }
