@@ -5,7 +5,8 @@ import {
   getHotelByHotelId,
   getHotelsByHotelType,
   searchHotels,
-  controlFilterHotels
+  controlFilterHotels,
+  testController
 } from "../controllers/hotels.js"
 import { verifyToken } from "../middleware/verifyToken.js"
 
@@ -24,9 +25,11 @@ routes.get("/hotels/types/:hotelType?", getHotelsByHotelType)
 routes.get("/hotels/search/:searchString", searchHotels)
 
 routes.get(
-  "/hotels/price/:minPrice-:maxPrice",
+  "/filters/price",
 
   controlFilterHotels
 )
+
+routes.get("/filters/categories", testController)
 
 export { routes }
