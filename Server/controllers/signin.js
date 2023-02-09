@@ -1,4 +1,4 @@
-import { authenticateUser } from "./authenticateUser.js"
+import { authenticateUser } from "../utils/authenticateUser.js"
 
 async function signin(req, res) {
   try {
