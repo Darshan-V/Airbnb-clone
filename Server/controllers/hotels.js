@@ -4,7 +4,8 @@ import {
   getHotelById,
   getHotelByType,
   searchHotel,
-  filterHotels
+  filterHotels,
+  searchListing
 } from "../models/hotelModel.js"
 
 async function getAllHotels(req, res) {
@@ -75,8 +76,14 @@ async function controlFilterHotels(req, res) {
     res.sendStatus(500)
   }
 }
-function testController(req, res) {
-  res.json(req.query)
+async function testController(req, res) {
+  try {
+    const querystring = req.query
+    const sortedListing = await searchListing(querystring)
+    res.json(sortedListing)
+  } catch (error) {
+    res.send(error.stack)
+  }
 }
 
 export {
