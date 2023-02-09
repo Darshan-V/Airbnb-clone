@@ -60,7 +60,6 @@ const searchListing = async (queryString) => {
   const max = queryString.maxPrice
   const type = queryString.type
   const search = queryString.search
-  console.log(search)
   const searchedListing = await pool.query(
     `SELECT *
       FROM property
