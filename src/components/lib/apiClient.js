@@ -92,9 +92,12 @@ async function searchHotels(searchString) {
 }
 
 async function filterByPrice(min, max) {
-  let data = await fetch(`${apiUrl}/hotels/price/${min}-${max}`, {
-    credentials: "include"
-  })
+  let data = await fetch(
+    `${apiUrl}/filters/price?minPrice=${min}&maxPrice=${max}`,
+    {
+      credentials: "include"
+    }
+  )
   const hotels = await data.json()
   return hotels
 }
