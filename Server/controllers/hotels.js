@@ -66,15 +66,17 @@ async function searchHotels(req, res) {
 
 async function controlFilterHotels(req, res) {
   try {
-    const maxPrice = req.params.maxPrice
-    const minPrice = req.params.minPrice
-    console.log(req.params)
+    const maxPrice = req.query.maxPrice
+    const minPrice = req.query.minPrice
+    console.log(req.query)
     const hotels = await filterHotels(minPrice, maxPrice)
     res.json(hotels)
   } catch (error) {
-    console.log(error.stack)
     res.sendStatus(500)
   }
+}
+function testController(req, res) {
+  res.json(req.query)
 }
 
 export {
@@ -83,5 +85,6 @@ export {
   getHotelByHotelId,
   getHotelsByHotelType,
   searchHotels,
-  controlFilterHotels
+  controlFilterHotels,
+  testController
 }
