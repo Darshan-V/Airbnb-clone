@@ -75,28 +75,35 @@ async function login() {
   return loggedIn
 }
 
-async function getHotelsByType(hotelType) {
-  let data = await fetch(`${apiUrl}/hotels/types/${hotelType}`, {
-    credentials: "include"
-  })
-  const filteredHotels = await data.json()
-  return filteredHotels
-}
+// async function getHotelsByType(hotelType) {
+//   let data = await fetch(`${apiUrl}/hotels/types/${hotelType}`, {
+//     credentials: "include"
+//   })
+//   const filteredHotels = await data.json()
+//   return filteredHotels
+// }
 
-async function searchHotels(searchString) {
-  let data = await fetch(`${apiUrl}/hotels/search/${searchString}`, {
-    credentials: "include"
-  })
-  const hotels = await data.json()
-  return hotels
-}
+// async function searchHotels(searchString) {
+//   let data = await fetch(`${apiUrl}/hotels/search/${searchString}`, {
+//     credentials: "include"
+//   })
+//   const hotels = await data.json()
+//   return hotels
+// }
 
-async function filterByPrice(min, max) {
-  let data = await fetch(`${apiUrl}/filters?minPrice=${min}&maxPrice=${max}`, {
-    credentials: "include"
-  })
-  const hotels = await data.json()
-  return hotels
+// async function filterByPrice(min, max) {
+//   let data = await fetch(`${apiUrl}/filters?minPrice=${min}&maxPrice=${max}`, {
+//     credentials: "include"
+//   })
+//   const hotels = await data.json()
+//   return hotels
+// }
+
+async function searchListing(searchString, min, max, hotelType) {
+  let queryUrl = `${apiUrl}/filters/categories?search=${searchString}&minPrice=${min}&maxPrice=${max}&type=${hotelType}`
+  const data = await fetch(queryUrl, { credentials: "include" })
+  const searchedList = await data.json()
+  return searchedList
 }
 
 export {
@@ -108,7 +115,8 @@ export {
   getBookingsbyProperty,
   checkSlots,
   login,
-  getHotelsByType,
-  searchHotels,
-  filterByPrice
+  // getHotelsByType,
+  // searchHotels,
+  // filterByPrice,
+  searchListing
 }
