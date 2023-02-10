@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { Link } from "react-router-dom"
-import { getHotelsByType, getHotels } from "../lib/apiClient.js"
+import { getHotels, searchListing } from "../lib/apiClient.js"
 import HomeTab from "./HomeTab.jsx"
 import Topbar from "../Topbar/Topbar"
 import Filter from "../pages/Filter.jsx"
@@ -21,11 +21,15 @@ const Places = () => {
       setPropertyData(defaultView)
       navigate(`/home`)
     } else {
-      const hotels = await getHotelsByType(params?.type)
-      if (hotels === "unauthorized") {
+      let searchString = "",
+        min = 0,
+        max = 999999,
+        type = params?.type
+      const listing = await searchListing(searchString, min, max, type)
+      if (listing === "unauthorized") {
         navigate("/")
       } else {
-        setPropertyData(hotels)
+        setPropertyData(listing)
         navigate(`/home/${params?.type}`)
       }
     }

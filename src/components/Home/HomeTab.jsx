@@ -15,23 +15,27 @@ import {
   GiPalmTree
 } from "react-icons/gi"
 import Popup from "reactjs-popup"
-import { filterByPrice, getHotelsByType } from "../lib/apiClient"
+import { searchListing } from "../lib/apiClient"
 
 const HomeTab = ({ data, change }) => {
   const [minPrice, setMinPrice] = useState(0)
-  const [maxPrice, setMaxPrice] = useState(0)
+  const [maxPrice, setMaxPrice] = useState(9999999)
   const [filteredHotels, setFilteredHotels] = useState([])
   const navigate = useNavigate()
   const params = useParams()
 
   const getHotelsByHotelType = async (type) => {
-    const hotels = await getHotelsByType(type)
+    let searchString = ""
+    let min = minPrice
+    let max = maxPrice
+    let hotelType = type
+    let hotels = await searchListing(searchString, min, max, hotelType)
     change(hotels)
     setFilteredHotels(hotels)
   }
 
   const filterHotelsbyPrice = async (min, max) => {
-    const hotels = await filterByPrice(min, max)
+    const hotels = await searchListing(min, max)
     change(hotels)
     setFilteredHotels(hotels)
   }
