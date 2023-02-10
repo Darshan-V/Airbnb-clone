@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { TbAerialLift, TbSearch } from "react-icons/tb"
 import { useParams } from "react-router"
 import { Link } from "react-router-dom"
-import { getHotels, searchHotels } from "../lib/apiClient"
+import { getHotels, searchListing } from "../lib/apiClient"
 
 const Topbar = ({ data, change }) => {
   const [searchedList, setSearchedList] = useState([])
@@ -10,7 +10,7 @@ const Topbar = ({ data, change }) => {
 
   const searchProperty = async (string) => {
     if (string.length >= 1) {
-      const searchedHotels = await searchHotels(string)
+      const searchedHotels = await searchListing(string)
       setSearchedList(searchedHotels)
     }
   }
