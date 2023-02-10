@@ -3,9 +3,9 @@ import {
   getAllHotels,
   getHotelImages,
   getHotelByHotelId,
-  getHotelsByHotelType,
-  searchHotels,
-  controlFilterHotels,
+  // getHotelsByHotelType,
+  // searchHotels,
+  // controlFilterHotels,
   testController
 } from "../controllers/hotels.js"
 import { verifyToken } from "../middleware/verifyToken.js"
@@ -20,16 +20,16 @@ routes.get("/hotels/:id/images", getHotelImages)
 
 routes.get("/hotels/:id", getHotelByHotelId)
 
-routes.get("/hotels/types/:hotelType?", getHotelsByHotelType)
+// routes.get("/hotels/types/:hotelType?", getHotelsByHotelType)
 
-routes.get("/hotels/search/:searchString", searchHotels)
+// routes.get("/hotels/search/:searchString", searchHotels)
 
-routes.get(
-  "/filters",
+// routes.get(
+//   "/filters",
 
-  controlFilterHotels
-)
+//   controlFilterHotels
+// )
 
-routes.get("/filters/categories", testController)
+routes.get("/filters/categories", verifyToken, testController)
 
 export { routes }
