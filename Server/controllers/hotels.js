@@ -2,9 +2,9 @@ import {
   getHotels,
   getImages,
   getHotelById,
-  getHotelByType,
-  searchHotel,
-  filterHotels,
+  // getHotelByType,
+  // searchHotel,
+  // filterHotels,
   searchListing
 } from "../models/hotelModel.js"
 
@@ -45,37 +45,37 @@ async function getHotelByHotelId(req, res) {
   }
 }
 
-async function getHotelsByHotelType(req, res) {
-  try {
-    const hotelType = req.params.hotelType
-    const hotels = await getHotelByType(hotelType)
-    res.json(hotels)
-  } catch (err) {
-    res.sendStatus(500)
-  }
-}
+// async function getHotelsByHotelType(req, res) {
+//   try {
+//     const hotelType = req.params.hotelType
+//     const hotels = await getHotelByType(hotelType)
+//     res.json(hotels)
+//   } catch (err) {
+//     res.sendStatus(500)
+//   }
+// }
 
-async function searchHotels(req, res) {
-  try {
-    const searchString = req.params.searchString
-    const hotels = await searchHotel(searchString)
-    res.json(hotels)
-  } catch (error) {
-    res.sendStatus(500)
-  }
-}
+// async function searchHotels(req, res) {
+//   try {
+//     const searchString = req.params.searchString
+//     const hotels = await searchHotel(searchString)
+//     res.json(hotels)
+//   } catch (error) {
+//     res.sendStatus(500)
+//   }
+// }
 
-async function controlFilterHotels(req, res) {
-  try {
-    const maxPrice = req.query.maxPrice
-    const minPrice = req.query.minPrice
-    console.log(req.query)
-    const hotels = await filterHotels(minPrice, maxPrice)
-    res.json(hotels)
-  } catch (error) {
-    res.sendStatus(500)
-  }
-}
+// async function controlFilterHotels(req, res) {
+//   try {
+//     const maxPrice = req.query.maxPrice
+//     const minPrice = req.query.minPrice
+//     console.log(req.query)
+//     const hotels = await filterHotels(minPrice, maxPrice)
+//     res.json(hotels)
+//   } catch (error) {
+//     res.sendStatus(500)
+//   }
+// }
 async function testController(req, res) {
   try {
     const querystring = req.query
@@ -90,8 +90,8 @@ export {
   getAllHotels,
   getHotelImages,
   getHotelByHotelId,
-  getHotelsByHotelType,
-  searchHotels,
-  controlFilterHotels,
+  // getHotelsByHotelType,
+  // searchHotels,
+  // controlFilterHotels,
   testController
 }
