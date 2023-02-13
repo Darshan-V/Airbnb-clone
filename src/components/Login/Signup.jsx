@@ -10,8 +10,10 @@ const Signup = () => {
   const navigate = useNavigate()
 
   const userRegistration = async () => {
-    const user = await registerUser(name, email, confirmPassword)
-    navigate("/")
+    if (password === confirmPassword) {
+      await registerUser(name, email, confirmPassword)
+      navigate("/")
+    }
   }
 
   return (
