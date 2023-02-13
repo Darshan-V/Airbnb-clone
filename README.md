@@ -16,19 +16,24 @@
 
 * Bcrypt.compare returns true when password matched and return false when not matched
 
-- [ ] add route for filter
-- [ ] error message on checkin and checkout indivisualy disable reserve button on invalid dates
+- [x] add route for filter
+- [x] error message on checkin and checkout indivisualy disable reserve button on invalid dates
 - [ ] React date picker / disable booked dates
-- [ ] use query params for the filter/search -> one filter api
+- [x] use query params for the filter/search -> one filter api
 - [x] file naming use only camelCase
 - [x] implement the middleware for verify token
-- [ ] fix routes
+- [ ] fix routes / move route prefix to the app.js
 - [x] move verify token to middleware folder
 - [ ] better exception handling {backend} different error codes for all the possible cases
 - [ ] validations backend
-- [ ] include created at to all the tables
+- [x] include created at to all the tables
 
 Frontend
 
 - [ ] default map center getfrom geolocation
-- [ ] include routes for mapview, filter, search
+- [x] include routes for mapview, filter, search
+- [ ] break down reservation component to smaller components
+- [ ] implement models using ui library -> done on search
+- [ ] make a priority list
+- [ ] hide price when invalid date and slot unavailable
+- [ ] \*\*\* Layout
