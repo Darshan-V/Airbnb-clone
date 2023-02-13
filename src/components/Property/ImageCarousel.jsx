@@ -5,17 +5,18 @@ import "./carousel.css"
 
 const ImageCarousel = ({ images }) => {
   return (
-    <div className="w-3/4 h-full mr-auto rounded-lg">
+    <div className=" flex flex-row w-full h-full mr-auto rounded-lg">
       <Carousel
         showArrows={true}
         autoPlay={false}
-        width="100%"
         dynamicHeight={false}
+        infiniteLoop={true}
+        showStatus={true}
         className="m-auto "
       >
         {images.map((image, i) => (
           <div key={i}>
-            <img src={image} className="rounded-lg " />
+            <img src={image} className="rounded-lg w-full h-full" />
           </div>
         ))}
       </Carousel>

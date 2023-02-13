@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { useGetBookingsQuery } from "../../redux/utils"
 
@@ -6,7 +6,10 @@ const BookingSlots = () => {
   const params = useParams()
   const hotelId = params.id
   const { data } = useGetBookingsQuery(hotelId)
-  console.log(data)
+  const [bookingData, setBookingData] = useState([])
+  useEffect(() => {
+    setBookingData(data)
+  }, [data])
   return (
     <div className="flex ">
       <div className="flex flex-col w-96">
@@ -15,7 +18,7 @@ const BookingSlots = () => {
             Confirm Booking
           </h1>
         </div>
-        {data?.map((reservation, i) => (
+        {bookingData?.map((reservation, i) => (
           <div key={i}>
             <div className="flex flex-col w-96 mr-auto border m-5">
               <span>Your Trip</span>
@@ -24,8 +27,13 @@ const BookingSlots = () => {
                   <span>
                     {reservation?.check_in} to {reservation?.check_out}
                   </span>
-                  <p></p>
                 </div>
+                <div>
+                  <p>Status</p>
+                  <span>{reservation.status}</span>
+                </div>
+                <p>created at {reservation.created_at}</p>
+                <p>{Date.now()}</p>
               </div>
             </div>
           </div>
