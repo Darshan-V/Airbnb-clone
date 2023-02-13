@@ -1,8 +1,18 @@
 import { faker } from "@faker-js/faker"
 import { pool } from "./models/config/init.js"
 async function insertFake() {
-  const type = ["island", "poolside", "camping"]
-  for (let i = 0; i < 10; i++) {
+  const type = [
+    "island",
+    "poolside",
+    "camping",
+    "beachside",
+    "tropical",
+    "manison",
+    "privatevilla",
+    "arctic",
+    "farmhouse"
+  ]
+  for (let i = 0; i < 50; i++) {
     let name = faker.address.cityName()
     let address = faker.address.city()
     let latitude = faker.address.latitude()
@@ -26,17 +36,30 @@ async function insertFake() {
 
 async function fakerImages() {
   let store = []
-  for (let i = 0; i < 10; i++) {
-    let images = faker.image.nature(800, 800, true)
+  for (let i = 0; i < 50; i++) {
+    let images = faker.image.imageUrl(800, 800, "cat", true)
     store.push(images)
   }
   store = JSON.stringify(store)
-  for (let i = 24; i <= 33; i++) {
-    // await pool.query(
-    //   "insert into images(property_id,Imageurl) values($1, $2)",
-    //   [i, store]
-    // )
-    console.log(i, store)
+  // for (let i = 34; i <= 43; i++) {
+  //   // await pool.query(
+  //   //   "insert into images(property_id,Imageurl) values($1, $2)",
+  //   //   [i, store]
+  //   // )
+  //   console.log(i, store)
+  // }
+  return store
+}
+
+async function insertImage() {
+  for (let i = 53; i < 103; i++) {
+    let images = await fakerImages()
+    await pool.query(
+      "insert into images(property_id,Imageurl) values($1, $2)",
+      [i, images]
+    )
   }
 }
-fakerImages()
+// fakerImages()
+// insertImage()
+// insertFake()
