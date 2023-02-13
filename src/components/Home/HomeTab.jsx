@@ -21,6 +21,7 @@ const HomeTab = ({ data, change }) => {
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(9999999)
   const [filteredHotels, setFilteredHotels] = useState([])
+  const [type, setType] = useState("")
   const navigate = useNavigate()
   const params = useParams()
 
@@ -30,12 +31,15 @@ const HomeTab = ({ data, change }) => {
     let max = maxPrice
     let hotelType = type
     let hotels = await searchListing(searchString, min, max, hotelType)
+    setType(hotelType)
     change(hotels)
     setFilteredHotels(hotels)
   }
 
   const filterHotelsbyPrice = async (min, max) => {
-    const hotels = await searchListing(min, max)
+    let searchString = ""
+    let hotelType = ""
+    let hotels = await searchListing(searchString, min, max, hotelType)
     change(hotels)
     setFilteredHotels(hotels)
   }
@@ -231,6 +235,7 @@ const HomeTab = ({ data, change }) => {
                   className="ml-auto bg-orange-400 w-24 rounded-md"
                   onClick={() => {
                     filterHotelsbyPrice(minPrice, maxPrice)
+                    navigate(`/home/${type}?/min=${minPrice}&max=${maxPrice}`)
                     close()
                   }}
                 >
