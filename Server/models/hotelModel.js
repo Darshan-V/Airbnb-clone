@@ -56,6 +56,7 @@ const getHotelById = async (hotelId) => {
 // }
 
 const searchListing = async (queryString) => {
+  //default min and max values
   const min = queryString.minPrice
   const max = queryString.maxPrice
   const type = queryString.type
@@ -72,7 +73,7 @@ const searchListing = async (queryString) => {
       )AND (type = $4  or $4 is NULL
       )AND (name ilike '%'|| $1 || '%'  or address ->> 'location' ilike '%' || $1 || '%' or $1 is NULL)`,
     [search, min, max, type]
-  )
+  ) //use clauses to run each query if the querystring exist
   return searchedListing.rows
 }
 
