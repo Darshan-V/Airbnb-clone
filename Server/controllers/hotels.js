@@ -21,8 +21,12 @@ async function getAllHotels(req, res) {
 async function getHotelImages(req, res) {
   try {
     const hotelId = req.params.id
-    const images = await getImages(hotelId)
-    res.json(images[0].imageurl)
+    if (!hotelId) {
+      res.status(404).json("property with id not found")
+    } else {
+      const images = await getImages(hotelId)
+      res.json(images[0].imageurl)
+    }
   } catch (err) {
     res.sendStatus(500)
   }
@@ -82,7 +86,7 @@ async function testController(req, res) {
     const sortedListing = await searchListing(querystring)
     res.json(sortedListing)
   } catch (error) {
-    res.send(error.stack)
+    res.sendStatus(500)
   }
 }
 
