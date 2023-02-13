@@ -1,16 +1,29 @@
 import React, { useState } from "react"
 import { TbAerialLift, TbSearch } from "react-icons/tb"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { Link } from "react-router-dom"
+import {
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure
+} from "@chakra-ui/react"
+import "./chakra.css"
 import { getHotels, searchListing } from "../lib/apiClient"
 
 const Topbar = ({ data, change }) => {
-  const [searchedList, setSearchedList] = useState([])
   const params = useParams()
-
+  const navigate = useNavigate()
   const searchProperty = async (string) => {
     if (string.length >= 1) {
-      const searchedHotels = await searchListing(string)
+      let searchString = string,
+        min = 0,
+        max = 999999,
+        type = ""
+      const searchedHotels = await searchListing(searchString, min, max, type)
       setSearchedList(searchedHotels)
     }
   }
@@ -20,12 +33,56 @@ const Topbar = ({ data, change }) => {
     change(listing)
   }
 
-  const getSearchString = (e) => {
-    const str = e.target.value
-    searchProperty(str)
-    if (str.length === 0) {
-      setSearchedList([])
+  const Search = () => {
+    const [searchTerm, setSearchTerm] = useState("")
+    const [searchedList, setSearchedList] = useState([])
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const handleChange = async (event) => {
+      setSearchTerm(event.target.value)
+      const listing = await searchListing(searchTerm)
+      setSearchedList(listing)
+      console.log(listing)
     }
+
+    return (
+      <>
+        <TbSearch
+          className="text text-3xl font text-yellow-600 hover:text-yellow-400 bg-slate-300 w-20 h-8 ml-auto rounded-lg shadow-lg shadow-slate-400"
+          onClick={onOpen}
+        />
+
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              <Input
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleChange}
+                size="md"
+                rounded="md"
+                mr="5px"
+              />
+            </ModalHeader>
+            <ModalBody>
+              {searchedList?.slice(0, 15)?.map((string, i) => (
+                <div key={i} className="flex flex-col w-full">
+                  <div
+                    className="hover:cursor-pointer w-full h-5 m-1 bg-slate-300 rounded-md pl-3"
+                    onClick={() => {
+                      navigate(`/property/${string.id}`)
+                    }}
+                  >
+                    {string.name}
+                  </div>
+                </div>
+              ))}
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </>
+    )
   }
 
   return (
@@ -40,23 +97,10 @@ const Topbar = ({ data, change }) => {
       {params?.id === undefined ? (
         <div className="flex flex-col ml-auto pr-10 pt-5">
           <div className="flex flex-row">
-            <TbSearch className="m-auto text-yellow-700 text-3xl font-bold" />
-
-            <div className="m-auto">
-              <input
-                placeholder="Search destination..."
-                className="h-10 w-96 border-2 border-orange-200 border-b-orange-500 focus:outline-none rounded-md "
-                onChange={(e) => getSearchString(e)}
-              />
-            </div>
+            {/* <Filter /> */}
+            <Search />
           </div>
-          <div className="flex flex-col sticky top-0 bg-white">
-            {searchedList.map((hotelName, i) => (
-              <div key={i}>
-                <div>{hotelName.name}</div>
-              </div>
-            ))}
-          </div>
+          <div className="flex flex-col sticky top-0 bg-white"></div>
         </div>
       ) : null}
 
