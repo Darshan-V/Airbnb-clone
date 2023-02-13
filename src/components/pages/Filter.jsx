@@ -11,7 +11,7 @@ const Filter = ({ data }) => {
     <div className="w-full sticky overflow-hidden">
       <MapContainer
         center={defaultCenter}
-        zoom={5}
+        zoom={4}
         scrollWheelZoom={false}
         doubleClickZoom
       >
