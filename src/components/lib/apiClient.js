@@ -100,9 +100,23 @@ async function login() {
 // }
 
 async function searchListing(searchString, min, max, hotelType) {
-  let queryUrl = `${apiUrl}/filters/categories?search=${searchString}&minPrice=${min}&maxPrice=${max}&type=${hotelType}`
+  let queryUrl = `${apiUrl}/hotels/filters/categories?`
+  if (searchString) {
+    queryUrl += `search=${searchString}&`
+  }
+  if (min) {
+    queryUrl += `minPrice=${min}&`
+  }
+  if (max) {
+    queryUrl += `maxPrice=${max}&`
+  }
+  if (hotelType) {
+    queryUrl += `type=${hotelType}&`
+  }
+  console.log(queryUrl)
   const data = await fetch(queryUrl, { credentials: "include" })
   const searchedList = await data.json()
+  // console.log(searchedList)
   return searchedList
 }
 
