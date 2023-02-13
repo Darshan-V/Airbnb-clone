@@ -30,6 +30,6 @@ routes.get("/hotels/:id", getHotelByHotelId)
 //   controlFilterHotels
 // )
 
-routes.get("/filters/categories", verifyToken, testController)
+routes.get("/hotels/filters/categories", testController)
 
 export { routes }
