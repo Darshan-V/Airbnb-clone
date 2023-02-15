@@ -28,14 +28,14 @@ const PropertyPage = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="flex flex-col w-full ">
+    <div className="flex flex-col w-3/4 m-auto">
       <Topbar />
-      <div className="flex flex-col w-full m-auto">
-        <p className="font-sans font-bold text-3xl pl-8 mt-3">
-          {propertyData?.name}, {propertyData?.type}
+      <div className="flex flex-col w-full m-auto pt-4">
+        <p className="font-sans font-bold text-2xl  mr-auto">
+          {propertyData?.name}, {propertyData?.type?.toUpperCase()}
         </p>
 
-        <div className="flex ">
+        <div className="flex pt-4 pb-4 ">
           <div className="flex flex-row "></div>
           <div className=" w-full">
             <ImageCarousel images={hotelImages} />

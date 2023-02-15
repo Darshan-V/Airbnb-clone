@@ -2,13 +2,13 @@ import React from "react"
 
 const AboutProperty = ({ data }) => {
   return (
-    <div className="flex flex-col m-auto w-3/5 mt-2">
+    <div className="flex flex-col mr-auto w-3/5 mt-2 pt-2">
       <div className="w-42">
         <h1 className="text-black font-mono font-bold text-2xl">
           Hosted by HOST
         </h1>
       </div>
-      <div className="flex flex-row  border-b-2 max-w-4/5 mt-1">
+      <div className="flex flex-row  border-b-2 max-w-4/5 mt-1 pb-2">
         <span className="text-slate-700 font-sans text-sm italic m-1">
           __ guests
         </span>
