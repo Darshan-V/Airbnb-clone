@@ -86,7 +86,7 @@ const Topbar = ({ data, change }) => {
   }
 
   return (
-    <div className="flex justify-between w-full m-auto bg-white-300  sticky top-0 bg-white">
+    <div className="flex justify-between w-full m-auto bg-white-300  sticky top-0 bg-white border-b-2 pb-4">
       <Link
         to={"/home"}
         className="flex justify-center mr-auto rounded-lg "
