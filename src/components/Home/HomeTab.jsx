@@ -14,8 +14,8 @@ import {
   GiIsland,
   GiPalmTree
 } from "react-icons/gi"
-import Popup from "reactjs-popup"
 import { searchListing } from "../lib/apiClient"
+import FilterListing from "./FilterListing"
 
 const HomeTab = ({ data, change }) => {
   const [minPrice, setMinPrice] = useState(0)
@@ -184,7 +184,8 @@ const HomeTab = ({ data, change }) => {
           </div>
         </button>
       ))}
-      <div className="flex flex-col w-24 m-auto border border-slate-400 rounded-md">
+      <FilterListing />
+      {/* <div className="flex flex-col w-24 m-auto border border-slate-400 rounded-md">
         <Popup
           trigger={
             <button className="text text-slate-600 text-sm font-serif italic h-10 w-full m-auto ">
@@ -245,7 +246,7 @@ const HomeTab = ({ data, change }) => {
             </div>
           )}
         </Popup>
-      </div>
+      </div> */}
     </div>
   )
 }
