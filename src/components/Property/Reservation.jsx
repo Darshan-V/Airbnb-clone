@@ -75,6 +75,7 @@ const Reservation = ({ price }) => {
       border="2px"
       position="sticky"
       top="30rem"
+      mt="2"
     >
       <CardHeader mr="auto" borderBottom="1px" w="full">
         <span className="text-xl font-mono font-semibold">&#8377; {price}</span>

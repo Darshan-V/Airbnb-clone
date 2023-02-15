@@ -2,7 +2,7 @@ import React from "react"
 
 const AboutProperty = ({ data }) => {
   return (
-    <div className="flex flex-col m-auto w-3/5">
+    <div className="flex flex-col m-auto w-3/5 mt-2">
       <div className="w-42">
         <h1 className="text-black font-mono font-bold text-2xl">
           Hosted by HOST
