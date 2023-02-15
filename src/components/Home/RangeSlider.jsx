@@ -4,7 +4,6 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  RangeSliderMark,
   Box
 } from "@chakra-ui/react"
 import { MdGraphicEq } from "react-icons/md"
@@ -22,30 +21,6 @@ const Slider = ({ min, max, setMin, setMax }) => {
           setMax(val[1])
         }}
       >
-        {/* <RangeSliderMark
-          value={min}
-          textAlign="center"
-          bg="orange.400"
-          color="white"
-          mt="-10"
-          ml="-5"
-          w="10"
-          rounded="lg"
-        >
-          {min}
-        </RangeSliderMark>
-        <RangeSliderMark
-          value={max}
-          textAlign="center"
-          bg="orange.400"
-          color="white"
-          mt="-10"
-          ml="-5"
-          w="10"
-          rounded="lg"
-        >
-          {max}
-        </RangeSliderMark> */}
         <RangeSliderTrack bg="orange.100">
           <RangeSliderFilledTrack bg="tomato" />
         </RangeSliderTrack>
