@@ -41,41 +41,39 @@ const Places = () => {
 
   return (
     <div className="flex flex-wrap w-full">
-      <div className="flex w-full flex-wrap m-auto">
+      <div className="flex w-full flex-wrap ">
         <Topbar data={propertyData} change={setPropertyData} />
         <HomeTab data={propertyData} change={setPropertyData} />
         {!mapView ? (
-          <div className="flex w-full justify-center ">
-            <div className="flex flex-row flex-wrap justify-center max-w-screen-3xl">
-              {propertyData.map((property, i) => (
-                <div className="flex flex-row" key={i}>
-                  <Link
-                    to={`/property/${property.id}`}
-                    className="flex flex-col flex-auto m-2 hover:cursor-pointer"
-                    key={i}
-                  >
-                    <div className=" w-80 h-60 border rounded-md ">
-                      <img
-                        src={propertyData[i]?.imageurl[0]}
-                        className="border rounded-lg w-80 h-60"
-                      />
-                    </div>
+          <div className="grid grid-cols-6 grid-rows-5 lg:grid-cols-5 gap-4 m-auto">
+            {propertyData.map((property, i) => (
+              <div className="flex flex-row" key={i}>
+                <Link
+                  to={`/property/${property.id}`}
+                  className="flex flex-col flex-auto m-2 hover:cursor-pointer"
+                  key={i}
+                >
+                  <div className=" w-80 h-60 border rounded-md ">
+                    <img
+                      src={propertyData[i]?.imageurl[0]}
+                      className="border rounded-lg w-80 h-60"
+                    />
+                  </div>
 
-                    <div className="flex flex-col hover:cursor-pointer">
-                      <p className="font-bold text-gray-800 w-60 h-6 overflow-hidden">
-                        {property?.name}
-                      </p>
-                      <p className="font-thin text-gray-700 w-60 h-6 overflow-hidden">
-                        {property?.address?.location}
-                      </p>
-                    </div>
-                    <p className="label places-price">
-                      Rs {property?.price} night
+                  <div className="flex flex-col hover:cursor-pointer">
+                    <p className="font-bold text-gray-800 w-60 h-6 overflow-hidden">
+                      {property?.name}
                     </p>
-                  </Link>
-                </div>
-              ))}
-            </div>
+                    <p className="font-thin text-gray-700 w-60 h-6 overflow-hidden">
+                      {property?.address?.location}
+                    </p>
+                  </div>
+                  <p className="label places-price">
+                    Rs {property?.price} night
+                  </p>
+                </Link>
+              </div>
+            ))}
           </div>
         ) : (
           <Filter data={propertyData} />
