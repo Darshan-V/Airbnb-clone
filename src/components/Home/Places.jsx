@@ -45,7 +45,7 @@ const Places = () => {
         <Topbar data={propertyData} change={setPropertyData} />
         <HomeTab data={propertyData} change={setPropertyData} />
         {!mapView ? (
-          <div className="grid grid-cols-6 grid-rows-5 lg:grid-cols-5 gap-4 m-auto">
+          <div className="grid grid-cols-6 grid-rows-5 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 m-auto">
             {propertyData.map((property, i) => (
               <div className="flex flex-row" key={i}>
                 <Link
