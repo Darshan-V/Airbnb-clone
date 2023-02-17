@@ -12,7 +12,11 @@ const reserveSlot = async (
     `insert into bookings (check_in, check_out, property_id, user_id, total_price, status) values($1, $2, $3, $4, $5 ,$6)`,
     [checkinDate, checkoutDate, placeId, userId, total, status]
   )
-  return "reserved slot"
+  const bookingData = await pool.query(
+    "select * from bookings where user_id=$1 and property_id=$2",
+    [userId, placeId]
+  )
+  return bookingData.rows
 }
 
 const checkAvailableSlots = async (checkIn, checkOut, hotelId) => {
