@@ -11,14 +11,26 @@ import {
   useDisclosure
 } from "@chakra-ui/react"
 import Slider from "./RangeSlider"
+import { searchListing } from "../lib/apiClient"
 
-const FilterListing = () => {
+const FilterListing = ({ change, setFilteredHotels }) => {
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(9999999)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [counter, setCounter] = useState(0)
 
-  const applyFilter = async (event) => {}
+  const filterHotelsbyPrice = async (minPrice, maxPrice) => {
+    let searchString = ""
+    let hotelType = ""
+    let hotels = await searchListing(
+      searchString,
+      minPrice,
+      maxPrice,
+      hotelType
+    )
+    change(hotels)
+    setFilteredHotels(hotels)
+  }
 
   return (
     <div className="m-auto">
@@ -93,7 +105,15 @@ const FilterListing = () => {
             </div>
           </ModalHeader>
           <ModalFooter>
-            <Button colorScheme="blue">Apply</Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                filterHotelsbyPrice(min, max)
+                onClose()
+              }}
+            >
+              Apply
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
