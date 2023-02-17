@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
-import { useGetBookingsQuery } from "../../redux/utils"
+import { getBookingsbyProperty } from "../lib/apiClient"
 
 const BookingSlots = () => {
   const params = useParams()
   const hotelId = params.id
-  const { data } = useGetBookingsQuery(hotelId)
   const [bookingData, setBookingData] = useState([])
-  useEffect(() => {
+
+  const getBookingData = async () => {
+    const data = await getBookingsbyProperty(hotelId)
     setBookingData(data)
-  }, [data])
+  }
+  useEffect(() => {
+    getBookingData()
+  }, [])
   return (
     <div className="flex ">
       <div className="flex flex-col w-96">
@@ -24,16 +28,17 @@ const BookingSlots = () => {
               <span>Your Trip</span>
               <div>
                 <div>
-                  <span>
-                    {reservation?.check_in} to {reservation?.check_out}
+                  <span className="text text-slate-500 underline uppercase">
+                    {reservation?.check_in.substr(0, 10)} to{" "}
+                    {reservation?.check_out.substr(0, 10)}
                   </span>
                 </div>
-                <div>
+                <div className="flex flex-row justify-between m-1">
                   <p>Status</p>
                   <span>{reservation.status}</span>
                 </div>
-                <p>created at {reservation.created_at}</p>
-                <p>{Date.now()}</p>
+                <p>created at {reservation.created_at.substr(11)}</p>
+                {/* <p>{Date.now()}</p> */}
               </div>
             </div>
           </div>
