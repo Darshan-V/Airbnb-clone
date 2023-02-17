@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router"
 import { reserveSlot, checkSlots } from "../lib/apiClient"
 import { Card, CardHeader, CardBody, Input, Button } from "@chakra-ui/react"
-import { useDispatch } from "react-redux"
-import { setReservation } from "../../redux/reservationSlice"
 
 const Reservation = ({ price }) => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().substring(0, 10)
   )
-
-  const dispatch = useDispatch()
 
   const [checkIn, setCheckin] = useState("")
   const [checkOut, setCheckout] = useState("")
@@ -39,18 +35,12 @@ const Reservation = ({ price }) => {
       validateDates(checkIn, checkOut, hotelId)
     }
 
-    dispatch(
-      setReservation({
-        checkIn: checkIn,
-        checkOut: checkOut,
-        nights: nights,
-        hotelId: hotelId,
-        price: price
-      })
-    )
     console.log(isBooked)
     const status = "reserved"
     reserveSlot(hotelId, checkIn, checkOut, total, status)
+    dispatch(
+      setReservation(reserveSlot(hotelId, checkIn, checkOut, total, status))
+    )
     navigate(`/booking/${hotelId}`)
   }
 
@@ -74,7 +64,7 @@ const Reservation = ({ price }) => {
       display="flex"
       border="2px"
       position="sticky"
-      top="30rem"
+      top="10rem"
       mt="2"
     >
       <CardHeader mr="auto" borderBottom="1px" w="full">
@@ -157,7 +147,7 @@ const Reservation = ({ price }) => {
                 <Button colorScheme="red" isDisabled w="full">
                   Reserve
                 </Button>
-                <span className="text-xs text-red-700 italic">
+                <span className="text-xs text-red-400 italic">
                   *Invalid Date
                 </span>
               </div>
@@ -179,25 +169,39 @@ const Reservation = ({ price }) => {
               *Slot not available
             </p>
           ) : null}
-          <div className="flex flex-col w-full mt-4">
-            <div className="flex flex-row ">
-              <span className="mr-auto text-slate-600 font-mono font-semibold">
-                &#8377;{price} x {nights}
-              </span>
-              <span className="ml-auto text-slate-700 font-mono font-bold">
-                &#8377;{price * nights}
-              </span>
+          {isBooked ||
+          checkIn < currentDate ||
+          checkOut <= checkIn ||
+          checkOut <= currentDate ? (
+            <p className="text font-sans italic text-md text-red-800">
+              Check the check in and check out or, the slot may not be available
+            </p>
+          ) : (
+            <div className="flex flex-col w-full mt-4">
+              <div className="flex flex-row ">
+                <span className="mr-auto text-slate-600 font-mono font-semibold">
+                  &#8377;{price} x {nights}
+                </span>
+                <span className="ml-auto text-slate-700 font-mono font-bold">
+                  &#8377;{price * nights}
+                </span>
+              </div>
             </div>
+          )}
+        </div>
+        {isBooked ||
+        checkIn < currentDate ||
+        checkOut <= checkIn ||
+        checkOut <= currentDate ? null : (
+          <div className="flex w-full">
+            <span className="mr-auto text-slate-800 font-mono font-semibold text-lg">
+              Total
+            </span>
+            <span className="ml-auto text-slate-900 font-mono font-bold text-lg">
+              &#8377; {price * nights}
+            </span>
           </div>
-        </div>
-        <div className="flex w-full">
-          <span className="mr-auto text-slate-800 font-mono font-semibold text-lg">
-            Total
-          </span>
-          <span className="ml-auto text-slate-900 font-mono font-bold text-lg">
-            &#8377; {price * nights}
-          </span>
-        </div>
+        )}
       </CardBody>
     </Card>
   )
