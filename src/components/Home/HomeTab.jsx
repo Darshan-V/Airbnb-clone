@@ -184,7 +184,7 @@ const HomeTab = ({ data, change }) => {
           </div>
         </button>
       ))}
-      <FilterListing />
+      <FilterListing change={change} setFilteredHotels={setFilteredHotels} />
       {/* <div className="flex flex-col w-24 m-auto border border-slate-400 rounded-md">
         <Popup
           trigger={
