@@ -17,16 +17,6 @@ import { getHotels, searchListing } from "../lib/apiClient"
 const Topbar = ({ data, change }) => {
   const params = useParams()
   const navigate = useNavigate()
-  const searchProperty = async (string) => {
-    if (string.length >= 1) {
-      let searchString = string,
-        min = 0,
-        max = 999999,
-        type = ""
-      const searchedHotels = await searchListing(searchString, min, max, type)
-      setSearchedList(searchedHotels)
-    }
-  }
 
   const getAllListing = async () => {
     const listing = await getHotels()
@@ -38,7 +28,7 @@ const Topbar = ({ data, change }) => {
     const [searchedList, setSearchedList] = useState([])
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const handleChange = async (event) => {
+    const searchForProperty = async (event) => {
       setSearchTerm(event.target.value)
       const listing = await searchListing(searchTerm)
       setSearchedList(listing)
@@ -59,7 +49,7 @@ const Topbar = ({ data, change }) => {
               <Input
                 placeholder="Search..."
                 value={searchTerm}
-                onChange={handleChange}
+                onChange={searchForProperty}
                 size="md"
                 rounded="md"
                 mr="5px"
@@ -86,38 +76,73 @@ const Topbar = ({ data, change }) => {
   }
 
   return (
-    <div className="flex justify-between w-full m-auto bg-white-300  sticky top-0 bg-white border-b-2 pb-4">
-      <Link
-        to={"/home"}
-        className="flex justify-center mr-auto rounded-lg "
-        onClick={getAllListing}
-      >
-        <TbAerialLift className="text text-6xl font text-yellow-600 hover:text-yellow-400" />
-      </Link>
-      {params?.id === undefined ? (
-        <div className="flex flex-col ml-auto pr-10 pt-5">
-          <div className="flex flex-row">
-            {/* <Filter /> */}
-            <Search />
-          </div>
-          <div className="flex flex-col sticky top-0 bg-white"></div>
-        </div>
-      ) : null}
-
+    <>
       {params?.id ? (
-        <div className="flex flex-row justify-evenly">
-          <div className="w-20 m-auto">
-            <span>Photos</span>
-          </div>
-          <div className="w-20 m-auto">
-            <span>Reviews</span>
-          </div>
-          <div className="w-20 m-auto">
-            <span>Location</span>
-          </div>
+        <div className="flex justify-between w-full m-auto bg-white-300 bg-white ">
+          <Link
+            to={"/home"}
+            className="flex justify-center mr-auto rounded-lg "
+            onClick={getAllListing}
+          >
+            <TbAerialLift className="text text-6xl font text-yellow-600 hover:text-yellow-400" />
+          </Link>
+          {params?.id === undefined ? (
+            <div className="flex flex-col ml-auto pr-10 pt-5">
+              <div className="flex flex-row">
+                <Search />
+              </div>
+              <div className="flex flex-col sticky top-0 bg-white"></div>
+            </div>
+          ) : null}
+
+          {params?.id ? (
+            <div className="flex flex-row justify-evenly">
+              <div className="w-20 m-auto">
+                <span>Photos</span>
+              </div>
+              <div className="w-20 m-auto">
+                <span>Reviews</span>
+              </div>
+              <div className="w-20 m-auto">
+                <span>Location</span>
+              </div>
+            </div>
+          ) : null}
         </div>
-      ) : null}
-    </div>
+      ) : (
+        <div className="flex justify-between w-full m-auto bg-white-300  sticky top-0 bg-white ">
+          <Link
+            to={"/home"}
+            className="flex justify-center mr-auto rounded-lg "
+            onClick={getAllListing}
+          >
+            <TbAerialLift className="text text-6xl font text-yellow-600 hover:text-yellow-400" />
+          </Link>
+          {params?.id === undefined ? (
+            <div className="flex flex-col ml-auto pr-10 pt-5">
+              <div className="flex flex-row">
+                <Search />
+              </div>
+              <div className="flex flex-col sticky top-0 bg-white"></div>
+            </div>
+          ) : null}
+
+          {params?.id ? (
+            <div className="flex flex-row justify-evenly">
+              <div className="w-20 m-auto">
+                <span>Photos</span>
+              </div>
+              <div className="w-20 m-auto">
+                <span>Reviews</span>
+              </div>
+              <div className="w-20 m-auto">
+                <span>Location</span>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      )}
+    </>
   )
 }
 
