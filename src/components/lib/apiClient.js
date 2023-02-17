@@ -30,8 +30,10 @@ async function reserveSlot(hotelId, checkinDate, checkoutDate, total, status) {
     }),
     credentials: "include"
   })
-  console.log(reserve)
-  return reserve
+  const data = await reserve.json()
+  console.log(data)
+
+  return data
 }
 
 async function getHotelById(hotelId) {
@@ -74,30 +76,6 @@ async function login() {
   const loggedIn = await data.json()
   return loggedIn
 }
-
-// async function getHotelsByType(hotelType) {
-//   let data = await fetch(`${apiUrl}/hotels/types/${hotelType}`, {
-//     credentials: "include"
-//   })
-//   const filteredHotels = await data.json()
-//   return filteredHotels
-// }
-
-// async function searchHotels(searchString) {
-//   let data = await fetch(`${apiUrl}/hotels/search/${searchString}`, {
-//     credentials: "include"
-//   })
-//   const hotels = await data.json()
-//   return hotels
-// }
-
-// async function filterByPrice(min, max) {
-//   let data = await fetch(`${apiUrl}/filters?minPrice=${min}&maxPrice=${max}`, {
-//     credentials: "include"
-//   })
-//   const hotels = await data.json()
-//   return hotels
-// }
 
 async function searchListing(searchString, min, max, hotelType) {
   let queryUrl = `${apiUrl}/hotels/filters/categories?`
