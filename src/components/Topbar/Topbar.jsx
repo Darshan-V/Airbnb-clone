@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react"
 import "./chakra.css"
 import { getHotels, searchListing } from "../lib/apiClient"
+import Logo from "./flc_design20230220117636.png"
 
 const Topbar = ({ data, change }) => {
   const params = useParams()
@@ -78,52 +79,50 @@ const Topbar = ({ data, change }) => {
   return (
     <>
       {params?.id ? (
-        <div className="flex justify-between w-full m-auto bg-white-300 bg-white ">
+        <div className="flex justify-between w-full m-auto pb-5 bg-white">
           <Link
             to={"/home"}
             className="flex justify-center mr-auto rounded-lg "
             onClick={getAllListing}
           >
-            <TbAerialLift className="text text-6xl font text-yellow-600 hover:text-yellow-400" />
+            <img src={Logo} className="w-28" />
           </Link>
           {params?.id === undefined ? (
-            <div className="flex flex-col ml-auto pr-10 pt-5">
+            <div className="flex flex-col align-middle ">
               <div className="flex flex-row">
                 <Search />
               </div>
-              <div className="flex flex-col sticky top-0 bg-white"></div>
             </div>
           ) : null}
 
           {params?.id ? (
-            <div className="flex flex-row justify-evenly">
-              <div className="w-20 m-auto">
+            <div className="flex flex-row justify-evenly m-auto">
+              <div className="w-20">
                 <span>Photos</span>
               </div>
-              <div className="w-20 m-auto">
+              <div className="w-20">
                 <span>Reviews</span>
               </div>
-              <div className="w-20 m-auto">
+              <div className="w-20">
                 <span>Location</span>
               </div>
             </div>
           ) : null}
         </div>
       ) : (
-        <div className="flex justify-between w-full m-auto bg-white-300  sticky top-0 bg-white ">
+        <div className="flex justify-between w-full m-auto bg-white-300 h-16 sticky top-0 bg-white">
           <Link
             to={"/home"}
             className="flex justify-center mr-auto rounded-lg "
             onClick={getAllListing}
           >
-            <TbAerialLift className="text text-6xl font text-yellow-600 hover:text-yellow-400" />
+            <img src={Logo} className="w-28" />
           </Link>
           {params?.id === undefined ? (
-            <div className="flex flex-col ml-auto pr-10 pt-5">
-              <div className="flex flex-row">
+            <div className="flex flex-col align-middle w-40">
+              <div className="flex flex-row m-auto">
                 <Search />
               </div>
-              <div className="flex flex-col sticky top-0 bg-white"></div>
             </div>
           ) : null}
 
