@@ -36,13 +36,13 @@ const HomeTab = ({ data, change }) => {
     setFilteredHotels(hotels)
   }
 
-  const filterHotelsbyPrice = async (min, max) => {
-    let searchString = ""
-    let hotelType = ""
-    let hotels = await searchListing(searchString, min, max, hotelType)
-    change(hotels)
-    setFilteredHotels(hotels)
-  }
+  // const filterHotelsbyPrice = async (min, max) => {
+  //   let searchString = ""
+  //   let hotelType = ""
+  //   let hotels = await searchListing(searchString, min, max, hotelType)
+  //   change(hotels)
+  //   setFilteredHotels(hotels)
+  // }
 
   const links = [
     {
@@ -165,7 +165,7 @@ const HomeTab = ({ data, change }) => {
   ]
 
   return (
-    <div className="flex flex-row  justify-center w-full h-16 overflow-auto no-scrollbar sticky top-14 bg-white">
+    <div className="flex flex-row  justify-center w-full h-20 overflow-auto no-scrollbar sticky top-16 bg-orange-50 m-auto">
       {links.map((link, i) => (
         <button key={i} className="flex flex-col w-16 m-auto">
           <div className="flex flex-col m-auto">
