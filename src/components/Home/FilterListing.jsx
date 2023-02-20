@@ -14,7 +14,7 @@ import Slider from "./RangeSlider"
 import { searchListing } from "../lib/apiClient"
 
 const FilterListing = ({ change, setFilteredHotels }) => {
-  const [min, setMin] = useState(0)
+  const [min, setMin] = useState(100)
   const [max, setMax] = useState(9999999)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [counter, setCounter] = useState(0)
