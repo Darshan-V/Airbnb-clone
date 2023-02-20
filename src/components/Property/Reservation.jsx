@@ -67,76 +67,74 @@ const Reservation = ({ price }) => {
       top="10rem"
       mt="2"
     >
-      <CardHeader mr="auto" borderBottom="1px" w="full">
+      <CardHeader mr="auto" borderBottom="1px" w="full" display="flex">
         <span className="text-xl font-mono font-semibold">&#8377; {price}</span>
         <span className="text-md font-mono font-thin">/Night</span>
       </CardHeader>
       <CardBody w="full" m="auto" h="full">
         <div className="flex flex-col w-full">
           <div className="flex flex-row w-full  rounded-lg">
-            {checkIn < currentDate ? (
-              <div className="w-full flex flex-col h-full border rounded-md border-red-600 bg-red-300">
-                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
-                  CheckIn Date
-                </span>
-                <Input
-                  placeholder="Select Checkin Date"
-                  size="sm"
-                  type="date"
-                  value={checkIn}
-                  onChange={(e) => {
-                    getCheckin(e)
-                  }}
-                />
-              </div>
-            ) : (
-              <div className="w-full flex flex-col h-full border border-black rounded-md mr-1">
-                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
-                  CheckIn Date
-                </span>
-                <Input
-                  placeholder="Select Checkin Date"
-                  size="sm"
-                  type="date"
-                  value={checkIn}
-                  borderTop="1px"
-                  onChange={(e) => {
-                    getCheckin(e)
-                  }}
-                />
-              </div>
-            )}
-            {checkOut <= currentDate || checkOut <= checkIn ? (
-              <div className="w-full flex flex-col h-full border rounded-md border-red-600 bg-red-300">
-                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
-                  CheckOut Date
-                </span>
-                <Input
-                  placeholder="Select CheckOut Date"
-                  size="sm"
-                  type="date"
-                  value={checkOut}
-                  onChange={(e) => {
-                    getCheckout(e)
-                  }}
-                />
-              </div>
-            ) : (
-              <div className="w-full flex flex-col  border border-black rounded-md h-full ">
-                <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
-                  CheckOut Date
-                </span>
-                <Input
-                  placeholder="Select CheckOut Date"
-                  size="sm"
-                  type="date"
-                  value={checkOut}
-                  onChange={(e) => {
-                    getCheckout(e)
-                  }}
-                />
-              </div>
-            )}
+            <div className="flex flex-row w-full">
+              {checkIn < currentDate ? (
+                <div className="w-full flex flex-col h-full border rounded-md border-red-600 bg-red-300 sm:w-2/5 md:w-1/2 lg:w-full m-auto">
+                  <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
+                    CheckIn Date
+                  </span>
+                  <Input
+                    placeholder="Select Checkin Date"
+                    type="date"
+                    value={checkIn}
+                    onChange={(e) => {
+                      getCheckin(e)
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="w-full flex flex-col h-full border border-black rounded-md mr-1 sm:w-2/5 md:w-1/2 lg:w-full m-auto">
+                  <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
+                    CheckIn Date
+                  </span>
+                  <Input
+                    placeholder="Select Checkin Date"
+                    type="date"
+                    value={checkIn}
+                    borderTop="1px"
+                    onChange={(e) => {
+                      getCheckin(e)
+                    }}
+                  />
+                </div>
+              )}
+              {checkOut <= currentDate || checkOut <= checkIn ? (
+                <div className="w-full flex flex-col h-full border rounded-md border-red-600 bg-red-300 sm:w-2/5 md:w-1/2 lg:w-full m-auto">
+                  <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1 ">
+                    CheckOut Date
+                  </span>
+                  <Input
+                    placeholder="Select CheckOut Date"
+                    type="date"
+                    value={checkOut}
+                    onChange={(e) => {
+                      getCheckout(e)
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="w-full flex flex-col  border border-black rounded-md h-full sm:w-2/5 md:w-1/2 lg:w-full m-auto">
+                  <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1">
+                    CheckOut Date
+                  </span>
+                  <Input
+                    placeholder="Select CheckOut Date"
+                    type="date"
+                    value={checkOut}
+                    onChange={(e) => {
+                      getCheckout(e)
+                    }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <div className="w-full m-1">
             {isBooked ||
