@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import {
   TbPool,
@@ -17,7 +17,7 @@ import {
 import { searchListing } from "../lib/apiClient"
 import FilterListing from "./FilterListing"
 
-const HomeTab = ({ data, change }) => {
+const HomeTab = ({ data, setPropertyData }) => {
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(9999999)
   const [filteredHotels, setFilteredHotels] = useState([])
@@ -25,24 +25,15 @@ const HomeTab = ({ data, change }) => {
   const navigate = useNavigate()
   const params = useParams()
 
-  const getHotelsByHotelType = async (type) => {
+  const getHotelsByHotelType = async (hotelType) => {
     let searchString = ""
     let min = minPrice
     let max = maxPrice
-    let hotelType = type
+    hotelType = type
     let hotels = await searchListing(searchString, min, max, hotelType)
     setType(hotelType)
-    change(hotels)
-    setFilteredHotels(hotels)
+    setPropertyData(hotels)
   }
-
-  // const filterHotelsbyPrice = async (min, max) => {
-  //   let searchString = ""
-  //   let hotelType = ""
-  //   let hotels = await searchListing(searchString, min, max, hotelType)
-  //   change(hotels)
-  //   setFilteredHotels(hotels)
-  // }
 
   const links = [
     {
@@ -184,69 +175,10 @@ const HomeTab = ({ data, change }) => {
           </div>
         </button>
       ))}
-      <FilterListing change={change} setFilteredHotels={setFilteredHotels} />
-      {/* <div className="flex flex-col w-24 m-auto border border-slate-400 rounded-md">
-        <Popup
-          trigger={
-            <button className="text text-slate-600 text-sm font-serif italic h-10 w-full m-auto ">
-              Filter
-            </button>
-          }
-          modal
-          nested
-        >
-          {(close) => (
-            <div className="flex flex-col bg-slate-300 w-full">
-              <button className="ml-auto w-5 h-5" onClick={close}>
-                &times;
-              </button>
-              <div className="m-auto">
-                <span className="text text-md font-sans font-semibold text-slate-600">
-                  Price Range
-                </span>
-              </div>
-              <div className="flex flex-row m-2">
-                <div className="mr-auto w-48 p-2">
-                  <input
-                    placeholder="min"
-                    className="w-full h-full p-1 rounded-md"
-                    onChange={(e) => {
-                      setMinPrice(e.target.value)
-                    }}
-                  />
-                </div>
-                <div className="mr-auto w-48 p-2">
-                  <input
-                    placeholder="max"
-                    className="w-full h-full p-1 rounded-md"
-                    onChange={(e) => {
-                      if (e.target.value > minPrice) {
-                        setMaxPrice(e.target.value)
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="flex m-2 ">
-                <Popup position="top center" nested>
-                  <span></span>
-                </Popup>
-
-                <button
-                  className="ml-auto bg-orange-400 w-24 rounded-md"
-                  onClick={() => {
-                    filterHotelsbyPrice(minPrice, maxPrice)
-                    navigate(`/home/${type}?/min=${minPrice}&max=${maxPrice}`)
-                    close()
-                  }}
-                >
-                  Apply
-                </button>
-              </div>
-            </div>
-          )}
-        </Popup>
-      </div> */}
+      <FilterListing
+        setPropertyData={setPropertyData}
+        setFilteredHotels={setFilteredHotels}
+      />
     </div>
   )
 }

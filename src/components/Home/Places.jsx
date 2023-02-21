@@ -38,13 +38,13 @@ const Places = () => {
 
   useEffect(() => {
     loadHotelList()
-  }, [])
+  }, [params.type])
 
   return (
     <div className="flex flex-wrap w-full">
       <div className="flex w-full flex-wrap ">
-        <Topbar data={propertyData} change={setPropertyData} />
-        <HomeTab data={propertyData} change={setPropertyData} />
+        <Topbar data={propertyData} setPropertyData={setPropertyData} />
+        <HomeTab data={propertyData} setPropertyData={setPropertyData} />
         {!mapView ? (
           <div className="flex w-full">
             <PropertyCard listing={propertyData} />
