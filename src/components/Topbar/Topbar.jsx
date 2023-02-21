@@ -14,14 +14,16 @@ import {
 import "./chakra.css"
 import { getHotels, searchListing } from "../lib/apiClient"
 import Logo from "./flc_design20230220117636.png"
+import { useSelector, useDispatch } from "react-redux"
 
-const Topbar = ({ data, change }) => {
+const Topbar = ({ data, setPropertyData }) => {
   const params = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const getAllListing = async () => {
     const listing = await getHotels()
-    change(listing)
+    setPropertyData(listing)
   }
 
   const Search = () => {
@@ -31,9 +33,10 @@ const Topbar = ({ data, change }) => {
 
     const searchForProperty = async (event) => {
       setSearchTerm(event.target.value)
+      dispatch(await searchListing(searchTerm))
       const listing = await searchListing(searchTerm)
       setSearchedList(listing)
-      console.log(listing)
+      // console.log(listing)
     }
 
     return (
