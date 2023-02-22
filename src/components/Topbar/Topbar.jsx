@@ -15,6 +15,7 @@ import "./chakra.css"
 import { getHotels, searchListing } from "../lib/apiClient"
 import Logo from "./flc_design20230220117636.png"
 import { useSelector, useDispatch } from "react-redux"
+import { searchQueryString } from "../../store/feature/filter"
 
 const Topbar = ({ data, setPropertyData }) => {
   const params = useParams()
@@ -27,16 +28,16 @@ const Topbar = ({ data, setPropertyData }) => {
   }
 
   const Search = () => {
-    const [searchTerm, setSearchTerm] = useState("")
+    // const [searchTerm, setSearchTerm] = useState("")
     const [searchedList, setSearchedList] = useState([])
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const searchTerm = useSelector((state) => state?.searchQuery)
 
     const searchForProperty = async (event) => {
-      setSearchTerm(event.target.value)
-      dispatch(await searchListing(searchTerm))
-      const listing = await searchListing(searchTerm)
+      const string = event.target.value
+      dispatch(searchQueryString(string))
+      const listing = await searchListing(string)
       setSearchedList(listing)
-      // console.log(listing)
     }
 
     return (
@@ -52,7 +53,7 @@ const Topbar = ({ data, setPropertyData }) => {
             <ModalHeader>
               <Input
                 placeholder="Search..."
-                value={searchTerm}
+                value={searchTerm.string}
                 onChange={searchForProperty}
                 size="md"
                 rounded="md"
