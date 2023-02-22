@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import {
   TbPool,
@@ -14,26 +14,26 @@ import {
   GiIsland,
   GiPalmTree
 } from "react-icons/gi"
-import { searchListing } from "../lib/apiClient"
+// import { searchListing } from "../lib/apiClient"
 import FilterListing from "./FilterListing"
+import { setType } from "../../store/feature/filter"
+import { useSelector, useDispatch } from "react-redux"
 
 const HomeTab = ({ data, setPropertyData }) => {
-  const [minPrice, setMinPrice] = useState(0)
-  const [maxPrice, setMaxPrice] = useState(9999999)
   const [filteredHotels, setFilteredHotels] = useState([])
-  const [type, setType] = useState("")
+  // const [type, setType] = useState('')
   const navigate = useNavigate()
   const params = useParams()
+  const dispatchType = useDispatch()
 
-  const getHotelsByHotelType = async (hotelType) => {
-    let searchString = ""
-    let min = minPrice
-    let max = maxPrice
-    hotelType = type
-    let hotels = await searchListing(searchString, min, max, hotelType)
-    setType(hotelType)
-    setPropertyData(hotels)
-  }
+  // const getHotelsByHotelType = async (hotelType) => {
+  //   let searchString = ""
+  //   let min = minPrice
+  //   let max = maxPrice
+  //   hotelType = type
+  //   let hotels = await searchListing(searchString, min, max, hotelType)
+  //   setPropertyData(hotels)
+  // }
 
   const links = [
     {
@@ -43,7 +43,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <TbPool
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("poolside")
+            dispatchType(setType("poolside"))
             navigate(`/home/poolside`)
           }}
         />
@@ -56,7 +56,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <TbBeach
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("beachside")
+            dispatchType(setType("beachside"))
             navigate(`/home/beachside`)
           }}
         />
@@ -69,7 +69,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <TbBuildingSkyscraper
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("manison")
+            dispatchType(setType("manison"))
             navigate(`/home/manison`)
           }}
         />
@@ -82,7 +82,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <TbBuildingCottage
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("privatevilla")
+            dispatchType(setType("privatevilla"))
             navigate(`/home/privatevilla`)
           }}
         />
@@ -95,7 +95,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <GiCampingTent
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("camping")
+            dispatchType(setType("camping"))
             navigate(`/home/camping`)
           }}
         />
@@ -108,7 +108,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <GiFrozenOrb
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("arctic")
+            dispatchType(setType("arctic"))
             navigate(`/home/arctic`)
           }}
         />
@@ -121,7 +121,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <GiFarmTractor
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("farmhouse")
+            dispatchType(setType("farmhouse"))
             navigate(`/home/farmhouse`)
           }}
         />
@@ -134,7 +134,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <GiIsland
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("island")
+            dispatchType(setType("island"))
             navigate(`/home/island`)
           }}
         />
@@ -147,7 +147,7 @@ const HomeTab = ({ data, setPropertyData }) => {
         <GiPalmTree
           className="text-orange-600 font-light text-3xl"
           onClick={() => {
-            getHotelsByHotelType("tropical")
+            dispatchType(setType("tropical"))
             navigate(`/home/tropical`)
           }}
         />

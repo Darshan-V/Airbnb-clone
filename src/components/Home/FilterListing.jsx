@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useParams } from "react-router"
 import {
   Modal,
   ModalOverlay,
@@ -14,22 +15,23 @@ import {
 import Slider from "./RangeSlider"
 import { searchListing } from "../lib/apiClient"
 
-const FilterListing = ({ change, setFilteredHotels }) => {
+const FilterListing = ({ setPropertyData, setFilteredHotels }) => {
   const [min, setMin] = useState(100)
   const [max, setMax] = useState(9999999)
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
   const [counter, setCounter] = useState(0)
+  const params = useParams()
 
   const filterHotelsbyPrice = async (minPrice, maxPrice) => {
     let searchString = ""
-    let hotelType = ""
+    let hotelType = params.type
     let hotels = await searchListing(
       searchString,
       minPrice,
       maxPrice,
       hotelType
     )
-    change(hotels)
+    setPropertyData(hotels)
     setFilteredHotels(hotels)
   }
 
