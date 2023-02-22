@@ -1,9 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { filterSlice } from "./feature/filter"
+import filterReducer from "./feature/filter"
 
 export const store = configureStore({
   reducer: {
-    searchQuery: filterSlice
+    searchQuery: filterReducer
   }
 })
-console.log(filterSlice.reducer.state)
