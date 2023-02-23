@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
-import { Link } from "react-router-dom"
 import { getHotels, searchListing } from "../lib/apiClient.js"
 import HomeTab from "./HomeTab.jsx"
 import Topbar from "../Topbar/Topbar"
@@ -10,17 +9,19 @@ import Loading from "../pages/Loading.jsx"
 
 const Places = () => {
   const [propertyData, setPropertyData] = useState([])
+  const [userId, setUserId] = useState("")
   const [mapView, setMapView] = useState(false)
   const navigate = useNavigate()
   const params = useParams()
 
   const loadHotelList = async () => {
     if (params?.type === undefined) {
-      const defaultView = await getHotels()
+      const [defaultView, userId] = await getHotels()
       if (defaultView == "unauthorized") {
         return navigate("/")
       }
       setPropertyData(defaultView)
+      setUserId(userId)
       navigate(`/home`)
     } else {
       let searchString = "",
@@ -47,7 +48,11 @@ const Places = () => {
   return (
     <div className="flex flex-wrap w-full">
       <div className="flex w-full flex-wrap ">
-        <Topbar data={propertyData} setPropertyData={setPropertyData} />
+        <Topbar
+          data={propertyData}
+          setPropertyData={setPropertyData}
+          userId={userId}
+        />
         <HomeTab data={propertyData} setPropertyData={setPropertyData} />
         {!mapView ? (
           <div className="flex w-full">
