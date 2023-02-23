@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { signin } from "./utils/config"
+import { useToast, Box } from "@chakra-ui/react"
 
 const Login = () => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState()
   const navigate = useNavigate()
+  const toast = useToast()
 
   const doSignup = () => {
     navigate("/signup")
   }
   const login = async () => {
-    const message = await signin(userName, password)
+    const [message, data] = await signin(userName, password)
     console.log(message)
-    if (message.status === 401) {
-      return <p>user not exist signup</p>
+    if (message.status !== 200) {
+      return setError(true)
     }
-    navigate(`/home`)
+    setError(false)
+    navigate(`/home/`)
   }
 
   return (
@@ -59,6 +63,21 @@ const Login = () => {
           <button
             className="border p-2 w-full rounded-md font-bold bg-green-600  text-white"
             onClick={() => {
+              if (error) {
+                return toast({
+                  title: "User not exist",
+                  description: "Please click signup to create account",
+                  status: "error",
+                  duration: 5000,
+                  isClosable: true
+                })
+              }
+              toast({
+                title: "Welcome!",
+                status: "success",
+                duration: 4000,
+                isClosable: true
+              })
               login()
             }}
           >

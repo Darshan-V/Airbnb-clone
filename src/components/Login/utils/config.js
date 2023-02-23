@@ -24,7 +24,8 @@ async function signin(email, password) {
     body: JSON.stringify({ email: email, password: password }),
     credentials: "include"
   })
-  return doSignin
+  const data = await doSignin.json()
+  return [doSignin, data]
 }
 
 export { registerUser, signin }
