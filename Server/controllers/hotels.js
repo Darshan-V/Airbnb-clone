@@ -11,8 +11,8 @@ import {
 async function getAllHotels(req, res) {
   try {
     const hotels = await getHotels()
-    console.log(req.headers)
-    res.json(hotels)
+    const userId = req.userId
+    res.json([hotels, userId])
   } catch (err) {
     res.sendStatus(500)
   }
