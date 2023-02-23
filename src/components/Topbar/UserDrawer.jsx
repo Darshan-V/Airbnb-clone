@@ -65,7 +65,7 @@ const UserDrawer = ({ userId }) => {
             bg="red.500"
             className="hover:cursor-pointer"
             onClick={() => {
-              navigate(`/home`)
+              navigate(`/`)
               onClose()
             }}
           >

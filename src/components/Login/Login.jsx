@@ -6,7 +6,6 @@ import { useToast, Box } from "@chakra-ui/react"
 const Login = () => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState()
   const navigate = useNavigate()
   const toast = useToast()
 
@@ -15,11 +14,9 @@ const Login = () => {
   }
   const login = async () => {
     const [message, data] = await signin(userName, password)
-    console.log(message)
     if (message.status !== 200) {
-      return setError(true)
+      return navigate("/")
     }
-    setError(false)
     navigate(`/home/`)
   }
 
@@ -63,15 +60,6 @@ const Login = () => {
           <button
             className="border p-2 w-full rounded-md font-bold bg-green-600  text-white"
             onClick={() => {
-              if (error) {
-                return toast({
-                  title: "User not exist",
-                  description: "Please click signup to create account",
-                  status: "error",
-                  duration: 5000,
-                  isClosable: true
-                })
-              }
               toast({
                 title: "Welcome!",
                 status: "success",
