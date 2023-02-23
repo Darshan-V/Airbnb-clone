@@ -4,8 +4,8 @@ async function getHotels() {
   let data = await fetch(`${apiUrl}/hotels`, {
     credentials: "include"
   })
-  let hotels = await data.json()
-  return hotels
+  let [hotels, id] = await data.json()
+  return [hotels, id]
 }
 
 async function getImages(hotelId) {
@@ -71,12 +71,6 @@ async function getBookingsbyProperty(hotelId) {
   return bookingData
 }
 
-async function login() {
-  let data = await fetch(`${apiUrl}/login`)
-  const loggedIn = await data.json()
-  return loggedIn
-}
-
 async function searchListing(searchString, min, max, hotelType) {
   let queryUrl = `${apiUrl}/hotels/filters/categories?`
   if (searchString) {
@@ -106,9 +100,5 @@ export {
   getUserById,
   getBookingsbyProperty,
   checkSlots,
-  login,
-  // getHotelsByType,
-  // searchHotels,
-  // filterByPrice,
   searchListing
 }
