@@ -6,6 +6,7 @@ import HomeTab from "./HomeTab.jsx"
 import Topbar from "../Topbar/Topbar"
 import Filter from "../pages/Filter.jsx"
 import PropertyCard from "./PropertyCard.jsx"
+import Loading from "../pages/Loading.jsx"
 
 const Places = () => {
   const [propertyData, setPropertyData] = useState([])
@@ -35,10 +36,13 @@ const Places = () => {
       }
     }
   }
-
   useEffect(() => {
     loadHotelList()
   }, [params.type])
+
+  if (!propertyData || propertyData.length === 0) {
+    return <Loading />
+  }
 
   return (
     <div className="flex flex-wrap w-full">
