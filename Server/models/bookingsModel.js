@@ -29,7 +29,7 @@ const checkAvailableSlots = async (checkIn, checkOut, hotelId) => {
 
 const getReservation = async (propertyId, userId) => {
   const reservedData = await pool.query(
-    "select * from bookings where property_id = $1 and user_id = $2",
+    "SELECT * FROM bookings WHERE created_at > NOW() - INTERVAL '15 minutes' and user_id = $2 and property_id = $1",
     [propertyId, userId]
   )
   return reservedData.rows
