@@ -3,7 +3,8 @@ import {
   createBookings,
   createUsers,
   createPlaces,
-  createImages
+  createImages,
+  createSessions
 } from "./query.js"
 const { Pool } = pg
 
@@ -19,6 +20,7 @@ async function initDB() {
   await pool.query(createBookings)
   await pool.query(createUsers)
   await pool.query(createImages)
+  await pool.query(createSessions)
 }
 
 export { initDB, pool }
