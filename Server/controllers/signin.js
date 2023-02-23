@@ -6,14 +6,15 @@ async function signin(req, res) {
     if (email.length === 0 || password.length === 0) {
       res.status(406).json("empty credentials")
     } else {
-      const token = await authenticateUser(email, password)
+      const [token, user] = await authenticateUser(email, password)
+      console.log("🚀 ~ file: signin.js:10 ~ signin ~ user:", user)
       if (!token) {
         res.status(417).json("no token")
         return
       }
       res
         .cookie("token", token, { httpOnly: true, sameSite: true })
-        .json("loggend in")
+        .json("loggedin")
     }
   } catch (error) {
     res.status(401).send("test error")
