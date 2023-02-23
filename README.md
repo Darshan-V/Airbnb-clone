@@ -7,7 +7,6 @@
 - [x] handle exception according to the response
 - [x] move the checkAvailableSlots to the booking route -> dep: calender
 - [x] fix date slice Reservation.jsx
-- [ ] why oAuth , why code , why tokens,
 - [ ] store updated session somewhere
 - [ ] send the session details to the frontend
 - [ ] BUG signup confirm password mismatch -> registered : split credentials check into functions: no trim password
@@ -33,7 +32,8 @@ Frontend
 - [ ] default map center getfrom geolocation
 - [x] include routes for mapview, filter, search
 - [ ] break down reservation component to smaller components
-- [ ] implement models using ui library -> done on search
+- [x] implement models using ui library -> done on search
 - [ ] make a priority list
-- [ ] hide price when invalid date and slot unavailable
-- [ ] \*\*\* Layout
+- [x] hide price when invalid date and slot unavailable
+- [x] \*\*\* Layout
+- [x] Loading page
