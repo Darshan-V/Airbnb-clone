@@ -35,4 +35,17 @@ const createImages = `create table if not exists images(
     created_at timestamp default current_timestamp,
     constraint fk_property foreign key(property_id) references property(id))`
 
-export { createBookings, createImages, createPlaces, createUsers }
+const createSessions = `create table if not exists sessions(
+    user_id int not null,
+    session_id varchar not null unique,
+    created_at timestamp default current_timestamp,
+    constraint fk_user foreign key(user_id) references users(id)
+)`
+
+export {
+  createBookings,
+  createImages,
+  createPlaces,
+  createUsers,
+  createSessions
+}
