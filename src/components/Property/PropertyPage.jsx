@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router"
 import ImageCarousel from "./ImageCarousel.jsx"
 import AboutProperty from "./AboutProperty.jsx"
 import Topbar from "../Topbar/Topbar.jsx"
+import Loading from "../pages/Loading.jsx"
 
 const PropertyPage = () => {
   const [propertyData, setPropertyData] = useState([])
@@ -26,7 +27,9 @@ const PropertyPage = () => {
   }, [propertyData.id])
 
   const navigate = useNavigate()
-
+  if (!propertyData || propertyData.length === 0) {
+    return <Loading />
+  }
   return (
     <div className="flex flex-col w-3/4 m-auto">
       <Topbar />
