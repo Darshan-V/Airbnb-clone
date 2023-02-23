@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { TbAerialLift, TbSearch } from "react-icons/tb"
+import { TbSearch } from "react-icons/tb"
 import { useNavigate, useParams } from "react-router"
 import { Link } from "react-router-dom"
 import {
@@ -9,6 +9,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Button,
   useDisclosure
 } from "@chakra-ui/react"
 import "./chakra.css"
@@ -16,8 +17,9 @@ import { getHotels, searchListing } from "../lib/apiClient"
 import Logo from "./flc_design20230220117636.png"
 import { useSelector, useDispatch } from "react-redux"
 import { searchQueryString } from "../../store/feature/filter"
+import UserDrawer from "./UserDrawer"
 
-const Topbar = ({ data, setPropertyData }) => {
+const Topbar = ({ userId, setPropertyData }) => {
   const params = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -42,10 +44,14 @@ const Topbar = ({ data, setPropertyData }) => {
 
     return (
       <>
-        <TbSearch
-          className="text text-3xl font text-yellow-600 hover:text-yellow-400 bg-slate-300 w-20 h-8 ml-auto rounded-lg shadow-lg shadow-slate-400"
+        <Button
+          variant="outline"
+          colorScheme="orange"
           onClick={onOpen}
-        />
+          height="full"
+        >
+          <TbSearch className="text text-4xl text-yellow-600" />
+        </Button>
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -95,6 +101,7 @@ const Topbar = ({ data, setPropertyData }) => {
             <div className="flex flex-col align-middle ">
               <div className="flex flex-row">
                 <Search />
+                <UserDrawer userId={userId} />
               </div>
             </div>
           ) : null}
@@ -123,9 +130,10 @@ const Topbar = ({ data, setPropertyData }) => {
             <img src={Logo} className="w-28" />
           </Link>
           {params?.id === undefined ? (
-            <div className="flex flex-col align-middle w-40">
-              <div className="flex flex-row m-auto">
+            <div className="flex flex-col align-middle justify-center w-60">
+              <div className="flex flex-row justify-evenly ">
                 <Search />
+                <UserDrawer userId={userId} />
               </div>
             </div>
           ) : null}
