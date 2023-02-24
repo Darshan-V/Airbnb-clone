@@ -92,6 +92,15 @@ async function searchListing(searchString, min, max, hotelType) {
   return searchedList
 }
 
+async function logout() {
+  let data = await fetch(`${apiUrl}/logout`, {
+    method: "DELETE",
+    credentials: "include"
+  })
+  const logout = await data.json()
+  return logout
+}
+
 export {
   getHotels,
   getImages,
@@ -100,5 +109,6 @@ export {
   getUserById,
   getBookingsbyProperty,
   checkSlots,
-  searchListing
+  searchListing,
+  logout
 }
