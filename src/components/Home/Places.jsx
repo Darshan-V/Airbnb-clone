@@ -17,7 +17,7 @@ const Places = () => {
   const loadHotelList = async () => {
     if (params?.type === undefined) {
       const [defaultView, userId] = await getHotels()
-      if (defaultView == "unauthorized") {
+      if (defaultView === "u") {
         return navigate("/")
       }
       setPropertyData(defaultView)
@@ -29,7 +29,7 @@ const Places = () => {
         max = 999999,
         type = params?.type
       const listing = await searchListing(searchString, min, max, type)
-      if (listing === "unauthorized") {
+      if (listing === "u") {
         navigate("/")
       } else {
         setPropertyData(listing)
