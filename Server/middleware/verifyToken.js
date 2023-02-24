@@ -1,13 +1,18 @@
-import jwt from "jsonwebtoken"
+import { getSession } from "../models/sessionModel.js"
 import dotenv from "dotenv"
 dotenv.config()
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   try {
     const reqToken = req.headers.cookie.split("=")[1]
-    const decoded = jwt.verify(reqToken, process.env.JWT_SECRET)
-    req.userId = decoded.id
-    next()
+    const session = await getSession(reqToken)
+    if (session.length !== 0) {
+      req.userId = session?.user_id
+      req.sessionId = reqToken
+      next()
+    } else {
+      res.status(401).json("invalid user")
+    }
   } catch (err) {
     res.status(401).json("unauthorized")
   }
