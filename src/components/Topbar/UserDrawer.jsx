@@ -7,7 +7,6 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Button,
   Avatar,
   useDisclosure,
   Box
@@ -43,21 +42,29 @@ const UserDrawer = ({ userId }) => {
         onClick={onOpen}
       />
 
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        closeOnEsc="true"
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader borderBottom="1px">
+          <DrawerHeader borderBottom="1px" bg="orange.100">
             <Avatar
               size="sm"
               mr="1.5"
-              bg="orange.300"
+              bg="blue.300"
               name={details?.name}
             ></Avatar>
             {details?.name?.toUpperCase()}
           </DrawerHeader>
 
-          <DrawerBody className="flex flex-col m-1">
+          <DrawerBody
+            className="flex flex-col m-1"
+            bgGradient="linear(to-r, green.200, pink.500)"
+          >
             <Box m="1" className="hover:cursor-pointer">
               <p className="font font-thin font-mono">Airbnb your Home</p>
             </Box>
