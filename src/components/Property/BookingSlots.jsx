@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { getBookingsbyProperty } from "../lib/apiClient"
+import { useNavigate } from "react-router"
 
 const BookingSlots = () => {
   const params = useParams()
   const hotelId = params.id
   const [bookingData, setBookingData] = useState([])
+  const navigate = useNavigate()
 
   const getBookingData = async () => {
     const data = await getBookingsbyProperty(hotelId)
-    setBookingData(data)
+    if (data.length > 0) {
+      return setBookingData(data)
+    }
+    navigate(`/property/${hotelId}`)
   }
   useEffect(() => {
     getBookingData()
