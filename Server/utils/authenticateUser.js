@@ -26,7 +26,7 @@ async function authenticateUser(email, password) {
       expiresIn: "3h"
     }
   )
-  return [token, fetchedUser]
+  return [token, fetchedUser[0]]
 }
 
 export { authenticateUser }
