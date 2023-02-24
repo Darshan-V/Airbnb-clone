@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { reserveSlot, checkSlots } from "../lib/apiClient"
 import { Card, CardHeader, CardBody, Input, Button } from "@chakra-ui/react"
@@ -35,7 +35,6 @@ const Reservation = ({ price }) => {
       validateDates(checkIn, checkOut, hotelId)
     }
 
-    console.log(isBooked)
     const status = "reserved"
     reserveSlot(hotelId, checkIn, checkOut, total, status)
     dispatch(
