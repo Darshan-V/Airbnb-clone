@@ -21,19 +21,9 @@ import { useSelector, useDispatch } from "react-redux"
 
 const HomeTab = ({ data, setPropertyData }) => {
   const [filteredHotels, setFilteredHotels] = useState([])
-  // const [type, setType] = useState('')
   const navigate = useNavigate()
   const params = useParams()
   const dispatchType = useDispatch()
-
-  // const getHotelsByHotelType = async (hotelType) => {
-  //   let searchString = ""
-  //   let min = minPrice
-  //   let max = maxPrice
-  //   hotelType = type
-  //   let hotels = await searchListing(searchString, min, max, hotelType)
-  //   setPropertyData(hotels)
-  // }
 
   const links = [
     {
