@@ -15,6 +15,7 @@ import {
 import { BiUser } from "react-icons/bi"
 import { getUserById } from "../lib/apiClient"
 import { useNavigate } from "react-router"
+import { logout } from "../lib/apiClient"
 
 const UserDrawer = ({ userId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -24,6 +25,10 @@ const UserDrawer = ({ userId }) => {
   const getUserDetails = async () => {
     const details = await getUserById(userId)
     setDetails(details)
+  }
+  const logoutUser = async () => {
+    logout()
+    navigate("/")
   }
   useEffect(() => {
     getUserDetails()
@@ -69,7 +74,9 @@ const UserDrawer = ({ userId }) => {
               onClose()
             }}
           >
-            <span className="text-2xl text-white m-auto">Logout</span>
+            <span className="text-2xl text-white m-auto" onClick={logoutUser}>
+              Logout
+            </span>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
