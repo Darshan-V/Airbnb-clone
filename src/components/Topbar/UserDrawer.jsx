@@ -63,7 +63,7 @@ const UserDrawer = ({ userId }) => {
 
           <DrawerBody
             className="flex flex-col m-1"
-            bgGradient="linear(to-r, green.200, pink.500)"
+            bgGradient="linear(to-r, orange.200, orange.50)"
           >
             <Box m="1" className="hover:cursor-pointer">
               <p className="font font-thin font-mono">Airbnb your Home</p>
