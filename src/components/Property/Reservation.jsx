@@ -37,10 +37,11 @@ const Reservation = ({ price }) => {
 
     const status = "reserved"
     reserveSlot(hotelId, checkIn, checkOut, total, status)
-    dispatch(
-      setReservation(reserveSlot(hotelId, checkIn, checkOut, total, status))
-    )
     navigate(`/booking/${hotelId}`)
+
+    // dispatch(
+    //   setReservation(reserveSlot(hotelId, checkIn, checkOut, total, status))
+    // )
   }
 
   const getCheckout = (event) => {
