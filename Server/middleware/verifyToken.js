@@ -1,6 +1,4 @@
 import { getSession } from "../models/sessionModel.js"
-import dotenv from "dotenv"
-dotenv.config()
 
 const verifyToken = async (req, res, next) => {
   try {
