@@ -37,3 +37,6 @@ Frontend
 - [x] hide price when invalid date and slot unavailable
 - [x] \*\*\* Layout
 - [x] Loading page
+- [ ] add search string in the store and retrive it when back on home
+- [ ] strictly aviod optional chaining in backend
+- [ ] clear res.cookie on logout
