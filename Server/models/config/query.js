@@ -23,6 +23,7 @@ const createBookings = `create table if not exists bookings(
     property_id int not null,
     user_id int not null,
     total_price int,
+    status varchar,
     created_at timestamp default current_timestamp,
     primary key(id),
     constraint fk_place foreign key(property_id) references property(id),

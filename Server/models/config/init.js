@@ -17,10 +17,10 @@ const pool = new Pool({
 
 async function initDB() {
   await pool.query(createPlaces)
-  await pool.query(createBookings)
   await pool.query(createUsers)
-  await pool.query(createImages)
   await pool.query(createSessions)
+  await pool.query(createBookings)
+  await pool.query(createImages)
 }
 
 export { initDB, pool }
