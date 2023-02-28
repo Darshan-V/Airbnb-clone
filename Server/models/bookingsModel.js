@@ -8,8 +8,9 @@ const reserveSlot = async (
   total,
   status
 ) => {
-  await pool.query(
-    `insert into bookings (check_in, check_out, property_id, user_id, total_price, status) values($1, $2, $3, $4, $5 ,$6)`,
+  console.log("im in db")
+  const booking = await pool.query(
+    "insert into bookings (check_in, check_out, property_id, user_id, total_price, status) values($1, $2, $3, $4, $5 ,$6) returning *",
     [
       checkinDate,
       checkoutDate,
@@ -19,11 +20,7 @@ const reserveSlot = async (
       status
     ]
   )
-  const bookingData = await pool.query(
-    "select * from bookings where user_id=$1 and property_id=$2",
-    [userId, placeId]
-  )
-  return bookingData.rows
+  return booking.rows
 }
 
 const checkAvailableSlots = async (
