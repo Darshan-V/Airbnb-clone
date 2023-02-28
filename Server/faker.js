@@ -12,7 +12,7 @@ async function insertFake() {
     "arctic",
     "farmhouse"
   ]
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i <= 500; i++) {
     let name = faker.address.cityName()
     let address = faker.address.city()
     let latitude = faker.address.latitude()
@@ -24,7 +24,10 @@ async function insertFake() {
       long: longitude
     }
     price = Number(price)
-    let ptype = type[Math.floor(Math.random() * type.length)]
+    let ptype =
+      type[
+        Math.floor(Math.random() * type.length)
+      ]
     await pool.query(
       "insert into property(name,address,price,type) values($1, $2, $3, $4)",
       [name, fullAddress, price, ptype]
@@ -36,8 +39,13 @@ async function insertFake() {
 
 async function fakerImages() {
   let store = []
-  for (let i = 0; i < 50; i++) {
-    let images = faker.image.imageUrl(800, 800, "cat", true)
+  for (let i = 501; i <= 501; i++) {
+    let images = faker.image.imageUrl(
+      800,
+      800,
+      "cat",
+      true
+    )
     store.push(images)
   }
   store = JSON.stringify(store)
@@ -52,7 +60,7 @@ async function fakerImages() {
 }
 
 async function insertImage() {
-  for (let i = 53; i < 103; i++) {
+  for (let i = 501; i <= 501; i++) {
     let images = await fakerImages()
     await pool.query(
       "insert into images(property_id,Imageurl) values($1, $2)",
