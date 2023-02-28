@@ -13,8 +13,16 @@ routes.get(
   checkAvailablity
 )
 
-routes.post("/hotels/:id/booking/", makeBooking) //send booking details as the response
+routes.post(
+  "/hotels/:id/booking/",
+  verifyToken,
+  makeBooking
+)
 
-routes.get("/bookings/:propertyId", verifyToken, getReservedEntry)
+routes.get(
+  "/bookings/:propertyId",
+  verifyToken,
+  getReservedEntry
+)
 
 export { routes }

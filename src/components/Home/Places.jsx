@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router"
-import { getHotels, searchListing } from "../lib/apiClient.js"
+import {
+  useNavigate,
+  useParams
+} from "react-router"
+import {
+  getHotels,
+  searchListing
+} from "../lib/apiClient.js"
 import HomeTab from "./HomeTab.jsx"
 import Topbar from "../Topbar/Topbar"
 import Filter from "../pages/Filter.jsx"
@@ -8,7 +14,8 @@ import PropertyCard from "./PropertyCard.jsx"
 import Loading from "../pages/Loading.jsx"
 
 const Places = () => {
-  const [propertyData, setPropertyData] = useState([])
+  const [propertyData, setPropertyData] =
+    useState([])
   const [userId, setUserId] = useState("")
   const [mapView, setMapView] = useState(false)
   const navigate = useNavigate()
@@ -16,7 +23,8 @@ const Places = () => {
 
   const loadHotelList = async () => {
     if (params?.type === undefined) {
-      const [defaultView, userId] = await getHotels()
+      const [defaultView, userId] =
+        await getHotels()
       if (defaultView === "u") {
         return navigate("/")
       }
@@ -28,7 +36,12 @@ const Places = () => {
         min = 0,
         max = 999999,
         type = params?.type
-      const listing = await searchListing(searchString, min, max, type)
+      const listing = await searchListing(
+        searchString,
+        min,
+        max,
+        type
+      )
       if (listing === "u") {
         navigate("/")
       } else {
@@ -41,7 +54,10 @@ const Places = () => {
     loadHotelList()
   }, [params.type])
 
-  if (!propertyData || propertyData.length === 0) {
+  if (
+    !propertyData ||
+    propertyData.length === 0
+  ) {
     return <Loading />
   }
 
@@ -53,10 +69,15 @@ const Places = () => {
           setPropertyData={setPropertyData}
           userId={userId}
         />
-        <HomeTab data={propertyData} setPropertyData={setPropertyData} />
+        <HomeTab
+          data={propertyData}
+          setPropertyData={setPropertyData}
+        />
         {!mapView ? (
           <div className="flex w-full">
-            <PropertyCard listing={propertyData} />
+            <PropertyCard
+              listing={propertyData}
+            />
           </div>
         ) : (
           <Filter data={propertyData} />
