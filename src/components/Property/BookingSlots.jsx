@@ -24,7 +24,7 @@ const BookingSlots = () => {
 
   useEffect(() => {
     getBookingData()
-  }, [hotelId])
+  }, [])
 
   console.log(bookingData)
   return (
@@ -39,7 +39,16 @@ const BookingSlots = () => {
           <div key={i}>
             <div className="flex flex-col w-96 mr-auto border m-5 p-5">
               <span>Your Trip</span>
-              <GiTrashCan className="ml-auto hover:cursor-pointer text-red-600 text-xl" />
+              <GiTrashCan
+                className="ml-auto hover:cursor-pointer text-red-600 text-xl"
+                onClick={() => {
+                  console.log(
+                    "clicked item",
+                    i,
+                    "will delete this item"
+                  )
+                }}
+              />
               <div>
                 <div>
                   <span className="text text-slate-500 underline uppercase">
@@ -77,8 +86,20 @@ const BookingSlots = () => {
             </div>
           </div>
         ))}
-        <div className="flex m-auto w-4/5 bg-pink-600 h-10 rounded-md">
-          <button className="w-84 bg-pink-600 m-auto text-white text-semibold text-xl font-mono">
+        <div
+          className="flex m-auto w-4/5 bg-pink-600 h-10 rounded-md hover:cursor-pointer hover:scale-110 hover:bg-pink-500"
+          onClick={() => {
+            if (bookingData.length === 1) {
+              return console.log(
+                "booking confirmed"
+              )
+            }
+            console.log(
+              "multiple slots selected edit selection before confirmation"
+            )
+          }}
+        >
+          <button className="w-84 m-auto text-white text-semibold text-xl font-mono">
             Continue
           </button>
         </div>

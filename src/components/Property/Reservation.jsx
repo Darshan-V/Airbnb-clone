@@ -54,21 +54,18 @@ const Reservation = ({ price }) => {
   const makeBooking = () => {
     const total = price * nights
     if (isBooked) {
-      return validateDates(
+      validateDates(checkIn, checkOut, hotelId)
+    } else {
+      const status = "reserved"
+      const reservation = reserveSlot(
+        hotelId,
         checkIn,
         checkOut,
-        hotelId
+        total,
+        status
       )
+      navigate(`/bookings/${hotelId}`)
     }
-    const status = "reserved"
-    const reservation = reserveSlot(
-      hotelId,
-      checkIn,
-      checkOut,
-      total,
-      status
-    )
-    navigate(`/bookings/${hotelId}`)
   }
 
   const getCheckout = (event) => {
