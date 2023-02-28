@@ -6,18 +6,35 @@ import {
 
 async function checkAvailablity(req, res) {
   try {
-    const { hotelId, checkIn, checkOut } = req.params
+    const { hotelId, checkIn, checkOut } =
+      req.params
     if (
-      checkIn < new Date().toISOString().substring(0, 10) ||
+      checkIn <
+        new Date()
+          .toISOString()
+          .substring(0, 10) ||
       checkOut <= checkIn ||
-      checkOut <= new Date().toISOString().substring(0, 10)
+      checkOut <=
+        new Date().toISOString().substring(0, 10)
     ) {
       res.status(409).json("invalid date format")
       return "invalid date format"
-    } else if (!hotelId || hotelId === "undefined") {
-      res.status(406).json("connot make reservation on invalid hotel")
+    } else if (
+      !hotelId ||
+      hotelId === "undefined"
+    ) {
+      res
+        .status(406)
+        .json(
+          "connot make reservation on invalid hotel"
+        )
     } else {
-      const bookedSlots = await checkAvailableSlots(checkIn, checkOut, hotelId)
+      const bookedSlots =
+        await checkAvailableSlots(
+          checkIn,
+          checkOut,
+          hotelId
+        )
       res.json(bookedSlots)
     }
   } catch (err) {
@@ -28,15 +45,23 @@ async function checkAvailablity(req, res) {
 async function makeBooking(req, res) {
   try {
     const hotelId = req.params.id
-    const { checkIn, checkOut, total, status } = req.body
+    const { checkIn, checkOut, total, status } =
+      req.body
     const userId = req.userId
     if (
-      checkIn < new Date().toISOString().substring(0, 10) ||
+      checkIn <
+        new Date()
+          .toISOString()
+          .substring(0, 10) ||
       checkOut <= checkIn ||
-      checkOut <= new Date().toISOString().substring(0, 10)
+      checkOut <=
+        new Date().toISOString().substring(0, 10)
     ) {
       res.status(409).json("invalid date format")
-    } else if (!hotelId || hotelId === "undefined") {
+    } else if (
+      !hotelId ||
+      hotelId === "undefined"
+    ) {
       res.status(406).json("required hotelId")
     } else if (!userId) {
       res.status(403).json("invalid user")
@@ -52,6 +77,7 @@ async function makeBooking(req, res) {
       res.json(confirmBooking)
     }
   } catch (err) {
+    console.log(err.stack)
     res.sendStatus(500)
   }
 }
@@ -62,10 +88,14 @@ async function getReservedEntry(req, res) {
     const userId = req.userId
     if (!hotelId || hotelId === "undefined") {
       res.status(406).json("required hotel id")
-    } else if (!userId || userId === "undefined") {
+    } else if (
+      !userId ||
+      userId === "undefined"
+    ) {
       res.status(403).json("invalid user")
     } else {
-      const reservationData = await getReservation(hotelId, userId)
+      const reservationData =
+        await getReservation(hotelId, userId)
       res.json(reservationData)
     }
   } catch (error) {
@@ -73,4 +103,8 @@ async function getReservedEntry(req, res) {
   }
 }
 
-export { checkAvailablity, makeBooking, getReservedEntry }
+export {
+  checkAvailablity,
+  makeBooking,
+  getReservedEntry
+}
