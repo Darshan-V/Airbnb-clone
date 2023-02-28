@@ -15,6 +15,7 @@ import { BiUser } from "react-icons/bi"
 import { getUserById } from "../lib/apiClient"
 import { useNavigate } from "react-router"
 import { logout } from "../lib/apiClient"
+import Loading from "../pages/Loading"
 
 const UserDrawer = ({ userId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -22,6 +23,9 @@ const UserDrawer = ({ userId }) => {
   const navigate = useNavigate()
 
   const getUserDetails = async () => {
+    if (!userId) {
+      return <Loading />
+    }
     const details = await getUserById(userId)
     setDetails(details)
   }
@@ -29,6 +33,7 @@ const UserDrawer = ({ userId }) => {
     logout()
     navigate("/")
   }
+
   useEffect(() => {
     getUserDetails()
   }, [userId])

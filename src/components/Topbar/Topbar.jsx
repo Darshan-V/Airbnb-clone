@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { TbSearch } from "react-icons/tb"
 import { useNavigate, useParams } from "react-router"
 import { Link } from "react-router-dom"
@@ -15,29 +15,30 @@ import {
 import "./chakra.css"
 import { getHotels, searchListing } from "../lib/apiClient"
 import Logo from "./flc_design20230220117636.png"
-import { useSelector, useDispatch } from "react-redux"
-import { searchQueryString } from "../../store/feature/filter"
 import UserDrawer from "./UserDrawer"
 
-const Topbar = ({ userId, setPropertyData }) => {
+const Topbar = ({ setPropertyData }) => {
   const params = useParams()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [userId, setUserId] = useState("")
 
   const getAllListing = async () => {
-    const listing = await getHotels()
+    const [listing, id] = await getHotels()
+    setUserId(id)
     setPropertyData(listing)
   }
+  useEffect(() => {
+    getAllListing()
+  }, [])
 
   const Search = () => {
-    // const [searchTerm, setSearchTerm] = useState("")
+    const [searchTerm, setSearchTerm] = useState("")
     const [searchedList, setSearchedList] = useState([])
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const searchTerm = useSelector((state) => state?.searchQuery)
 
     const searchForProperty = async (event) => {
       const string = event.target.value
-      dispatch(searchQueryString(string))
+      setSearchTerm(string)
       const listing = await searchListing(string)
       setSearchedList(listing)
     }
