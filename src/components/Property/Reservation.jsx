@@ -1,19 +1,7 @@
 import React, { useState } from "react"
-import {
-  useNavigate,
-  useParams
-} from "react-router"
-import {
-  reserveSlot,
-  checkSlots
-} from "../lib/apiClient"
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Input,
-  Button
-} from "@chakra-ui/react"
+import { useNavigate, useParams } from "react-router"
+import { reserveSlot, checkSlots } from "../lib/apiClient"
+import { Card, CardHeader, CardBody, Input, Button } from "@chakra-ui/react"
 
 const Reservation = ({ price }) => {
   const [currentDate, setCurrentDate] = useState(
@@ -28,22 +16,12 @@ const Reservation = ({ price }) => {
   const params = useParams()
   const hotelId = params.id
 
-  const diff =
-    new Date(checkOut).valueOf() -
-    new Date(checkIn).valueOf()
+  const diff = new Date(checkOut).valueOf() - new Date(checkIn).valueOf()
   const diffInHours = diff / 1000 / 60 / 60
   const nights = diffInHours / 24
 
-  const validateDates = async (
-    checkIn,
-    checkOut,
-    hotelId
-  ) => {
-    const isAvailable = await checkSlots(
-      checkIn,
-      checkOut,
-      hotelId
-    )
+  const validateDates = async (checkIn, checkOut, hotelId) => {
+    const isAvailable = await checkSlots(checkIn, checkOut, hotelId)
     if (isAvailable.length === 0) {
       return setIsBooked(false)
     } else {
@@ -51,13 +29,13 @@ const Reservation = ({ price }) => {
     }
   }
 
-  const makeBooking = () => {
+  const makeBooking = async () => {
     const total = price * nights
     if (isBooked) {
-      validateDates(checkIn, checkOut, hotelId)
+      await validateDates(checkIn, checkOut, hotelId)
     } else {
       const status = "reserved"
-      const reservation = reserveSlot(
+      const reservation = await reserveSlot(
         hotelId,
         checkIn,
         checkOut,
@@ -65,24 +43,20 @@ const Reservation = ({ price }) => {
         status
       )
       navigate(`/bookings/${hotelId}`)
+      return reservation
     }
   }
 
-  const getCheckout = (event) => {
+  const getCheckout = async (event) => {
     const checkOutDate = event.target.value
     setCheckout(checkOutDate)
-    validateDates(checkIn, checkOutDate, hotelId)
+    await validateDates(checkIn, checkOutDate, hotelId)
   }
   const getCheckin = async (event) => {
     const checkInDate = event.target.value
     setCheckin(checkInDate)
 
-    if (checkOut)
-      validateDates(
-        checkInDate,
-        checkOut,
-        hotelId
-      )
+    if (checkOut) await validateDates(checkInDate, checkOut, hotelId)
   }
 
   return (
@@ -95,18 +69,9 @@ const Reservation = ({ price }) => {
       top="10rem"
       mt="2"
     >
-      <CardHeader
-        mr="auto"
-        borderBottom="1px"
-        w="full"
-        display="flex"
-      >
-        <span className="text-xl font-mono font-semibold">
-          &#8377; {price}
-        </span>
-        <span className="text-md font-mono font-thin">
-          /Night
-        </span>
+      <CardHeader mr="auto" borderBottom="1px" w="full" display="flex">
+        <span className="text-xl font-mono font-semibold">&#8377; {price}</span>
+        <span className="text-md font-mono font-thin">/Night</span>
       </CardHeader>
       <CardBody w="full" m="auto" h="full">
         <div className="flex flex-col w-full">
@@ -142,8 +107,7 @@ const Reservation = ({ price }) => {
                   />
                 </div>
               )}
-              {checkOut <= currentDate ||
-              checkOut <= checkIn ? (
+              {checkOut <= currentDate || checkOut <= checkIn ? (
                 <div className="w-full flex flex-col h-full border rounded-md border-red-600 bg-red-300 sm:w-2/5 md:w-1/2 lg:w-full m-auto">
                   <span className="mr-auto text-xs font-mono font-semibold pt-1 pl-1 ">
                     CheckOut Date
@@ -180,11 +144,7 @@ const Reservation = ({ price }) => {
             checkOut <= checkIn ||
             checkOut <= currentDate ? (
               <div className="mt-4">
-                <Button
-                  colorScheme="red"
-                  isDisabled
-                  w="full"
-                >
+                <Button colorScheme="red" isDisabled w="full">
                   Reserve
                 </Button>
                 <span className="text-xs text-red-400 italic">
@@ -214,8 +174,7 @@ const Reservation = ({ price }) => {
           checkOut <= checkIn ||
           checkOut <= currentDate ? (
             <p className="text font-sans italic text-md text-red-800">
-              Check the check in and check out or,
-              the slot may not be available
+              Check the check in and check out or, the slot may not be available
             </p>
           ) : (
             <div className="flex flex-col w-full mt-4">
