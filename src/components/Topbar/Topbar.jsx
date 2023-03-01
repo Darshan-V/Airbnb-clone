@@ -27,6 +27,7 @@ const Topbar = ({ setPropertyData }) => {
     setUserId(id)
     setPropertyData(listing)
   }
+
   useEffect(() => {
     getAllListing()
   }, [])
