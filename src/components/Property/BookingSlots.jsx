@@ -4,13 +4,15 @@ import { getBookingsbyProperty } from "../lib/apiClient"
 import { useNavigate } from "react-router"
 import { GiTrashCan } from "react-icons/gi"
 import PlaceSummary from "./PlaceSummary"
-import { Button } from "@chakra-ui/react"
+import { Button, useToast } from "@chakra-ui/react"
+import { updateReservation } from "../lib/apiClient"
 
 const BookingSlots = () => {
   const params = useParams()
   const hotelId = params.id
   const [bookingData, setBookingData] = useState([])
   const navigate = useNavigate()
+  const toast = useToast()
 
   const getBookingData = async () => {
     const data = await getBookingsbyProperty(hotelId)
@@ -22,8 +24,35 @@ const BookingSlots = () => {
 
   useEffect(() => {
     getBookingData()
-  }, [])
+  }, [bookingData])
 
+  const updateBookingData = async (hotelId, changeStatus, bookingId) => {
+    if (!hotelId) {
+      return (
+        <>
+          {toast({
+            title: "select a property",
+            status: "warning",
+            duration: 4000,
+            isClosable: true
+          })}
+        </>
+      )
+    }
+    const updateData = await updateReservation(hotelId, changeStatus, bookingId)
+    return (
+      <>
+        {toast({
+          title: "changes made!",
+          status: "info",
+          duration: 4000,
+          isClosable: true
+        })}
+      </>
+    )
+  }
+  // console.log(bookingData[0])
+  // console.log(params)
   //   const deleteSlotHandler=()=>{}
 
   return (
@@ -43,6 +72,7 @@ const BookingSlots = () => {
                   className="ml-auto hover:cursor-pointer text-red-600 text-xl"
                   onClick={() => {
                     console.log("clicked item", i, "will delete this item")
+                    updateBookingData(params?.id, "canceled", reservation?.id)
                   }}
                 />
                 <div>
