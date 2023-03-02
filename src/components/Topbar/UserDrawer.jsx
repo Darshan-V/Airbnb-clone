@@ -76,6 +76,9 @@ const UserDrawer = ({ userId }) => {
             <Box m="1" className="hover:cursor-pointer">
               <p className="font font-thin font-mono">Host an experience</p>
             </Box>
+            <Box>
+              <p className="font font-thin font-mono">Previous Bookings</p>
+            </Box>
           </DrawerBody>
 
           <DrawerFooter
