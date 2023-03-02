@@ -5,6 +5,7 @@ import {
   getReservedEntry,
   updateReservedSlots
 } from "../controllers/reservation.js"
+import { getUserBooking } from "../controllers/bookings.js"
 import { verifyToken } from "../middleware/verifyToken.js"
 const routes = express.Router()
 
@@ -23,5 +24,7 @@ routes.put(
   verifyToken,
   updateReservedSlots
 )
+
+routes.get("/bookings/confirmed/:bookingId", verifyToken, getUserBooking)
 
 export { routes }
