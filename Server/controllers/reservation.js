@@ -92,11 +92,14 @@ async function updateReservedSlots(req, res) {
     return res.status(403).json("invalid entry")
   }
   const updateReservationData = await updateReservation(
-    propertyId,
+    hotelId,
     userId,
     bookingId,
     status
   )
+  if (!updateReservationData) {
+    return res.status(404).json("booking not found")
+  }
   res.json(updateReservationData)
   try {
   } catch (error) {
@@ -105,4 +108,4 @@ async function updateReservedSlots(req, res) {
   }
 }
 
-export { checkAvailablity, makeBooking, getReservedEntry }
+export { checkAvailablity, makeBooking, getReservedEntry, updateReservedSlots }
