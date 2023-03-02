@@ -17,9 +17,14 @@ const getImages = async (hotelId) => {
 }
 
 const getHotelById = async (hotelId) => {
-  const hotel = await pool.query("select * from property where id = $1", [
-    hotelId
-  ])
+  const hotel = await pool.query(
+    `select images.imageUrl,property.id, property.name,property.address,property.price,property.type 
+  from images 
+  left join property
+  on images.property_id = property.id
+  where id = $1`,
+    [hotelId]
+  )
   return hotel.rows
 }
 
