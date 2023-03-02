@@ -17,7 +17,7 @@ const reserveSlot = async (
 
 const checkAvailableSlots = async (checkIn, checkOut, hotelId) => {
   const isAvailable = await pool.query(
-    `select * from bookings where property_id = $3 and status = 'reserved' or status = 'confirmed' and (check_in between $1 and $2 or check_out between $1 and $2 or check_in <= $1 and check_out >= $2 )`,
+    `select * from bookings where property_id = $3 and (check_in between $1 and $2 or check_out between $1 and $2 or check_in <= $1 and check_out >= $2)and (status = 'reserved' or status = 'confirmed')`,
     [checkIn, checkOut, hotelId]
   )
   return isAvailable.rows
@@ -41,9 +41,23 @@ const updateReservation = async (propertyId, userId, bookingId, status) => {
 
 const autodDeleteBookingRecords = async () => {
   const deletedData = await pool.query(
-    `delete from bookings where (created_at < now() - interval '11 minutes' and status = 'reserved') or (status='canceled')`
+    `delete from bookings where (created_at < now() - interval '11 minutes' and status = 'reserved')`
   )
   return deletedData
+}
+
+const getBookingData = async (userId, bookingId) => {
+  const bookingData = await pool.query(
+    `select users.email, bookings.check_in,bookings.check_out,bookings.status,bookings.total_price,property.name,property.address
+    from users
+    left join bookings
+    on users.id = bookings.user_id
+    left join property
+    on property.id = bookings.property_id
+    where users.id = $1 and bookings.id = $2 and status = 'confirmed'`,
+    [userId, bookingId]
+  )
+  return bookingData.rows
 }
 
 export {
@@ -51,5 +65,6 @@ export {
   checkAvailableSlots,
   getReservation,
   updateReservation,
-  autodDeleteBookingRecords
+  autodDeleteBookingRecords,
+  getBookingData
 }
