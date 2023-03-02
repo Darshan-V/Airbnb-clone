@@ -15,6 +15,7 @@ const PlaceSummary = ({ data }) => {
   useEffect(() => {
     getHotelDetails()
   }, [params.id])
+  console.log(details)
 
   return (
     <div>
@@ -22,12 +23,18 @@ const PlaceSummary = ({ data }) => {
         <CardHeader>
           <div className="flex">
             <div className="flex flex-col">
+              <div className="w-full h-20 ">
+                <img
+                  src={details?.imageurl}
+                  className="w-20 h-full rounded-lg"
+                />
+              </div>
               <span className="text text-lg font-bold ">{details?.name}</span>
               <span className="text-sm text-slate-500 italic underline">
                 {details?.address?.location}
               </span>
             </div>
-            <div className="flex flex-col ml-auto">
+            <div className="flex flex-col ml-auto mt-auto">
               <span className="text-lg font-bold text-slate-600">Price</span>
               <span className="text-sm italic underline text-slate-500">
                 &#8377; {details?.price}
@@ -40,8 +47,8 @@ const PlaceSummary = ({ data }) => {
           <Box>
             <div className="flex justify-between">
               <span className="text-lg font-bold text-slate-800">Total</span>
-              <span className="text-sm text-slate-600 font-bold underline italic">
-                &#8377;{data[0]?.total_price}
+              <span className=" text-slate-600 font-bold underline italic text-lg">
+                &#8377; {data[0]?.total_price}
               </span>
             </div>
           </Box>

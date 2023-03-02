@@ -24,7 +24,7 @@ const BookingSlots = () => {
 
   useEffect(() => {
     getBookingData()
-  }, [bookingData])
+  }, [params?.id])
 
   const updateBookingData = async (hotelId, changeStatus, bookingId) => {
     if (!hotelId) {
@@ -51,9 +51,36 @@ const BookingSlots = () => {
       </>
     )
   }
-  // console.log(bookingData[0])
-  // console.log(params)
-  //   const deleteSlotHandler=()=>{}
+
+  const confirmBooking = async (hotelId, changeStatus, bookingId) => {
+    if (!hotelId) {
+      return (
+        <>
+          {toast({
+            title: "select a property",
+            status: "warning",
+            duration: 4000,
+            isClosable: true
+          })}
+        </>
+      )
+    }
+    const confirmation = await updateReservation(
+      hotelId,
+      changeStatus,
+      bookingId
+    )
+    return (
+      <>
+        {toast({
+          title: "changes made!",
+          status: "info",
+          duration: 4000,
+          isClosable: true
+        })}
+      </>
+    )
+  }
 
   return (
     <div className="flex ">
@@ -106,7 +133,13 @@ const BookingSlots = () => {
                 Continue
               </Button>
             ) : (
-              <Button w="full" colorScheme="pink">
+              <Button
+                w="full"
+                colorScheme="pink"
+                onClick={() => {
+                  confirmBooking(params?.id, "confirmed", bookingData[0]?.id)
+                }}
+              >
                 Continue
               </Button>
             )}
