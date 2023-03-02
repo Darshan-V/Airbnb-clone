@@ -10,7 +10,7 @@ const createSession = async (userId, sessionId) => {
 
 const getSession = async (sessionId) => {
   const session = await pool.query(
-    "select user_id, session_id from sessions where session_id = $1",
+    "select users.email, sessions.user_id, sessions.session_id from users left join sessions on users.id = sessions.user_id where session_id = $1",
     [sessionId]
   )
   return session.rows[0]
