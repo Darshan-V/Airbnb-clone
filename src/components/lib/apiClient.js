@@ -115,6 +115,14 @@ async function updateReservation(hotelId, status, bookingId) {
   return changeStatus
 }
 
+// async function getCurrentBooking(bookingId) {
+//   let data = await fetch(`${apiUrl}/bookings/confirmed/${bookingId}`, {
+//     credentials: "include"
+//   })
+//   const currentBooking = await data.json()
+//   return currentBooking
+// }
+
 export {
   getHotels,
   getImages,
