@@ -60,6 +60,6 @@ async function insertImage() {
     )
   }
 }
-fakerImages()
-insertImage()
+// fakerImages()
+// insertImage()
 // insertFake()
