@@ -25,7 +25,6 @@ const Topbar = ({ setPropertyData }) => {
   const getAllListing = async () => {
     const [listing, id] = await getHotels()
     setUserId(id)
-    setPropertyData(listing)
   }
 
   useEffect(() => {
