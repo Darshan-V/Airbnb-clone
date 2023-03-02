@@ -100,6 +100,21 @@ async function logout() {
   return logout
 }
 
+async function updateReservation(hotelId, status, bookingId) {
+  let data = await fetch(`${apiUrl}/bookings/confirmation/${hotelId}`, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      bookingId: bookingId,
+      status: status
+    })
+  })
+  const changeStatus = await data.json()
+  console.log(changeStatus)
+  return changeStatus
+}
+
 export {
   getHotels,
   getImages,
@@ -109,5 +124,6 @@ export {
   getBookingsbyProperty,
   checkSlots,
   searchListing,
-  logout
+  logout,
+  updateReservation
 }
