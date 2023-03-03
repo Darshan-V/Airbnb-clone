@@ -6,6 +6,7 @@ import { GiTrashCan } from "react-icons/gi"
 import PlaceSummary from "./PlaceSummary"
 import { Button, useToast } from "@chakra-ui/react"
 import { updateReservation } from "../lib/apiClient"
+import { Link } from "react-router-dom"
 
 const BookingSlots = () => {
   const params = useParams()
@@ -133,15 +134,17 @@ const BookingSlots = () => {
                 Continue
               </Button>
             ) : (
-              <Button
-                w="full"
-                colorScheme="pink"
-                onClick={() => {
-                  confirmBooking(params?.id, "confirmed", bookingData[0]?.id)
-                }}
-              >
-                Continue
-              </Button>
+              <Link to={`/summary/${bookingData[0]?.id}`} className="w-full">
+                <Button
+                  w="full"
+                  colorScheme="pink"
+                  onClick={() => {
+                    confirmBooking(params?.id, "confirmed", bookingData[0]?.id)
+                  }}
+                >
+                  Continue
+                </Button>
+              </Link>
             )}
           </div>
         </div>
