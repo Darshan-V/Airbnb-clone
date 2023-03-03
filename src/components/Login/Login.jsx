@@ -25,10 +25,10 @@ const Login = () => {
       <p className="text font-semibold text-2xl pb-3 pl-2">Login</p>
       <div>
         <div className="flex flex-col m-2">
-          <span>Username</span>
+          <span>Email</span>
           <div className="w-80 border rounded-md h-8 ">
             <input
-              placeholder=" Username"
+              placeholder=" email"
               className="w-full h-full p-1"
               onChange={(e) => {
                 setUserName(e.target.value)

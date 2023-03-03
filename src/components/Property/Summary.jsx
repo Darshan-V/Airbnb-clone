@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { getCurrentBooking } from "../lib/apiClient"
 import {
   Card,
@@ -14,10 +14,14 @@ import { Link } from "react-router-dom"
 
 const Summary = () => {
   const params = useParams()
+  const navigate = useNavigate()
   const bookingId = params.bookingId
   const [userBooking, setUserBooking] = useState([])
   const summary = async () => {
     const booking = await getCurrentBooking(bookingId)
+    if (booking === "unauthorized") {
+      return navigate("/")
+    }
     setUserBooking(booking)
   }
 
