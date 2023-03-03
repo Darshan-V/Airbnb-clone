@@ -5,6 +5,7 @@ import Signup from "./components/Login/Signup"
 import BookingSlots from "./components/Property/BookingSlots"
 import PropertyImages from "./components/Property/PropertyImages"
 import PropertyPage from "./components/Property/PropertyPage"
+import Summary from "./components/Property/Summary"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             path="/property_images/:property_id?/:user_id?"
             element={<PropertyImages />}
           />
+          <Route path="/summary/:bookingId" element={<Summary />} />
         </Routes>
       </Router>
     </div>
