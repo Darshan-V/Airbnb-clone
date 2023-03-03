@@ -57,7 +57,7 @@ const getBookingData = async (userId, bookingId) => {
     where users.id = $1 and bookings.id = $2 and status = 'confirmed'`,
     [userId, bookingId]
   )
-  return bookingData.rows
+  return bookingData.rows[0]
 }
 
 export {

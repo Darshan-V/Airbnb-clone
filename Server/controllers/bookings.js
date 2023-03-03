@@ -18,11 +18,15 @@ async function getUserBooking(req, res) {
     const finalStatus = await getBookingData(userId, bookingId)
     const options = {
       from: process.env.AUTH_EMAIL,
-      to: email,
+      to: "gowdadarshanv@gmail.com",
       subject: "test",
       html: ` <div>
-              <span>hello</span>
-              <p>This is a test email don't respond</p>
+            <h1>Booking Details</h1>
+            <p>Location: ${finalStatus.address.location}</p>
+              <p>Checkin: ${finalStatus.check_in}</p>
+              <p>Checkout: ${finalStatus.check_out}</p>
+              <p>Status:${finalStatus.status}</p>
+              <p>Amount Paid: ${finalStatus.total_price}</p>
             </div>`
     }
     await sendBookingToEmail(options)
