@@ -21,7 +21,7 @@ const sendEmail = async (mailOptions) => {
     const emailSent = await transporter.sendMail(mailOptions)
     return emailSent
   } catch (error) {
-    throw error
+    console.log(error.stack)
   }
 }
 
