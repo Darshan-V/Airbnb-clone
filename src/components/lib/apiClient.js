@@ -111,7 +111,6 @@ async function updateReservation(hotelId, status, bookingId) {
     })
   })
   const changeStatus = await data.json()
-  console.log(changeStatus)
   return changeStatus
 }
 
