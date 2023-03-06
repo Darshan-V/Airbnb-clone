@@ -22,12 +22,15 @@ async function getUserBooking(req, res) {
       subject: "test",
       html: ` <div>
             <h1>Booking Details</h1>
-            <p>Location: ${finalStatus.address.location}</p>
-              <p>Checkin: ${finalStatus.check_in}</p>
-              <p>Checkout: ${finalStatus.check_out}</p>
-              <p>Status:${finalStatus.status}</p>
-              <p>Amount Paid: ${finalStatus.total_price}</p>
+            <p>Location: ${finalStatus?.address?.location}</p>
+              <p>Checkin: ${finalStatus?.check_in}</p>
+              <p>Checkout: ${finalStatus?.check_out}</p>
+              <p>Status:${finalStatus?.status}</p>
+              <p>Amount Paid: ${finalStatus?.total_price}</p>
             </div>`
+    }
+    if (finalStatus?.status !== "confirmed") {
+      return
     }
     await sendBookingToEmail(options)
     res.json(finalStatus)
