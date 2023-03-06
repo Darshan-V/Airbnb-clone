@@ -6,19 +6,28 @@ const filterSlice = createSlice({
     searchString: "",
     type: "",
     minPrice: 0,
-    maxPrice: 999999
+    maxPrice: 999999,
+    bookingId: 0,
+    booking: []
   },
   reducers: {
     searchQueryString: (state, action) => {
       state.searchString = action.payload
-      console.log(state.searchString)
     },
     setType: (state, action) => {
       state.type = action.payload
-      console.log(state.type)
+    },
+    setBookingId: (state, action) => {
+      state.bookingId = action.payload
+      console.log(action.payload)
+    },
+    setBooking: (state, action) => {
+      state.booking = action.payload
     }
   }
 })
-export const { searchQueryString, setType } = filterSlice.actions
+
+export const { searchQueryString, setType, setBooking, setBookingId } =
+  filterSlice.actions
 
 export default filterSlice.reducer
