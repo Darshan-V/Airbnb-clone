@@ -5,8 +5,10 @@ import { useNavigate } from "react-router"
 import { GiTrashCan } from "react-icons/gi"
 import PlaceSummary from "./PlaceSummary"
 import { Button, useToast } from "@chakra-ui/react"
-import { updateReservation } from "../lib/apiClient"
+import { updateReservation, getCurrentBooking } from "../lib/apiClient"
 import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setBooking, setBookingId } from "../../store/feature/filter"
 
 const BookingSlots = () => {
   const params = useParams()
@@ -14,6 +16,7 @@ const BookingSlots = () => {
   const [bookingData, setBookingData] = useState([])
   const navigate = useNavigate()
   const toast = useToast()
+  const dispatch = useDispatch()
 
   const getBookingData = async () => {
     const data = await getBookingsbyProperty(hotelId)
@@ -23,11 +26,19 @@ const BookingSlots = () => {
     setBookingData(data)
   }
 
+  const getCurrentBookingData = async () => {
+    const booking = await getCurrentBooking(bookingData[0]?.id)
+    if (booking === "unauthorized") {
+      return navigate("/")
+    }
+    dispatch(setBooking(booking))
+  }
+
   useEffect(() => {
     getBookingData()
   }, [params?.id])
 
-  const updateBookingData = async (hotelId, changeStatus, bookingId) => {
+  const deleteBooking = async (hotelId, changeStatus, bookingId) => {
     if (!hotelId) {
       return (
         <>
@@ -44,8 +55,8 @@ const BookingSlots = () => {
     return (
       <>
         {toast({
-          title: "changes made!",
-          status: "info",
+          title: "Booking Deleted!",
+          status: "warning",
           duration: 4000,
           isClosable: true
         })}
@@ -71,6 +82,8 @@ const BookingSlots = () => {
       changeStatus,
       bookingId
     )
+    getCurrentBookingData()
+    dispatch(setBookingId(bookingData[0]?.id))
     return (
       <>
         {toast({
@@ -96,13 +109,15 @@ const BookingSlots = () => {
             <div key={i}>
               <div className="flex flex-col w-96 mr-auto border m-5 p-5">
                 <span>Your Trip</span>
-                <GiTrashCan
-                  className="ml-auto hover:cursor-pointer text-red-600 text-xl"
-                  onClick={() => {
-                    console.log("clicked item", i, "will delete this item")
-                    updateBookingData(params?.id, "canceled", reservation?.id)
-                  }}
-                />
+                <Link to={`/property/${hotelId}`}>
+                  <GiTrashCan
+                    className="ml-auto hover:cursor-pointer text-red-600 text-xl"
+                    onClick={() => {
+                      console.log("clicked item", i, "will delete this item")
+                      deleteBooking(params?.id, "canceled", reservation?.id)
+                    }}
+                  />
+                </Link>
                 <div>
                   <div>
                     <span className="text text-slate-500 underline uppercase">

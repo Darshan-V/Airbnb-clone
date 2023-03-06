@@ -11,12 +11,22 @@ import {
   Divider
 } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { setBookingId } from "../../store/feature/filter"
+import Loading from "../pages/Loading"
 
 const Summary = () => {
   const params = useParams()
   const navigate = useNavigate()
-  const bookingId = params.bookingId
   const [userBooking, setUserBooking] = useState([])
+  const bookingId = params.bookingId
+
+  //   const dispatch = useDispatch()
+  console.log(userBooking)
+  const booking = useSelector((state) => state.searchQuery.booking)
+
+  console.log(booking)
+
   const summary = async () => {
     const booking = await getCurrentBooking(bookingId)
     if (booking === "unauthorized") {
@@ -27,7 +37,12 @@ const Summary = () => {
 
   useEffect(() => {
     summary()
+    setUserBooking(booking)
   }, [])
+
+  if (userBooking.length === 0) {
+    return <Loading />
+  }
 
   return (
     <div className="border-8 border-orange-400 h-screen rounded-lg">
@@ -75,9 +90,16 @@ const Summary = () => {
           </div>
         </CardBody>
         <CardFooter>
-          <Link to={`/home`}>
-            <Button colorScheme="blue">Back to Home</Button>
-          </Link>
+          <div className="flex flex-col">
+            <div className="m-auto p-5">
+              <p className="text-xs font-sans italic underline pt-2 text-orange-600">
+                *Check your registered email for the booking details
+              </p>
+            </div>
+            <Link to={`/home`} className="m-auto">
+              <Button colorScheme="blue">Back to Home</Button>
+            </Link>
+          </div>
         </CardFooter>
       </Card>
     </div>

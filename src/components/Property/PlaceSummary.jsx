@@ -12,10 +12,11 @@ const PlaceSummary = ({ data }) => {
     setDetails(hotelData)
     return hotelData
   }
+
   useEffect(() => {
     getHotelDetails()
   }, [params.id])
-  console.log(details)
+  // console.log(details)
 
   return (
     <div>
