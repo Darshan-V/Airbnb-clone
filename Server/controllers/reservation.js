@@ -76,32 +76,32 @@ async function getReservedEntry(req, res) {
 }
 
 async function updateReservedSlots(req, res) {
-  const hotelId = req.params.propertyId
-  const { status, bookingId } = req.body
-  const userId = req.userId
-  if (!hotelId || hotelId === "undefined") {
-    return res.status(406).json("required hotelId")
-  }
-  if (!userId || userId === "undefined") {
-    return res.status(403).json("invalid user")
-  }
-  if (!bookingId || bookingId === "undefined") {
-    return res.status(406).json("required bookingId")
-  }
-  if (!status || !String(status) || status === undefined) {
-    return res.status(403).json("invalid entry")
-  }
-  const updateReservationData = await updateReservation(
-    hotelId,
-    userId,
-    bookingId,
-    status
-  )
-  if (!updateReservationData) {
-    return res.status(404).json("booking not found")
-  }
-  res.json(updateReservationData)
   try {
+    const hotelId = req.params.propertyId
+    const { status, bookingId } = req.body
+    const userId = req.userId
+    if (!hotelId || hotelId === "undefined") {
+      return res.status(406).json("required hotelId")
+    }
+    if (!userId || userId === "undefined") {
+      return res.status(403).json("invalid user")
+    }
+    if (!bookingId || bookingId === "undefined") {
+      return res.status(406).json("required bookingId")
+    }
+    if (!status || !String(status) || status === undefined) {
+      return res.status(403).json("invalid entry")
+    }
+    const updateReservationData = await updateReservation(
+      hotelId,
+      userId,
+      bookingId,
+      status
+    )
+    if (!updateReservationData) {
+      return res.status(404).json("booking not found")
+    }
+    res.json(updateReservationData)
   } catch (error) {
     console.log(error.stack)
     res.sendStatus(500)

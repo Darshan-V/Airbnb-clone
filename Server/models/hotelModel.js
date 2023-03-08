@@ -71,12 +71,14 @@ const searchListing = async (queryString) => {
       FROM images
       left join property
       on images.property_id = property.id
-      WHERE  (
-        price >= $2 OR $2 IS NULL
-      ) AND (
-        price <= $3 OR $3 IS NULL
-      )AND (type = $4  or $4 is NULL
-      )AND (name ilike '%'|| $1 || '%'  or address ->> 'location' ilike '%' || $1 || '%' or $1 is NULL)`,
+      WHERE  
+      (price >= $2 OR $2 IS NULL) 
+      AND 
+      (price <= $3 OR $3 IS NULL)
+      AND 
+      (type = $4  or $4 is NULL)
+      AND 
+      (name ilike '%'|| $1 || '%'  or address ->> 'location' ilike '%' || $1 || '%' or $1 is NULL)`,
     [search, min, max, type]
   ) //use clauses to run each query if the querystring exist
   return searchedListing.rows
