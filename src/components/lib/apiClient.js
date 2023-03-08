@@ -86,7 +86,9 @@ async function searchListing(searchString, min, max, hotelType) {
   const data = await fetch(queryUrl, {
     credentials: "include"
   })
+  console.log(queryUrl)
   const searchedList = await data.json()
+
   // console.log(searchedList)
   return searchedList
 }
