@@ -6,6 +6,7 @@ import ImageCarousel from "./ImageCarousel.jsx"
 import AboutProperty from "./AboutProperty.jsx"
 import Topbar from "../Topbar/Topbar.jsx"
 import Loading from "../pages/Loading.jsx"
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 
 const PropertyPage = () => {
   const [propertyData, setPropertyData] = useState([])
@@ -40,8 +41,10 @@ const PropertyPage = () => {
 
         <div className="flex pt-4 pb-4 ">
           <div className="flex flex-row "></div>
-          <div className=" w-full">
+          <div className="flex flex-row w-full">
+            <IoIosArrowBack className=" text-4xl absolute z-10 left-40 top-80 text-gray-300" />
             <ImageCarousel images={hotelImages} />
+            <IoIosArrowForward className=" text-4xl absolute z-10 right-40 top-80 text-gray-300" />
           </div>
         </div>
       </div>
