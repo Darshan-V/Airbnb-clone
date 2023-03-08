@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react"
 import "./chakra.css"
 import { getHotels, searchListing } from "../lib/apiClient"
-import Logo from "./flc_design20230220117636.png"
+import Logo from "./flc_design20230220117636-88725c9c.png"
 import UserDrawer from "./UserDrawer"
 
 const Topbar = ({ setPropertyData }) => {
@@ -125,7 +125,7 @@ const Topbar = ({ setPropertyData }) => {
         <div className="flex justify-between w-full m-auto bg-white-300 h-16 sticky top-0 bg-white">
           <Link
             to={"/home"}
-            className="flex justify-center mr-auto rounded-lg "
+            className="flex justify-center mr-auto rounded-lg bg-slate-600 ml-1"
             onClick={getAllListing}
           >
             <img src={Logo} className="w-28" />
