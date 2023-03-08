@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-package.json
 .prettierrc
 postcss.config.cjs
 tailwind.config.cjs
