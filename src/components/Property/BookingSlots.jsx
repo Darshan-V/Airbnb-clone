@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { getBookingsbyProperty } from "../lib/apiClient"
 import { useNavigate } from "react-router"
-import { GiTrashCan } from "react-icons/gi"
 import PlaceSummary from "./PlaceSummary"
 import { Button, useToast } from "@chakra-ui/react"
 import { updateReservation, getCurrentBooking } from "../lib/apiClient"
-import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { setBooking, setBookingId } from "../../store/feature/filter"
+import BookingList from "./BookingList"
+import ConfirmBookingBtn from "./ConfirmBookingBtn"
 
 const BookingSlots = () => {
   const params = useParams()
@@ -105,63 +105,15 @@ const BookingSlots = () => {
               Confirm Booking
             </h1>
           </div>
-          {bookingData?.map((reservation, i) => (
-            <div key={i}>
-              <div className="flex flex-col w-96 mr-auto border m-5 p-5">
-                <span>Your Trip</span>
-                <Link to={`/property/${hotelId}`}>
-                  <GiTrashCan
-                    className="ml-auto hover:cursor-pointer text-red-600 text-xl"
-                    onClick={() => {
-                      console.log("clicked item", i, "will delete this item")
-                      deleteBooking(params?.id, "canceled", reservation?.id)
-                    }}
-                  />
-                </Link>
-                <div>
-                  <div>
-                    <span className="text text-slate-500 underline uppercase">
-                      {reservation?.check_in.substr(0, 10)} to{" "}
-                      {reservation?.check_out.substr(0, 10)}
-                    </span>
-                  </div>
-                  <div className="flex flex-row justify-between m-1">
-                    <p>Status</p>
-                    <span>{reservation.status}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-          <div
-            className="flex m-auto w-4/5 h-10 rounded-md hover:cursor-pointer hover:scale-110 hover:bg-pink-500"
-            onClick={() => {
-              if (bookingData.length === 1) {
-                return console.log("booking confirmed")
-              }
-              console.log(
-                "multiple slots selected edit selection before confirmation"
-              )
-            }}
-          >
-            {bookingData.length > 1 ? (
-              <Button isDisabled w="full" colorScheme="pink">
-                Continue
-              </Button>
-            ) : (
-              <Link to={`/summary/${bookingData[0]?.id}`} className="w-full">
-                <Button
-                  w="full"
-                  colorScheme="pink"
-                  onClick={() => {
-                    confirmBooking(params?.id, "confirmed", bookingData[0]?.id)
-                  }}
-                >
-                  Continue
-                </Button>
-              </Link>
-            )}
-          </div>
+          <BookingList
+            bookingData={bookingData}
+            deleteBooking={deleteBooking}
+            hotelId={hotelId}
+          />
+          <ConfirmBookingBtn
+            bookingData={bookingData}
+            confirmBooking={confirmBooking}
+          />
         </div>
         {bookingData.length > 1 ? null : (
           <div className="m-auto w-2/6 h-auto">
