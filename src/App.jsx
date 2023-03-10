@@ -9,7 +9,7 @@ import Summary from "./components/Property/Summary"
 
 function App() {
   return (
-    <div className="flex flex-col  m-auto">
+    <div className="flex flex-col m-auto">
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
