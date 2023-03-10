@@ -41,7 +41,7 @@ const UserDrawer = ({ userId }) => {
   return (
     <div className="hover:cursor-pointer ">
       <Avatar
-        bg="orange.300"
+        bg="gray.400"
         icon={<BiUser fontSize="1.5rem" />}
         size="md"
         onClick={onOpen}

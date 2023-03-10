@@ -47,11 +47,12 @@ const Topbar = ({ setPropertyData }) => {
       <>
         <Button
           variant="outline"
-          colorScheme="orange"
+          colorScheme="pink"
           onClick={onOpen}
           height="full"
+          rounded="3xl"
         >
-          <TbSearch className="text text-4xl text-yellow-600" />
+          <TbSearch className="text text-4xl text-pink-600" />
         </Button>
 
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -60,7 +61,7 @@ const Topbar = ({ setPropertyData }) => {
             <ModalHeader>
               <Input
                 placeholder="Search..."
-                value={searchTerm.string}
+                value={searchTerm}
                 onChange={searchForProperty}
                 size="md"
                 rounded="md"
@@ -90,10 +91,10 @@ const Topbar = ({ setPropertyData }) => {
   return (
     <>
       {params?.id ? (
-        <div className="flex justify-between w-full m-auto pb-5 bg-white">
+        <div className="flex justify-between w-full pb-5 bg-white mt-2">
           <Link
             to={"/home"}
-            className="flex justify-center mr-auto rounded-lg "
+            className="flex justify-center mr-auto rounded-lg bg-pink-600"
             onClick={getAllListing}
           >
             <img src={Logo} className="w-28" />
@@ -122,10 +123,10 @@ const Topbar = ({ setPropertyData }) => {
           ) : null}
         </div>
       ) : (
-        <div className="flex justify-between w-full m-auto bg-white-300 h-16 sticky top-0 bg-white">
+        <div className="flex justify-between w-full h-16 sticky top-0 bg-white pt-2 pb-2 border-b-2">
           <Link
             to={"/home"}
-            className="flex justify-center mr-auto rounded-lg bg-slate-600 ml-1"
+            className="flex justify-center mr-auto rounded-lg bg-pink-700 ml-1 "
             onClick={getAllListing}
           >
             <img src={Logo} className="w-28" />
