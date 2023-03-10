@@ -17,7 +17,7 @@ const reserveSlot = async (
 
 const checkAvailableSlots = async (checkIn, checkOut, hotelId) => {
   const isAvailable = await pool.query(
-    `select * from bookings where property_id = $3 and (check_in between $1 and $2 or check_out between $1 and $2 or check_in <= $1 and check_out >= $2 and created_at > NOW() - INTERVAL '15 minutes') and (status = 'reserved' or status = 'confirmed')`,
+    `select * from bookings where property_id = $3 and (check_in between $1 and $2 or check_out between $1 and $2 or check_in <= $1 and check_out >= $2 and created_at < NOW() - INTERVAL '15 minutes') and (status = 'reserved' or status = 'confirmed')`,
     [checkIn, checkOut, hotelId]
   )
   return isAvailable.rows
