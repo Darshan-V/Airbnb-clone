@@ -8,10 +8,10 @@ const PropertyCard = ({ listing }) => {
     return <Loading />
   }
   return (
-    <div className="grid grid-cols-1 grid-rows-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 m-auto pt-5">
+    <div className="grid grid-cols-1 grid-rows-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-10 gap-y-5 m-auto pt-5">
       {listing.map((property, i) => (
         <div
-          className="flex flex-row  rounded-lg border border-slate-0 hover:border-slate-400  delay-150 hover:bg-gradient-to-r from-orange-100 to-orange-300 "
+          className="flex flex-row  rounded-lg hover:border-slate-400  delay-150 hover:bg-gradient-to-r from-orange-100 to-orange-300 "
           key={i}
         >
           <Link
@@ -19,7 +19,7 @@ const PropertyCard = ({ listing }) => {
             className="flex flex-col flex-auto m-2 hover:cursor-pointer"
             key={i}
           >
-            <div className=" w-80 h-60 border rounded-md ">
+            <div className=" w-full h-full border rounded-md ">
               <img
                 src={property?.imageurl[0]}
                 className="border rounded-lg w-80 h-60"
