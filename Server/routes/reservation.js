@@ -12,7 +12,7 @@ const routes = express.Router()
 routes.get(
   "/check/slots/:hotelId/:checkIn/:checkOut",
   verifyToken,
-  checkAvailablity
+  checkAvailablity //route
 )
 
 routes.post("/hotels/:id/booking/", verifyToken, makeBooking)

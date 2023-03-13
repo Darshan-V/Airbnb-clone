@@ -1,6 +1,6 @@
 .leaflet-container {
   display: flex;
-  height: 40rem; /* <-- map height */
+  height: 82vh; /* <-- map height */
   width: 100%;
   border: groove;
   margin: auto;

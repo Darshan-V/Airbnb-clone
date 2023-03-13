@@ -13,7 +13,7 @@ import {
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { setBookingId } from "../../store/feature/filter"
-import Loading from "../pages/Loading"
+import ConfirmationLoading from "./ConfirmationLoading"
 
 const Summary = () => {
   const params = useParams()
@@ -22,10 +22,7 @@ const Summary = () => {
   const bookingId = params.bookingId
 
   //   const dispatch = useDispatch()
-  console.log(userBooking)
   const booking = useSelector((state) => state.searchQuery.booking)
-
-  console.log(booking)
 
   const summary = async () => {
     const booking = await getCurrentBooking(bookingId)
@@ -41,7 +38,7 @@ const Summary = () => {
   }, [])
 
   if (userBooking.length === 0) {
-    return <Loading />
+    return <ConfirmationLoading />
   }
 
   return (

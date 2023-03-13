@@ -39,7 +39,7 @@ const FilterListing = ({ setPropertyData, setFilteredHotels }) => {
     <div className="m-auto">
       <Button
         className="text text-3xl font text-yellow-600 hover:text-black bg-slate-300 w-20 h-8 ml-auto rounded-lg shadow-lg shadow-slate-400 m-auto"
-        onClick={(onOpen, onToggle)}
+        onClick={onOpen}
       >
         Filter
       </Button>
