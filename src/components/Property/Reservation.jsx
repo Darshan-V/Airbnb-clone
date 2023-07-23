@@ -59,6 +59,11 @@ const Reservation = ({ price }) => {
     if (checkOut) await validateDates(checkInDate, checkOut, hotelId)
   }
 
+  const minDate = () => {
+    const today = new Date().toISOString().split('T')[0];
+    return today;
+};
+
   return (
     <Card
       w="25rem"
@@ -85,6 +90,7 @@ const Reservation = ({ price }) => {
                   <Input
                     placeholder="Select Checkin Date"
                     type="date"
+                    min={minDate()}
                     value={checkIn}
                     onChange={(e) => {
                       getCheckin(e)
